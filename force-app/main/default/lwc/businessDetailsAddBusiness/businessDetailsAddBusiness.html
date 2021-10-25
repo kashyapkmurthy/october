@@ -1,0 +1,12 @@
+<template>
+    <h1>Add a Business</h1>
+    <c-registration-business-details phone-label="Main business phone" email-label="Business email" 
+            street-addrss-label="Primary business street address" postal-addrss-label="Business postal address" 
+            onupdatebusinessdetailsparameters={handleBusinessDetails} onabnvalidation={handleABNValidation}></c-registration-business-details>
+    <lightning-layout>
+        <lightning-button  class="slds-p-top_large" if:true={showAddBusinessButton} variant="Neutral" label="Add Business" disabled={submitDisabled} onclick={handleClick}></lightning-button>
+    </lightning-layout>
+    <template if:true={isLoading}>
+        <c-spinner size-input="large"></c-spinner>
+    </template>
+</template>

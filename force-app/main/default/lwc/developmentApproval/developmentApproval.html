@@ -1,0 +1,39 @@
+<template>
+    <h2>Development Approval</h2>
+    <lightning-layout>
+        <lightning-layout-item size="12" small-device-size="12" medium-device-size="8" large-device-size="6">
+            <lightning-input type="text" maxlength="80" label="Approving Authority/Private Certifier" value={appAuthority} name="approvingAuthority" 
+            field-level-help={appTypeHelpText} pattern="^[a-zA-Z0-9-/,& ]*" message-when-pattern-mismatch="Please enter a valid Approving Authority/Private Certifier"
+            required={instalmentsStep}
+            message-when-value-missing="Please enter Approving Authority/Private Certifier"></lightning-input>
+        </lightning-layout-item>
+    </lightning-layout>
+    <lightning-layout>
+        <lightning-layout-item size="12" small-device-size="12" medium-device-size="8" large-device-size="6">
+            <lightning-input type="text" maxlength="80" label="Contact Name" value={contName} name="contactName" 
+            pattern="^[a-zA-Z '-]*" message-when-pattern-mismatch="Please enter a valid Contact Name"
+            required={instalmentsStep}
+            message-when-value-missing="Please enter Contact Name"></lightning-input>
+        </lightning-layout-item>
+    </lightning-layout>
+    <lightning-layout>
+        <lightning-layout-item size="12" small-device-size="12" medium-device-size="5" large-device-size="3">
+            <lightning-input type="tel" label="Phone" pattern="(^(\s*(1300|1800|1900|1902))(| )[0-9]{3}(| )([0-9]\s*){3}$)|(^(\s*0[2|3|7|8]){1}(| )[0-9]{4}(| )([0-9]\s*){4}$)|(^(\s*(13|18|19))(| )([0-9]\s*){4}$)|(^(\s*04)[0-9]{2}(| )[0-9]{3}(| )([0-9]\s*){3}$)|
+            (^(\s*[+])[0-9]{2}(| )[0-9]{1}(| )[0-9]{4}(| )([0-9]\s*){4}$)|(^(\s*[+])[0-9]{2}(| )[0-9]{3}(| )[0-9]{3}(| )([0-9]\s*){3}$)" value={phone} 
+            message-when-pattern-mismatch="Phone number has wrong format" name="phone" maxlength="15"
+            field-level-help="Phone number must begin with + (country code) (Or) must be a valid Australian phone number
+                    1300 XXX XXX, 1800 XXX XXX, 1900 XXX XXX, 1902 XXX XXX,
+                    02 XXXX XXXX, 03 XXXX XXXX, 07 XXXX XXXX, 08 XXXX XXXX,
+                    13 XXXX, 18 XXXX, 19 XXXX,
+                    04XX XXX XXX"  onchange={handleChange}
+                    ></lightning-input>
+        </lightning-layout-item>
+    </lightning-layout>
+    <lightning-layout>
+        <lightning-layout-item size="12" small-device-size="12" medium-device-size="8" large-device-size="6">
+            <lightning-input type="email" class="emailinput" pattern="^[A-Za-z0-9._%+-/!#$%&'*=?^_`{|}~]+@[A-Za-z0-9.-]+\.[A-Za-z]*$" message-when-pattern-mismatch="Email has wrong format" name="email" label="Email" value={email} 
+             onchange={handleChangeEmail} max-length="80" required={instalmentsStep}
+             message-when-value-missing="Please enter Email"></lightning-input>
+        </lightning-layout-item>
+    </lightning-layout>    
+</template>

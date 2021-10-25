@@ -1,0 +1,7 @@
+.THIS div.slds-radio_button-group{
+    border: none;
+}
+
+.THIS label.slds-radio_button__label {
+    border-radius: 0.25rem !important;
+}

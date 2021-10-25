@@ -1,0 +1,335 @@
+<template>
+    <h2>Summary</h2>
+    <lightning-card title="Development details" class="break-word">
+        <lightning-button label="Edit" id="developmentDetails" slot="actions" onclick={handleClick}></lightning-button>
+        <lightning-layout horizontal-align="start" multiple-rows>
+            <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="4" padding="horizontal-small">
+                <p ><b>Application Type:</b></p>
+            </lightning-layout-item>
+            <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="8" padding="horizontal-small">
+                <p >{devDetails.appType}</p>
+            </lightning-layout-item>
+        </lightning-layout>
+        <lightning-layout horizontal-align="start" multiple-rows>
+            <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="4" padding="horizontal-small">
+                <p ><b>Application number:</b></p>
+            </lightning-layout-item>
+            <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="8" padding="horizontal-small">
+                <p >{devDetails.appNumber}</p>
+            </lightning-layout-item>
+        </lightning-layout>
+        <lightning-layout horizontal-align="start" multiple-rows>
+            <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="4" padding="horizontal-small">
+                <p ><b>Planning Portal reference:</b></p>
+            </lightning-layout-item>
+            <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="8" padding="horizontal-small">
+                <p >{devDetails.planningPortalNumber}</p>
+            </lightning-layout-item>
+        </lightning-layout>
+        <lightning-layout horizontal-align="start" multiple-rows>
+            <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="4" padding="horizontal-small">
+                <p ><b>Local govt.area/authority:</b></p>
+            </lightning-layout-item>
+            <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="8" padding="horizontal-small">
+                <p >{devDetails.govtAuth}</p>
+            </lightning-layout-item>
+        </lightning-layout>
+        <lightning-layout horizontal-align="start" multiple-rows>
+            <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="4" padding="horizontal-small">
+                <p ><b>Site address:</b></p>
+            </lightning-layout-item>
+            <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="8" padding="horizontal-small">
+                <p >{constSiteAddress.fullAddress}</p>
+            </lightning-layout-item>
+        </lightning-layout>
+        <lightning-layout horizontal-align="start" multiple-rows>
+            <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="4" padding="horizontal-small">
+                <p ><b>Construction period:</b></p>
+            </lightning-layout-item>
+            <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="8" padding="horizontal-small">
+                <p >From {startDate} to {endDate}</p>
+            </lightning-layout-item>
+        </lightning-layout>           
+    </lightning-card>  
+    <div class="slds-p-vertical_large">
+        <lightning-card title="Development approval" class="break-word">
+            <lightning-button label="Edit" id="developmentApproval" slot="actions" onclick={handleClick}></lightning-button>
+            <lightning-layout horizontal-align="start" multiple-rows>
+                <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="4" padding="horizontal-small">
+                    <p ><b>Approving Authority/Certifier:</b></p>
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="8" padding="horizontal-small">
+                    <p >{devApprovalDetails.approvingAuthority}</p>
+                </lightning-layout-item>
+            </lightning-layout>
+            <lightning-layout horizontal-align="start" multiple-rows>
+                <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="4" padding="horizontal-small">
+                    <p ><b>Contact name:</b></p>
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="8" padding="horizontal-small">
+                    <p >{devApprovalDetails.contactName}</p>
+                </lightning-layout-item>
+            </lightning-layout>
+            <lightning-layout horizontal-align="start" multiple-rows>
+                <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="4" padding="horizontal-small">
+                    <p ><b>Phone:</b></p>
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="8" padding="horizontal-small">
+                    <p >{devApprovalDetails.phone}</p>
+                </lightning-layout-item>
+            </lightning-layout>
+            <lightning-layout horizontal-align="start" multiple-rows>
+                <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="4" padding="horizontal-small">
+                    <p ><b>Email:</b></p>
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="8" padding="horizontal-small">
+                    <p >{devApprovalDetails.email}</p>
+                </lightning-layout-item>
+            </lightning-layout>  
+        </lightning-card> 
+    </div>
+
+    <lightning-card title="Development costs" class="break-word">
+        <lightning-button label="Edit" id="developmentCosts" slot="actions" onclick={handleClick}></lightning-button>
+        <lightning-layout horizontal-align="start" multiple-rows>
+            <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="4" padding="horizontal-small">
+                <p ><b>Total cost of work:</b></p>
+            </lightning-layout-item>
+            <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="8" padding="horizontal-small"> 
+                <p >${devCostDetails.totalBuildConstCost}</p>
+            </lightning-layout-item>
+        </lightning-layout>
+        <lightning-layout horizontal-align="start" multiple-rows>
+            <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="4" padding="horizontal-small">
+                <p ><b>Levy payable:</b></p>
+            </lightning-layout-item>
+            <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="8" padding="horizontal-small">
+                <p>${devCostDetails.levyPayable}</p>
+            </lightning-layout-item>
+        </lightning-layout>
+        <template if:true = {instalmentSelected}>
+            <h4 class="heading_4 slds-p-top_medium slds-var-p-left_small">{tableLabel}</h4>
+            <template if:true={isVariableInstalments}>
+                <template if:false={smallMediumDevView}>
+                    <lightning-layout horizontal-align="start">
+                        <lightning-layout-item flexibility="auto" size="3" padding="horizontal-small">
+                            <p></p>
+                        </lightning-layout-item>
+                        <lightning-layout-item flexibility="auto" size="3">
+                            <p><b>Start date</b></p>
+                        </lightning-layout-item>
+                        <lightning-layout-item flexibility="auto" size="3">
+                            <p><b>Estimated cost</b></p>
+                        </lightning-layout-item>
+                        <lightning-layout-item flexibility="auto" size="3">
+                            <p><b>Levy amount</b></p>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </template>
+                <template iterator:it={instalmentData}>
+                    <div key={it.value.id}>
+                        <div class="slds-var-p-horizontal_small">
+                            <p if:true={it.first} class="slds-border_top"></p>
+                        </div>
+                        <lightning-layout horizontal-align="start" multiple-rows class={it.value.bckgrndColor}>
+                            <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="3" large-device-size="3" padding="horizontal-small">
+                                <p><b>{it.value.stage}</b></p>
+                            </lightning-layout-item>
+                            <template if:true={smallMediumDevView}>
+                                <lightning-layout-item padding="horizontal-small" size="12" small-device-size="12" medium-device-size="12">
+                                    <p><b>Start date</b></p>
+                                </lightning-layout-item>   
+                            </template> 
+                            <lightning-layout-item flexibility="auto" padding="horizontal-small" size="12" small-device-size="12" medium-device-size="3" large-device-size="3">
+                                <p>{it.value.startDate}</p>
+                            </lightning-layout-item>
+                            <template if:true={smallMediumDevView}>
+                                <lightning-layout-item padding="horizontal-small" size="12" small-device-size="12" medium-device-size="12">
+                                    <p><b>Estimated cost</b></p>
+                                </lightning-layout-item>   
+                            </template>                             
+                            <lightning-layout-item flexibility="auto" padding="horizontal-small" size="12" small-device-size="12" medium-device-size="3" large-device-size="3">
+                                <p>${it.value.estimatedCost}</p>
+                            </lightning-layout-item>
+                            <template if:true={smallMediumDevView}>
+                                <lightning-layout-item padding="horizontal-small" size="12" small-device-size="12" medium-device-size="12">
+                                    <p><b>Levy amount</b></p>
+                                </lightning-layout-item>   
+                            </template>                             
+                            <lightning-layout-item flexibility="auto" padding="horizontal-small" size="12" small-device-size="12" medium-device-size="3" large-device-size="3">
+                                <p>${it.value.levyAmt}</p>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                    </div>
+                </template>
+            </template>
+            <template if:true={isPresetInstalments}>
+                <template if:false={smallMediumDevView}>
+                    <lightning-layout horizontal-align="start">
+                        <lightning-layout-item flexibility="auto" size="4" padding="horizontal-small">
+                            <p><b>Payment</b></p>
+                        </lightning-layout-item>
+                        <lightning-layout-item flexibility="auto" size="4">
+                            <p><b>Levy amount</b></p>
+                        </lightning-layout-item>
+                        <lightning-layout-item flexibility="auto" size="4">
+                            <p><b>Due date</b></p>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </template>
+                <template iterator:it={instalmentData}>
+                    <div key={it.value.id}>
+                        <div class="slds-var-p-horizontal_small">
+                            <p if:true={it.first} class="slds-border_top"></p>
+                        </div>
+                        <lightning-layout horizontal-align="start" multiple-rows class={it.value.bckgrndColor}>
+                            <template if:true={smallMediumDevView}>
+                                <lightning-layout-item padding="horizontal-small" size="12" small-device-size="12" medium-device-size="12"> 
+                                    <p><b>Payment {it.value.payNo}</b></p>
+                                </lightning-layout-item>   
+                            </template> 
+                            <template if:false={smallMediumDevView}>
+                                <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="4" large-device-size="4" padding="horizontal-small">
+                                    <p><b>{it.value.payNo}</b></p>
+                                </lightning-layout-item>
+                            </template>
+                            <template if:true={smallMediumDevView}>
+                                <lightning-layout-item padding="horizontal-small" size="12" small-device-size="12" medium-device-size="12">
+                                    <p><b>Levy amount</b></p>
+                                </lightning-layout-item>   
+                            </template> 
+                            <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="4" large-device-size="4" padding="horizontal-small">
+                                <p>${it.value.presetInstal}</p>
+                            </lightning-layout-item>
+                            <template if:true={smallMediumDevView}>
+                                <lightning-layout-item padding="horizontal-small" size="12" small-device-size="12" medium-device-size="12">
+                                    <p><b>Due date</b></p>
+                                </lightning-layout-item>   
+                            </template> 
+                            <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="4" large-device-size="4" padding="horizontal-small">
+                                <p>{it.value.dueDate}</p>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                        <div class="slds-var-p-horizontal_small">
+                            <p if:true={it.last} class="slds-border_bottom"></p>
+                        </div>
+                    </div>
+                </template>
+                <template if:false={smallMediumDevView}>
+                    <lightning-layout horizontal-align="start" multiple-rows>
+                        <lightning-layout-item flexibility="auto" size="4" large-device-size="4" padding="horizontal-small">
+                            <p><b>Total Levy:</b></p>
+                        </lightning-layout-item>
+                        <lightning-layout-item flexibility="auto" size="4" large-device-size="4" padding="horizontal-small">
+                            <p>${devCostDetails.levyPayable}</p>
+                        </lightning-layout-item>
+                        <lightning-layout-item flexibility="auto" size="4" large-device-size="4">
+                            <p></p>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </template>
+                <template if:true={smallMediumDevView}>
+                    <lightning-layout horizontal-align="start" multiple-rows>
+                        <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="12" padding="horizontal-small">
+                            <p><b>Total Levy:</b></p>
+                        </lightning-layout-item>
+                        <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="12" padding="horizontal-small">
+                            <p>${devCostDetails.levyPayable}</p>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </template>
+            </template>
+            <template if:true={notPrimaryContact}>
+                <div class="slds-var-p-top_medium">
+                    <h4 class="heading_4 slds-var-p-left_small ">Instalment contact person</h4>
+                </div>
+                <lightning-layout horizontal-align="start" multiple-rows>
+                    <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="4" padding="horizontal-small">
+                        <p ><b>Name:</b></p>
+                    </lightning-layout-item>
+                    <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="8" padding="horizontal-small">
+                        <p >{instalCmpDetails.givenName} {instalCmpDetails.surName}</p>
+                    </lightning-layout-item>
+                </lightning-layout>
+                <lightning-layout horizontal-align="start" multiple-rows>
+                    <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="4" padding="horizontal-small">
+                        <p ><b>Phone:</b></p>
+                    </lightning-layout-item>
+                    <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="8" padding="horizontal-small">
+                        <p >{instalCmpDetails.phone}</p>
+                    </lightning-layout-item>
+                </lightning-layout>
+                <lightning-layout horizontal-align="start" multiple-rows>
+                    <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="4" padding="horizontal-small">
+                        <p ><b>Email:</b></p>
+                    </lightning-layout-item>
+                    <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="8" padding="horizontal-small">
+                        <p >{instalCmpDetails.email}</p>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </template>
+        </template>
+    </lightning-card> 
+    <template if:true={authRepDetailsPresent}>
+        <div class="slds-p-vertical_large">
+            <lightning-card title="Your role" class="break-word">
+                <lightning-button label="Edit" id="AuthorisedRep" slot="actions" onclick={handleClick}></lightning-button>
+                <lightning-layout horizontal-align="start" multiple-rows>
+                    <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="4" padding="horizontal-small">
+                        <p ><b>Name:</b></p>
+                    </lightning-layout-item>
+                    <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="8" padding="horizontal-small">
+                        <p >{authRepDetails.givenName} {authRepDetails.surName}</p>
+                    </lightning-layout-item>
+                </lightning-layout>
+                <lightning-layout horizontal-align="start" multiple-rows>
+                    <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="4" padding="horizontal-small">
+                        <p ><b>Phone:</b></p>
+                    </lightning-layout-item>
+                    <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="8" padding="horizontal-small">
+                        <p >{authRepDetails.phone}</p>
+                    </lightning-layout-item>
+                </lightning-layout>
+                <lightning-layout horizontal-align="start" multiple-rows>
+                    <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="4" padding="horizontal-small">
+                        <p ><b>Email:</b></p>
+                    </lightning-layout-item>
+                    <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="8" padding="horizontal-small">
+                        <p >{authRepDetails.email}</p>
+                    </lightning-layout-item>
+                </lightning-layout>  
+                <lightning-layout horizontal-align="start" multiple-rows>
+                    <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="4" padding="horizontal-small">
+                        <p ><b>Postal address:</b></p>
+                    </lightning-layout-item>
+                    <lightning-layout-item flexibility="auto" size="12" small-device-size="12" medium-device-size="8" padding="horizontal-small">
+                        <p >{postalAddress.fullAddress}</p>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </lightning-card> 
+        </div>
+    </template>
+    <!-- Added below section to show files in the summary section -->
+    <template if:true={hasFiles}>
+        <p><span>Uploaded Files: </span></p>
+        <template for:each={uploadedFiles} for:item="file">
+            <div key={file} class="slds-m-top_x-small">
+                <lightning-layout>
+                    <lightning-layout-item>
+                        <div class="slds-p-top_xx-small">
+                            <lightning-icon icon-name="doctype:image" size="small" class="slds-m-right_x-small" title="Image"></lightning-icon>
+                            {file.name}
+                        </div>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </div>
+        </template>
+    </template>
+
+    <h2>Declaration</h2>
+    <p class="slds-text-body_regular slds-text-color_destructive">{declarationText}</p>
+    <div class="slds-p-top_large">
+        <lightning-input type="checkbox" class="chkbox" label={checkboxLabel} name="checkboxInput" required
+        message-when-value-missing="Please accept the declaration"></lightning-input>
+    </div>
+</template>

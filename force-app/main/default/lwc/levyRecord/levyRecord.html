@@ -1,0 +1,54 @@
+<template>
+    <template if:true={loading}>
+        <h1>Loading...</h1>  
+    </template>
+    <template if:false={loading}>
+        <template if:false={hasAccess}>
+            <h1>Record can't be accessed</h1>  
+        </template>
+        <template if:true={hasAccess}>
+            <lightning-layout multiple-rows="true">
+                <lightning-layout-item size="12" small-device-size="12" medium-device-size="8" large-device-size="8">
+                    <h1>Levy details - {levyName}</h1>   
+                </lightning-layout-item>
+                <lightning-layout-item size="12" small-device-size="12" medium-device-size="4" large-device-size="4">
+                    <template if:false={action}>
+                        <lightning-button-menu  alternative-text="Action" label="Actions" menu-alignment="right" class="slds-float_right header-button" onselect={handleMenuSelect}>
+                            <template for:each={items} for:item="action">
+                                <lightning-menu-item
+                                    label={action.label}
+                                    value={action.value}
+                                    key={action.label}
+                                    >
+                                </lightning-menu-item>
+                            </template>
+                        </lightning-button-menu>    
+                    </template>    
+                </lightning-layout-item>        
+            </lightning-layout>    
+            <lightning-layout multiple-rows class="ignore-margin">
+                <lightning-layout-item size="12" medium-device-size="6" padding="horizontal-small">
+                    <template if:true={action}>
+                        <c-levy-record-case-request record-id={recordId} onclose={handleClose} action={action} type={type} eft-details={eftDetails} levy={levy}></c-levy-record-case-request>
+                        <c-levy-record-topup record-id={recordId} levy={levy} action={action} eft-allowed={eftAllowed} onclose={handleClose}></c-levy-record-topup>
+                    </template>
+                    <template if:false={action}>
+                        <c-levy-record-details record-id={recordId} levy={levy} can-pay={canPay} has-interest={hasInterest} eft-allowed={eftAllowed}></c-levy-record-details>
+                    </template>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" medium-device-size="6" padding="horizontal-small">
+                    <template if:false={action}>
+                        <c-levy-record-approver record-id={recordId} levy={levy}></c-levy-record-approver>
+                    </template>
+                </lightning-layout-item>        
+            </lightning-layout>
+            <template if:false={action}>
+                <c-levy-record-instalments record-id={recordId} levy={levy} eft-allowed={eftAllowed}></c-levy-record-instalments>
+                <c-levy-record-transactions record-id={recordId}></c-levy-record-transactions>
+                <c-levy-record-payments record-id={recordId}></c-levy-record-payments>
+                <c-levy-record-cases record-id={recordId}></c-levy-record-cases>
+            </template>
+        </template>
+    </template>    
+
+</template>

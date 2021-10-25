@@ -1,0 +1,45 @@
+<template>
+    <lightning-card class="table-card" title="Support tickets">
+        <template if:true={hasData}> 
+            <template if:false={mobileView}>   
+                <lightning-datatable key-field="id" data={data} columns={columns} sorted-by={sortedBy} hide-checkbox-column
+                    sorted-direction={sortedDirection}>
+                </lightning-datatable>  
+            </template>
+            <template if:true={mobileView}>
+                <template for:each={data} for:item="cases">
+                    <h3 key={cases.Id}>Ticket No. <a href={cases.url}>{cases.ticket}</a></h3>
+                    <lightning-layout key={cases.id} >
+                        <lightning-layout-item size="4">
+                            <p><span>Subject:</span></p>
+                        </lightning-layout-item> 
+                        <lightning-layout-item size="8">
+                            <p><span>{cases.subject}</span></p>
+                        </lightning-layout-item>                           
+                    </lightning-layout>
+                    <lightning-layout key={cases.id}>
+                        <lightning-layout-item size="4">
+                            <p><span>Created date:</span></p>
+                        </lightning-layout-item> 
+                        <lightning-layout-item size="8">
+                            <p><lightning-formatted-date-time value={cases.created} year="numeric" month="numeric" day="numeric" hour="2-digit"
+                                minute="2-digit" hour12="true"></lightning-formatted-date-time></p>
+                            
+                        </lightning-layout-item>                                                                                     
+                    </lightning-layout>
+                    <lightning-layout key={cases.id}>
+                        <lightning-layout-item size="4">
+                            <p><span>Status:</span></p>
+                        </lightning-layout-item> 
+                        <lightning-layout-item size="8">
+                            <p><span>{cases.status}</span></p>
+                        </lightning-layout-item>                                                                           
+                    </lightning-layout>                  
+                </template>
+            </template>                 
+        </template>
+        <template if:false={hasData}>
+            <p class="slds-align_absolute-center"><span>No support tickets to show</span></p>
+        </template>           
+    </lightning-card>        
+</template>

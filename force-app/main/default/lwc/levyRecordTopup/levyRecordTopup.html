@@ -1,0 +1,102 @@
+<template>
+    <template if:true={isLoading}>
+        <c-spinner size-input="large"></c-spinner>
+    </template>
+    <template if:true={isTopup}>
+        <template if:false={isEFTOpen}>
+            <lightning-card class="table-card" title="Top up">
+                <lightning-button-icon icon-name="utility:close" slot="actions" variant="container" onclick={handleClose} alternative-text="Close" title="Close"></lightning-button-icon>
+                <lightning-layout>
+                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="8" large-device-size="8">
+                        <lightning-input type="number"
+                            label="New total cost of construction work (including GST)"
+                            value={costAmount}
+                            formatter="currency"
+                            max="1000000000000"
+                            onchange={handleChange} 
+                            class="construction-cost"
+                            message-when-step-mismatch="Please enter amount only up to 2 decimal places"
+                            required
+                            step=".01">
+                        </lightning-input>                     
+                    </lightning-layout-item>
+                </lightning-layout>
+                <lightning-layout>
+                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6">
+                        <lightning-input type="number"
+                            label="Levy payable"
+                            value={levyAmount}
+                            formatter="currency"
+                            disabled>
+                        </lightning-input>                        
+                    </lightning-layout-item>
+                </lightning-layout>
+                <lightning-layout>
+                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6">
+                        <lightning-input type="number"
+                            label="Levy already paid"
+                            value={paidAmount}
+                            formatter="currency"
+                            disabled>
+                        </lightning-input>                       
+                    </lightning-layout-item>
+                </lightning-layout>
+                <lightning-layout>
+                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6">
+                        <lightning-input type="number"
+                            label="Top up amount due"
+                            value={topupAmount}
+                            formatter="currency"
+                            class="topup-amount"
+                            min="0.01"
+                            message-when-range-underflow="Top Up amount should be greater than 0"
+                            disabled>
+                        </lightning-input>    
+                    </lightning-layout-item>
+                </lightning-layout>                                    
+                <lightning-button label="Pay now" disabled={submitDisabled} onclick={payLevy} ></lightning-button>  
+                <lightning-button class="slds-m-left_x-small" label="Close" onclick={handleClose}></lightning-button>
+            </lightning-card>   
+        </template> 
+        <template if:true={isEFTOpen}>
+            <h2>Pay via EFT</h2>
+            <p>To pay via EFT create a new payment in your bank account and enter the details below:</p>
+            <lightning-layout multiple-rows>
+                <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="4">
+                    <p><span>BSB Code:</span></p>                    
+                </lightning-layout-item>
+                <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="4">
+                    <p><span>{bsb}</span></p>                    
+                </lightning-layout-item>                
+            </lightning-layout>  
+            <lightning-layout multiple-rows>
+                <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="4">
+                    <p><span>Account number:</span></p>                    
+                </lightning-layout-item>
+                <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="4">
+                    <p><span>{accNo}</span></p>                    
+                </lightning-layout-item>                
+            </lightning-layout>
+            <lightning-layout multiple-rows>
+                <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="4">
+                    <p><span>Description:</span></p>                    
+                </lightning-layout-item>
+                <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="4">
+                    <p><span>{transactionId}</span></p>                    
+                </lightning-layout-item>                
+            </lightning-layout> 
+            <lightning-layout multiple-rows>
+                <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="4">
+                    <p><span>Amount:</span></p>                    
+                </lightning-layout-item>
+                <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="4">
+                    <p><span>{topupAmount}</span></p>                    
+                </lightning-layout-item>                
+            </lightning-layout>                                              
+            <hr>
+            <h2>Pay via NSW Customer Payment Portal</h2>
+            <lightning-button label="Pay now" disabled={submitDisabled} onclick={payCPP} ></lightning-button>
+            <lightning-button class="slds-m-left_x-small" label="Close" onclick={handleClickClose}></lightning-button>
+        </template>        
+    </template>
+</template>

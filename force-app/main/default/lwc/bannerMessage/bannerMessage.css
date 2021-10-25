@@ -1,0 +1,23 @@
+.messageTitle {
+    font-size: 20px !important;
+    font-weight: 600 !important;
+}
+
+.messageBody {
+    font-size: 16px !important;
+    font-weight: 400 !important;
+}
+
+.messageContainer {
+    text-align: left !important;
+    background-color: #2E5299;
+    padding-right: var(--lwc-spacingXxLarge) !important;
+}
+
+.messageCloseIcon {
+    top: var(--lwc-spacingLarge) !important;
+}
+
+.criticalMessage {
+    background-color: #b81237;
+}

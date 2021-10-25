@@ -1,0 +1,29 @@
+<template>
+    <h1>Welcome {firstName}</h1>
+    <lightning-layout multiple-rows>
+        <lightning-layout-item size={layoutSize} padding="horizontal-small">
+            <lightning-card title="Pending Actions">
+                <lightning-button if:false={mobileView} label="Pay New Levy" name="payNewLevy" slot="actions" onclick={handleClick}></lightning-button>
+                <div class="slds-p-left_medium" if:true={mobileView}>
+                    <lightning-button label="Pay New Levy" name="payNewLevy" slot="actions" onclick={handleClick}></lightning-button>
+                </div>
+                <c-bci-pending-actions render-as-shared = true></c-bci-pending-actions>
+            </lightning-card>
+        </lightning-layout-item>
+        <lightning-layout-item size={layoutSize} padding="horizontal-small">  
+            <lightning-card title="Support Tickets">
+                <div class="slds-p-left_medium" if:true={mobileView}>
+                    <lightning-button label="New Ticket" name="newTicket" slot="actions" onclick={handleClick}></lightning-button>
+                </div>
+                <lightning-button if:false={mobileView} label="New Ticket" name="newTicket" slot="actions" onclick={handleClick}></lightning-button>
+                <div if:true={hasCaseData}>
+                    <lightning-datatable  class="slds-max-medium-table_stacked slds-table_resizable-cols" wrap-text-max-lines="2" key-field="id" data={caseData} columns={ticketColumns} hide-checkbox-column></lightning-datatable>
+                    <p><a href="./cases" target="_blank" class="slds-p-left_x-small"><u>see all</u> <lightning-icon class="slds-p-left_xx-small" icon-name="utility:forward" alternative-text="click forward" title="click forward" size="xx-small"></lightning-icon></a> </p>
+                </div>
+                <template if:true={noRecordstoShow}>
+                    <p class="slds-align_absolute-center"><span>No support tickets to show</span></p>
+                </template>  
+            </lightning-card>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>

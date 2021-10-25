@@ -1,0 +1,32 @@
+<template>
+    <div class={containerPadding}>
+        <h1>Your support tickets</h1>
+        <lightning-button label="New support ticket" onclick={newCase}></lightning-button> 
+        <lightning-layout>
+            <lightning-layout-item size="12" small-device-size="12" medium-device-size="5" large-device-size="3">
+                <lightning-input type="search" onchange={handleKeyChange} value={searchKey} class="search-input"></lightning-input>        
+            </lightning-layout-item>
+        </lightning-layout>
+        <template if:true={hasData}>               
+            <lightning-datatable class="slds-max-medium-table_stacked" key-field="id" data={data} columns={columns} sorted-by={sortedBy} hide-checkbox-column
+                sorted-direction={sortedDirection} onsort={sortColumns} onrowaction={handleRowAction} wrap-text-max-lines="3">
+            </lightning-datatable>
+            <template if:true={multiplePages}>
+                <lightning-layout class="slds-m-top_small" multiple-rows="true">
+                    <lightning-layout-item>
+                        <lightning-button label="Previous" icon-name="utility:chevronleft" onclick={previousHandler} disabled={isPrev} class="table-nav"> 
+                        </lightning-button>
+                        <lightning-button label="Next" icon-name="utility:chevronright" icon-position="right" disabled={isNext}
+                            onclick={nextHandler} class="table-nav slds-m-left_small"></lightning-button>                
+                    </lightning-layout-item>
+                    <lightning-layout-item alignment-bump="left">
+                        <p><span>Page {page} of {totalPage}</span></p>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </template>    
+        </template>
+        <template if:false={hasData}>
+            <p class="slds-align_absolute-center"><span>No tickets to show</span></p>
+        </template>
+    </div>  
+</template>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LSC_Case_ApprovedVoluntaryLaborCost_Rule</fullName>
+    <active>true</active>
+    <description>Validates that the LSC_ApprovedVoluntaryLabourCost__c field has been populated before the case updated for approval</description>
+    <errorConditionFormula>AND(
+ISCHANGED(Status),
+RecordType.DeveloperName = &quot;LSC_Exemption&quot;,
+OR(
+ISPICKVAL(PRIORVALUE(Status),&quot;New&quot;),
+ISPICKVAL(PRIORVALUE(Status),&quot;In Progress&quot;),
+ISPICKVAL(PRIORVALUE(Status),&quot;On Hold&quot;)),
+ISPICKVAL(Status, &quot;Pending Approval&quot;),
+ISBLANK(LSC_ApprovedVoluntaryLabourCost__c)
+)</errorConditionFormula>
+    <errorMessage>The Approved Voluntary Labour cost needs to be updated before updating case status</errorMessage>
+</ValidationRule>

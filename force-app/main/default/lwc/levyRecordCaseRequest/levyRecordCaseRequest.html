@@ -1,0 +1,186 @@
+<template>
+    <template if:true={isRendered}>
+        <template if:true={isRefund}>
+            <lightning-card title="Development details" class="table-card">
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="4">
+                        <p><b>DA Number:</b></p>
+                    </lightning-layout-item>            
+                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="8">
+                        <p><span>{levy.daNumber}</span></p>
+                    </lightning-layout-item>
+                </lightning-layout>
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="4">
+                        <p><b>Date paid:</b></p>
+                    </lightning-layout-item>            
+                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="8">
+                        <p><span>{paidDate}</span></p>
+                    </lightning-layout-item>
+                </lightning-layout>
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="4">
+                        <p><b>Site address:</b></p>
+                    </lightning-layout-item>            
+                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="8">
+                        <p><span>{levy.siteAddress}</span></p>
+                    </lightning-layout-item>
+                </lightning-layout>               
+
+            </lightning-card>
+        </template>
+        <lightning-card class="table-card" title={title}>           
+            <template if:true={isSupport}>
+                <lightning-combobox
+                        name="category"
+                        label={categoryType}
+                        value={category}
+                        options={options}
+                        onchange={handleChange}
+                        message-when-value-missing="Please make a selection"
+                        required
+                ></lightning-combobox>  
+            </template> 
+            <template if:true={isSupport}>
+                <lightning-input type="text" label="Subject" value={subject} required data-field='subject' name="subject" onchange={handleChange}></lightning-input>                
+            </template>
+            <template if:true={isRefund}>
+                <lightning-combobox
+                        name="category"
+                        label={categoryType}
+                        value={category}
+                        options={options}
+                        onchange={handleRefundDropDownChange}
+                        message-when-value-missing="Please make a selection"
+                        required
+                ></lightning-combobox>  
+            </template>            
+            <template if:true={displayRefundFields}> 
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="4">
+                        <p><b>Total cost:</b></p>
+                    </lightning-layout-item>            
+                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="8">
+                        <p><span><lightning-formatted-number value={levy.totalCost} format-style="currency"></lightning-formatted-number></span></p>
+                    </lightning-layout-item>
+                </lightning-layout>
+                
+                <template if:true={costOfWorkLabel}>                
+                    <lightning-layout>
+                        <lightning-layout-item size="12" small-device-size="12" medium-device-size="8" large-device-size="8">
+                            <lightning-input type="number"
+                                label={buttonLabel}
+                                value={costAmount}
+                                formatter="currency"
+                                max="1000000000000"
+                                onchange={handleAmountChange} 
+                                class="construction-cost"
+                                message-when-step-mismatch="Please enter amount only up to 2 decimal places"
+                                required
+                                step=".01">
+                            </lightning-input>                     
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </template>
+                <template if:true={levyCostLabel}>
+                    <lightning-layout multiple-rows="true">
+                        <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="4">
+                            <p><b>Levy Cost:</b></p>
+                        </lightning-layout-item>            
+                        <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="8">
+                            <p><span><lightning-formatted-number value={levyAmount} format-style="currency"></lightning-formatted-number></span></p>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </template>
+
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="4">
+                        <p><b>Levy already paid:</b></p>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="8">
+                        <p><span><lightning-formatted-number value={levy.amountPaid} format-style="currency"></lightning-formatted-number></span></p>
+                    </lightning-layout-item>
+                </lightning-layout>
+
+                <template if:true={hasExemptionRefunds}>
+                    <lightning-layout>
+                        <lightning-layout-item size="12" small-device-size="12" medium-device-size="8" large-device-size="8">
+                            <lightning-input type="number"
+                                label="Voluntary labour cost (incl. GST)"
+                                value={voluntaryCostAmount}
+                                formatter="currency"
+                                max="1000000000000"
+                                onchange={handleVoluntaryAmount} 
+                                class="voluntary-cost"
+                                message-when-step-mismatch="Please enter amount only up to 2 decimal places"
+                                required
+                                step=".01">
+                            </lightning-input>                     
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </template>
+
+                <template if:true={showLicenseLookup}>
+                    <c-owner-builder-licence-lookup onownerbuildevent={handleChildEvent} onemptyownerbox={handleEmptyOwnerTextBox} large-device-size=8></c-owner-builder-licence-lookup>
+                </template>
+
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="4">
+                        <p><b>Refund estimate:</b></p>
+                    </lightning-layout-item>            
+                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="8">
+                        <p><span><lightning-formatted-number value={refundAmount} format-style="currency"></lightning-formatted-number></span></p>
+                    </lightning-layout-item>
+                </lightning-layout>
+
+            </template>
+            <lightning-textarea name="details" label="Details" value={details} required onchange={handleChange}></lightning-textarea>  
+            
+            <label class="slds-form-element__label" if:true={isRefund}>
+                <p>Supporting documentation</p>
+            </label>
+            <ul class="file-upload-label-list" if:true={isRefund}>
+                <li><span>Confirmation of Cost Of Works from Approving Authority</span></li>
+                <li><span>Confirmation of Status from Approving Authority</span></li>
+            </ul>
+            <lightning-file-upload
+                class="no-margin-button"
+                label={fileUploadLabel}
+                name="fileUploader"
+                accept={acceptedFormats}
+                record-id={fileRecordId}
+                onuploadfinished={handleUploadFinished}
+                multiple>
+            </lightning-file-upload>   
+            <template if:true={hasFiles}>
+                <p><span>Uploaded Files: </span></p>
+                <template for:each={uploadedFiles} for:item="file">
+                    <div key={file} class="slds-m-top_x-small">
+                        <lightning-button-icon icon-name="utility:clear" name={file.id} alternative-text="Remove" class="iconnoborder" onclick={handleFileDelete} title="Remove"></lightning-button-icon>
+                        <lightning-icon icon-name="doctype:attachment" size="small" class="slds-m-right_x-small" title="Image"></lightning-icon>
+                            {file.name}
+                    </div>
+                </template>
+            </template>
+            <template if:true={isEFTRefund}>
+                <h3>Your bank details</h3>   
+                <lightning-input type="text" label="Account name" value={accountName} required data-field ='accountName' name="accountName" onchange={handleChange}></lightning-input>        
+                <lightning-layout>
+                    <lightning-layout-item size="5">
+                        <lightning-input type="text" label="BSB code" min-length="6" max-length="6" pattern="[0-9]+" message-when-pattern-mismatch="Only digits are allowed as input" value={bsbCode} required data-field ='bsbCode' name="bsbCode" onchange={handleBSBChange}></lightning-input>        
+                        {bankDetails}
+                    </lightning-layout-item>
+                    <lightning-layout-item size="1">
+                    </lightning-layout-item>                    
+                    <lightning-layout-item size="6">
+                        <lightning-input type="text" label="Account number" max-length="9" value={accountNumber} required data-field ='accountNumber' name="accountNumber" onchange={handleChange}></lightning-input>        
+                    </lightning-layout-item>
+                </lightning-layout>          
+                <lightning-input type="text" label="Bank name" value={bankName} max-length="255" required data-field ='bankName' name="bankName" onchange={handleChange}></lightning-input>    
+            </template>
+            <lightning-button label="Submit request" disabled={submitDisabled} onclick={openCase} ></lightning-button>  
+            <lightning-button label="Cancel" onclick={handleClose} ></lightning-button>  
+        </lightning-card>
+
+    </template>
+</template>

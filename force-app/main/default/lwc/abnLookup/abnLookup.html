@@ -1,0 +1,10 @@
+<template>
+    <lightning-input type="text" id="abnLookup" label="ABN" maxlength="11" onfocus={onFocus}
+    pattern="^[0-9 ]+$" value={abnValue} onchange={handleChange} 
+    message-when-pattern-mismatch="Please enter numbers" required 
+    message-when-value-missing="Please enter a valid ABN number"></lightning-input>
+    <div if:true={showError} data-help-text="" aria-live="assertive" class="slds-form-element__help slds-text-color_destructive slds-has-error">{errorMessage}</div>
+    <div if:true={isLoading} class="slds-is-relative slds-p-vertical_large">
+        <lightning-spinner variant="brand" size="medium"></lightning-spinner>
+    </div>
+</template>

@@ -1,0 +1,39 @@
+<template>
+    <h2>Development details</h2>
+    <lightning-layout>
+        <lightning-layout-item size="12" small-device-size="12" medium-device-size="8" large-device-size="6">
+            <template if:true={appTypeOptions}>
+            <lightning-combobox name="appType" label="Application Type" value={appTypeValue}
+            options={appTypeOptions} onchange={handleAppTypeChange} required message-when-value-missing="Please enter the application type"
+            field-level-help={appNumberHelpText}>
+            </lightning-combobox>
+            </template>
+        </lightning-layout-item>
+    </lightning-layout>
+    <lightning-layout>
+        <lightning-layout-item size="12" small-device-size="12" medium-device-size="5" large-device-size="3">
+            <lightning-input type="text" maxlength="20" label="Planning Portal reference number" value={planningPortalNum} name="planningPortalNumber"
+            pattern="^[a-zA-Z0-9-]*" message-when-pattern-mismatch="Please enter a valid Portal reference number">
+            </lightning-input>
+            <lightning-input type="text" maxlength="20" label="Application number" value={applicationNum} name="appNumber" required
+            message-when-value-missing="Please enter the application number"></lightning-input>
+        </lightning-layout-item>
+    </lightning-layout>
+    <lightning-layout>
+        <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="4">
+            <c-searchable-picklist list-input={govtAuthOptionList} label="Local Government area/authority" onupdateselectedpicklist={handleSelected} search-input={govtAuthValue} error-message="Please select a Local Government Area from the picklist"></c-searchable-picklist>
+        </lightning-layout-item>
+    </lightning-layout>
+    <c-new-address-search  id="constSiteAdd" address-label="Construction Site address" onupdateaddrsparameters={handleAddressDetails} address-parameters={devdetails_addressparameters}></c-new-address-search><br/>
+    <label class="slds-form-element__label slds-no-flex">Construction Period</label>
+    <lightning-layout pull-to-boundary="small" multiple-rows="true">
+
+        <lightning-layout-item size="12" small-device-size="12" medium-device-size="5" large-device-size="3" padding="horizontal-small">
+            <lightning-input type="date" name="startDate" data-id="startDate" label="Estimated start date" required message-when-value-missing="Please enter the construction start date" onchange={handleStartDate} onfocus={onFocus} value={startDate}></lightning-input>
+        </lightning-layout-item>
+
+        <lightning-layout-item size="12" small-device-size="12" medium-device-size="5" large-device-size="3" padding="horizontal-small"> 
+            <lightning-input type="date" name="endDate" data-id="endDate" label="Estimated end date" required message-when-value-missing="Please enter the construction end date" value={endDate} onchange={handleEndDate}></lightning-input>
+        </lightning-layout-item>
+    </lightning-layout>
+</template>

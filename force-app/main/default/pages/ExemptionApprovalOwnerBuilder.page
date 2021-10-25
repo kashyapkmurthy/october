@@ -1,0 +1,155 @@
+<apex:page standardController="Case" extensions="LSC_CaseControllerExtension" showHeader="false" applyBodyTag="false" renderAs="pdf">
+
+    <head>
+        <style type="text/css" media="print">
+            @page {
+                padding-top: 120px;
+                margin-bottom: 3cm;
+
+                @top-center {
+                    content: element(header);
+                }
+                @bottom-left {
+                    content: element(footer);
+                }
+            }
+
+            div.header {
+                padding-top: 40px;
+                position: running(header);
+                font-family: Helvetica, sans-serif;
+                font-size: 20px;
+            }
+
+            div.footer {
+                position: running(footer);
+                font-size: 14px;
+                font-family: Helvetica, sans-serif;
+                text-align: center;
+            }
+
+            div.content {
+                font-family: Helvetica, sans-serif, sans-serif;
+                line-height: 1.2;
+            }
+
+            .pagenumber:before {
+                content: counter(page);
+            }
+
+            .pagecount:before {
+                content: counter(pages);
+            }
+        </style>
+    </head>
+    <div class="header" style="{!IF(renderPage == true, 'display:block', 'display:none')}">
+        <table style="width:100%;">
+            <tr>
+                <th>
+                    <apex:image url="{!$Resource.LSCLogo}" />
+                </th>
+                <td style="text-align:right;"> Approval No.
+                    <apex:outputText value=" {!Case.CaseNumber}" />
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="header" style="{!IF(renderPage == false, 'display:block', 'display:none')}">
+        <apex:pageMessages />
+    </div>
+    <div class="footer" style="{!IF(renderPage == true, 'display:block', 'display:none')}">
+        Helpline 13 14 41 | www.longservice.nsw.gov.au
+        <hr/> 32 Mann Street, Gosford NSW 2250 | Locked Bag 3000, Central Coast MC NSW 2252 | ABN 93 646 090 808
+    </div>
+    <div class="content" style="{!IF(renderPage == true, 'display:block', 'display:none')}">
+        <h1>Exemption Approval Certificate
+            <br/> Owner-Builder</h1>
+        <apex:outputLabel style="font-weight:bold;" value="Date: "></apex:outputLabel>
+        <apex:outputText value="{0,date,dd'/'MM'/'yyyy}">
+            <apex:param value="{!Case.ClosedDate}" /> </apex:outputText>
+        <p>In accordance with the Building and Construction Industry Long Service Payments Act 1986,
+            <br/>a
+            <strong>maximum partial exemption</strong> of
+            <strong>{!Case.LSC_ApprovedExemptionPercentage__c}</strong>%, has been
+            <strong>granted</strong> to:</p>
+
+        <h2>Development Applicant</h2>
+        <table>
+            <tr>
+                <td>
+                    <apex:outputText value="{!applicantName}" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <apex:outputText value="{!applicantMailingAddress}" />
+                </td>
+            </tr>
+        </table>
+
+        <h2>Development Details</h2>
+        <table>
+            <tr>
+                <th style="width: 35%;">Owner Builder Permit:</th>
+                <td>
+                    <apex:outputText value="{!Case.LSC_LevyId__r.LSC_OwnerBuilderLicenceNo__c}" />
+                </td>
+            </tr>
+            <tr>
+                <th>Application No.:</th>
+                <td>
+                    <apex:outputText value="{!Case.LSC_LevyId__r.LSC_ApplicationNumber__c}" />
+                </td>
+            </tr>
+            <tr>
+                <th>Application Type:</th>
+                <td>
+                    <apex:outputText value="{!Case.LSC_LevyId__r.LSC_ApplicationType__c}" />
+                </td>
+            </tr>
+            <tr>
+                <th>Approving Authority:</th>
+                <td>
+                    <apex:outputText value="{!Case.LSC_LevyId__r.LSC_LocalGovtAreaOrGovtAuthority__c}" />
+                </td>
+            </tr>
+            <tr>
+                <th>Site Address:</th>
+                <td>
+                    <apex:outputText value="{!Case.LSC_LevyId__r.LSC_SiteAddressStreet__c} {!Case.LSC_LevyId__r.LSC_SiteAddressCity__c}
+                                            {!Case.LSC_LevyId__r.LSC_SiteAddressState__c} {!Case.LSC_LevyId__r.LSC_SiteAddressPostCode__c}"
+                    />
+                </td>
+            </tr>
+            <tr><td><h2>Levy Details</h2></td></tr>
+            <tr>
+                <th>Levy No.:</th>
+                <td>
+                    <apex:outputText value="{!Case.LSC_LevyId__r.Name}" />
+                </td>
+            </tr>
+            <tr>
+                <th>Total Cost of Work*:</th>
+                <td>
+                    <apex:outputText value="{0, number,$###,###,###,###,##0.00}"><apex:param value="{!Case.LSC_LevyId__r.LSC_CostOfWorks__c}"/></apex:outputText>
+                </td>
+            </tr>
+            <tr>
+                <th>Value of Voluntary Labour:</th>
+                <td>
+                    <apex:outputText value="{0, number,$###,###,###,###,##0.00}"><apex:param value="{!Case.LSC_ApprovedVoluntaryLabourCost__c}"/></apex:outputText>
+                </td>
+            </tr>
+            <tr style="font-size: 18px;font-weight:bold;">
+                <th>Levy Payable After Exemption: </th>
+                <td>
+                    <apex:outputText style="font-weight:bold;"  value="{0, number,$###,###,###,###,##0.00}"><apex:param value="{!Case.LSC_LevyId__r.LSC_TotalLevyPayable__c}"/></apex:outputText>
+                </td>
+            </tr>
+        </table>
+
+        <p>* If the
+            <strong>total cost of work</strong> is different from the value accepted by the approving authority, this certificate
+            is NOT Valid, and the levy payer should contact the Long Service Corporation.</p>
+    </div>
+</apex:page>

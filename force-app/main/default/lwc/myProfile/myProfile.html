@@ -1,0 +1,103 @@
+<template>
+    <template if:true={isLoading}>
+        <c-spinner></c-spinner>
+    </template>
+    <h1>Your Profile</h1>
+    <lightning-card title="Your details" class="table-card">
+        <lightning-button label={buttonLabel} id="myProfile" slot="actions" class="slds-m-left_small"
+            onclick={handleClick}>
+        </lightning-button>
+        <template if:false={renderReadMode}>
+            <lightning-button variant="brand-outline" label="Cancel" id="userDetailsCancel" slot="actions"
+                class="slds-m-left_small" onclick={handleCancelClick}>
+            </lightning-button>
+        </template>
+        <lightning-layout multiple-rows="true">
+            <lightning-layout-item size="12" small-device-size="12" medium-device-size="3" large-device-size="3">
+                <p><b>First Name:</b></p>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" small-device-size="12" medium-device-size="8" large-device-size="6">
+                <lightning-input type="text" maxlength="40" value={userData.firstName} readonly={renderReadMode}
+                    name="firstName" required message-when-value-missing="Please enter First name"
+                    pattern="^[a-zA-Z '-]*" message-when-pattern-mismatch="Please enter a valid First name"
+                    onchange={handleFirstNameChange}></lightning-input>
+            </lightning-layout-item>
+        </lightning-layout>
+        <lightning-layout multiple-rows="true">
+            <lightning-layout-item size="12" small-device-size="12" medium-device-size="3" large-device-size="3">
+                <p><b>Last Name:</b></p>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" small-device-size="12" medium-device-size="8" large-device-size="6">
+                <lightning-input type="text" maxlength="80" value={userData.lastName} readonly={renderReadMode}
+                    name="lastName" required message-when-value-missing="Please enter Last name" pattern="^[a-zA-Z '-]*"
+                    message-when-pattern-mismatch="Please enter a valid Last name" onchange={handleLastNameChange}>
+                </lightning-input>
+            </lightning-layout-item>
+        </lightning-layout>
+        <br />
+        <lightning-layout multiple-rows="true">
+            <lightning-layout-item size="12" small-device-size="12" medium-device-size="3" large-device-size="3">
+                <p><b>Email:</b></p>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" small-device-size="12" medium-device-size="8" large-device-size="5">
+                <lightning-input type="email" max-length="80" class="emailinput" variant="label-hidden"
+                    value={userData.email} pattern="^[A-Za-z0-9._%+-/!#$%&'*=?^_`{|}~]+@[A-Za-z0-9.-]+\.[A-Za-z]*$"
+                    message-when-pattern-mismatch="Email has wrong format" disabled
+                    message-when-value-missing="Please enter a valid email address">
+                </lightning-input>
+            </lightning-layout-item>
+        </lightning-layout>
+        <br />
+        <lightning-layout multiple-rows="true">
+            <lightning-layout-item size="12" small-device-size="12" medium-device-size="3" large-device-size="3">
+                <p><b>Phone:</b>
+                    <lightning-helptext content="Phone number must begin with + (country code) (Or) must be a valid Australian phone number
+                    1300 XXX XXX, 1800 XXX XXX, 1900 XXX XXX, 1902 XXX XXX,
+                    02 XXXX XXXX, 03 XXXX XXXX, 07 XXXX XXXX, 08 XXXX XXXX,
+                    13 XXXX, 18 XXXX, 19 XXXX,
+                    04XX XXX XX"></lightning-helptext>
+                </p>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" small-device-size="12" medium-device-size="8" large-device-size="5">
+                <lightning-input variant="label-hidden" class="phoneInput" readonly={renderReadMode}
+                    pattern="(^(\s*(1300|1800|1900|1902))(| )[0-9]{3}(| )([0-9]\s*){3}$)|(^(\s*0[2|3|7|8]){1}(| )[0-9]{4}(| )([0-9]\s*){4}$)|(^(\s*(13|18|19))(| )([0-9]\s*){4}$)|(^(\s*04)[0-9]{2}(| )[0-9]{3}(| )([0-9]\s*){3}$)|
+                    (^(\s*[+])[0-9]{2}(| )[0-9]{1}(| )[0-9]{4}(| )([0-9]\s*){4}$)|(^(\s*[+])[0-9]{2}(| )[0-9]{3}(| )[0-9]{3}(| )([0-9]\s*){3}$)" message-when-pattern-mismatch="Phone number has wrong format"
+                    name="phone" maxlength="15" type="phone" value={userData.phone} required
+                    message-when-value-missing="Please enter a valid phone number" onchange={handlePhoneChange}>
+                </lightning-input>
+            </lightning-layout-item>
+        </lightning-layout>
+        <br />
+        <template if:true={userData.isIndividual}>
+            <lightning-layout multiple-rows="true">
+                <lightning-layout-item size="12" small-device-size="12" medium-device-size="3" large-device-size="3">
+                    <p><b> Address:</b></p>
+                </lightning-layout-item>
+                <template if:true={renderReadMode}>
+                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="8"
+                        large-device-size="6">
+                        <lightning-input type="text" variant="label-hidden" readonly={renderReadMode}
+                            name="mailingAddress" value={mailingFullAddress}></lightning-input>
+                    </lightning-layout-item>
+                </template>
+                <template if:false={renderReadMode}>
+                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="9"
+                        large-device-size="9">
+                        <c-new-address-search id="mailingAdd" address-type="Business"
+                            onupdateaddrsparameters={handleMailingAddressDetails}
+                            address-parameters={mailingAddressDetails}>
+                        </c-new-address-search>
+                    </lightning-layout-item>
+                </template>
+            </lightning-layout>
+        </template>
+    </lightning-card>
+    <template if:true={showLinkNSW}>
+        <lightning-layout>
+            <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="4">
+                <button type="submit" class="service-button" onclick={handleSNSWLink}><span>Link Service
+                        NSW</span></button>
+            </lightning-layout-item>
+        </lightning-layout>
+    </template>
+</template>

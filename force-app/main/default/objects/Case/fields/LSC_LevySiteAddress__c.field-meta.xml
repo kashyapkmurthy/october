@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LSC_LevySiteAddress__c</fullName>
+    <externalId>false</externalId>
+    <formula>LSC_LevyId__r.LSC_SiteAddressStreet__c &amp;BR()
+&amp;LSC_LevyId__r.LSC_SiteAddressCity__c &amp; &quot;, &quot; &amp; LSC_LevyId__r.LSC_SiteAddressState__c &amp; &apos; &apos; &amp; LSC_LevyId__r.LSC_SiteAddressPostCode__c</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Levy Site Address</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Text</type>
+    <unique>false</unique>
+</CustomField>

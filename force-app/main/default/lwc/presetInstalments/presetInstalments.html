@@ -1,0 +1,70 @@
+<template>
+    <lightning-card>
+        <h3 class="slds-var-p-left_medium">Your payment schedule</h3>
+        <template if:false={smallMediumDevView}>
+            <lightning-layout>
+                <lightning-layout-item padding="horizontal-medium" size="4">
+                    <p></p>
+                </lightning-layout-item>
+                <lightning-layout-item padding="horizontal-medium" size="4">
+                    <p><b>Levy amount</b></p>
+                </lightning-layout-item>
+                <lightning-layout-item padding="horizontal-medium" size="4">
+                    <p><b>Due date</b></p>
+                </lightning-layout-item>        
+            </lightning-layout>
+        </template>
+        <template iterator:it={instalmentData}>
+            <div key={it.value.id}>
+                <lightning-layout multiple-rows class={it.value.bckgrndColor}>
+                    <lightning-layout-item padding="horizontal-medium" size="12" small-device-size="12" medium-device-size="12" large-device-size="4">
+                        <p><b>Payment {it.value.payNo}:</b></p>
+                    </lightning-layout-item>
+                    <template if:true={smallMediumDevView}>
+                        <lightning-layout-item padding="horizontal-medium" size="12" small-device-size="12" medium-device-size="12">
+                            <p><b>Levy amount</b></p>
+                        </lightning-layout-item>   
+                    </template>             
+                    <lightning-layout-item padding="horizontal-medium" size="12" small-device-size="12" medium-device-size="12" large-device-size="4">
+                        <p><b>$ </b>{it.value.presetInstal}</p>
+                    </lightning-layout-item>
+                    <template if:true={smallMediumDevView}>
+                        <lightning-layout-item padding="horizontal-medium" size="12" small-device-size="12" medium-device-size="12">
+                            <p><b>Due date</b></p>
+                        </lightning-layout-item>     
+                    </template>             
+                    <lightning-layout-item padding="horizontal-medium" size="12" small-device-size="12" medium-device-size="12" large-device-size="4">
+                        <p>{it.value.dueDate}</p>
+                    </lightning-layout-item>        
+                </lightning-layout>
+            </div>
+        </template>
+        <template if:true={smallMediumDevView}>
+            <lightning-layout>
+                <lightning-layout-item padding="horizontal-medium" size="12" small-device-size="12" medium-device-size="12">
+                    <p class="slds-border_top"></p>  
+                </lightning-layout-item > 
+            </lightning-layout>
+        </template>
+        <template if:false={smallMediumDevView}>
+            <lightning-layout multiple-rows>
+                <lightning-layout-item padding="horizontal-medium" size="4" large-device-size="4">
+                    <p><b>Total levy amount</b></p>
+                </lightning-layout-item>
+                <lightning-layout-item padding="horizontal-medium" size="4" large-device-size="4">
+                    <p><b>$ </b>{levyPayable}</p>
+                </lightning-layout-item> 
+            </lightning-layout>
+        </template>
+        <template if:true={smallMediumDevView}>
+            <lightning-layout multiple-rows>
+                <lightning-layout-item padding="horizontal-medium" size="12" small-device-size="12" medium-device-size="12">
+                    <p><b>Total levy amount</b></p>
+                </lightning-layout-item>
+                <lightning-layout-item padding="horizontal-medium" size="12" small-device-size="12" medium-device-size="12">
+                    <p><b>$ </b>{levyPayable}</p>
+                </lightning-layout-item> 
+            </lightning-layout>
+        </template>
+    </lightning-card>
+</template>

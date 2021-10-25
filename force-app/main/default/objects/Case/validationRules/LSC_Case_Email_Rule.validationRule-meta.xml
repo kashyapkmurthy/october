@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LSC_Case_Email_Rule</fullName>
+    <active>true</active>
+    <description>Validates that the Contact Email field has an email address in there before placing the case on hold</description>
+    <errorConditionFormula>AND (OR (ISPICKVAL(Status, &quot;On Hold&quot;)),ISBLANK( Contact.Email ))</errorConditionFormula>
+    <errorMessage>Please add the contact email address before placing the case on hold</errorMessage>
+</ValidationRule>

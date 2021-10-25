@@ -1,0 +1,1167 @@
+<apex:page id="CommunityInMaintenance" standardStylesheets="false" sideBar="false" showHeader="false" applyHtmlTag="true"
+  applyBodyTag="false" lightningStyleSheets="true">
+  <html>
+
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>In Maintenance</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
+    <style>
+      html {
+        font-family: var(--lwc-fontFamily, Montserrat);
+        -ms-text-size-adjust: 100%;
+        -moz-text-size-adjust: 100%;
+        -webkit-text-size-adjust: 100%;
+      }
+
+      .siteforceThemeLayoutStarter {
+        position: relative;
+        z-index: 1;
+        font-size: .8125rem;
+        width: 100%;
+        touch-action: manipulation;
+      }
+
+      .forceCommunityThemeHeaderBase {
+        color: var(--lwc-colorTextLink, rgb(0, 95, 178));
+        width: 100%;
+        position: relative;
+        z-index: 5;
+      }
+
+      .forceCommunityThemeHeaderBase .themeBgImage,
+      .forceCommunityThemeHeaderBase .themeBgOverlay {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 0;
+      }
+
+      .forceCommunityThemeHeaderStacked .themeHeaderInner {
+        opacity: 1;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        z-index: 3;
+        align-items: center;
+        height: 100%;
+        min-height: 34px;
+        max-width: 100%;
+      }
+
+      .forceCommunityThemeHeaderStacked .themeHeaderTopRow {
+        display: flex;
+        width: 100%;
+      }
+
+      @media(min-width: 48em) {
+        .forceCommunityThemeHeaderStacked .themeHeaderTopRowInner {
+          min-height: 32px;
+        }
+      }
+
+      @media(min-width: 48em) {
+        .themeHeaderBottomRow {
+          padding-top: 0px;
+          padding-bottom: 0px;
+          background-color: rgb(244, 244, 247);
+          border-top: 1px solid rgb(160, 165, 174);
+          height: 62px;
+          width: 100%;
+        }
+      }
+
+
+      .forceCommunityThemeHeaderStacked .themeHeaderTopRowInner {
+        display: flex;
+        align-items: center;
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      @media (max-width: 600px) {
+        .forceCommunityThemeHeaderStacked .themeHeaderTopRowInner {
+          margin: 0 auto;
+        }
+      }
+
+      .logoImage {
+        width: 223px;
+        height: 78px;
+      }
+
+      @media (max-width: 600px) {
+        .logoImage {
+          width: 120px;
+          height: 42px;
+        }
+      }
+
+
+      .forceCommunityThemeHeaderStacked .searchPosition--right .themeLogo {
+        flex-grow: 1;
+        flex-basis: 0;
+      }
+
+      .forceCommunityThemeHeaderStacked .themeLogo {
+        display: flex;
+      }
+
+      .forceCommunityThemeHeaderStacked .themeNavOverlay {
+        z-index: 1;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        max-width: 100vw;
+        max-height: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        transition: opacity .3s, max-height 0s .3s;
+        opacity: 0;
+      }
+
+
+      .siteforceThemeLayoutStarter>.body.isPageWidthFixed-true {
+        margin: 0 auto;
+        max-width: 100%;
+      }
+
+      .forceCommunityRichText {
+        word-wrap: break-word;
+        font-family: Montserrat, Arial, sans-serif;
+      }
+
+      .forceCommunityRichText a {
+        color: var(--lwc-colorTextLink, rgb(0, 95, 178));
+      }
+
+      a {
+        color: var(--lwc-brandTextLink, rgb(0, 95, 178));
+        text-decoration: none;
+        transition: color .1s linear;
+      }
+
+      body {
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .forceCommunityThemeNav .mainNavItem .linkBtn {
+        font-weight: 500 !important;
+        padding: 16px !important;
+      }
+
+      .forceCommunityThemeNav .mainNavItem .linkBtn:hover {
+        background-color: rgba(0, 133, 179, 0.2);
+      }
+
+
+      @media (min-width: 768px) {
+        .forceCommunityThemeNav .mainNavItem .linkBtn {
+          font-size: .87rem !important;
+        }
+      }
+
+      @media (min-width: 996px) {
+        .forceCommunityThemeNav .mainNavItem .linkBtn {
+          font-size: 1rem !important;
+        }
+      }
+
+      .forceCommunityThemeNav .mainNavItem {
+        padding-left: 0px !important;
+      }
+
+      .forceCommunityThemeSearchSection .search-trigger {
+        width: 80px !important;
+      }
+
+      .forceCommunityThemeSearchSection .search-triggerButton {
+        display: flex !important;
+      }
+
+      .visible-links>li:first-child {
+        display: none;
+      }
+
+      .slds-table_header-fixed_container {
+        margin-top: 5px;
+      }
+
+      .slds-input {
+        font-weight: 400 !important;
+        font-size: 1rem !important;
+        line-height: 1.5 !important;
+        padding: .75rem 1rem !important;
+        border-radius: .25rem !important;
+        background-color: #fff !important;
+        color: #333 !important;
+        border: 1px solid #4c4f55 !important;
+        vertical-align: middle !important;
+        -webkit-appearance: none !important;
+        -moz-appearance: none !important;
+        appearance: none !important;
+        width: 100% !important;
+      }
+
+      .slds-input:disabled {
+        background: #f4f4f7 !important;
+        -webkit-text-fill-color: #333 !important;
+        opacity: 1;
+      }
+
+      .slds-input-has-icon .slds-input {
+        padding-left: 2rem !important;
+        padding-right: 2rem !important;
+      }
+
+      .search-input {
+        padding-top: 0.5rem !important;
+        padding-bottom: 0.5rem !important;
+      }
+
+      .slds-input:hover {
+        background-color: rgba(0, 133, 179, 0.2) !important;
+      }
+
+
+      .slds-form-element__label {
+        margin-top: 10px !important;
+        font-weight: 600 !important;
+        font-size: 1rem !important;
+        line-height: 1.5 !important;
+        color: black !important;
+      }
+
+      .slds-text-align_center {
+        font-size: 1rem !important;
+      }
+
+      @media (min-width: 768px) {
+        h1 {
+          margin-top: 30px !important;
+          margin-bottom: 1rem !important;
+          font-size: 2.25rem !important;
+          line-height: 1.25 !important;
+          font-weight: 600 !important;
+          display: block !important;
+          margin-inline-start: 0px !important;
+          margin-inline-end: 0px !important;
+        }
+      }
+
+      @media (max-width: 768px) {
+        h1 {
+          margin-top: 10px !important;
+          margin-bottom: 1rem !important;
+          font-size: 1.5rem !important;
+          line-height: 1.25 !important;
+          font-weight: 600 !important;
+          display: block !important;
+          margin-inline-start: 0px !important;
+          margin-inline-end: 0px !important;
+        }
+      }
+
+      @media (min-width: 768px) {
+        h2 {
+          font-size: 2rem !important;
+          line-height: 1.25 !important;
+          font-weight: 600 !important;
+          margin-top: 30px !important;
+        }
+      }
+
+      @media (max-width: 768px) {
+        h2 {
+          font-size: 1.25rem !important;
+          line-height: 1.0 !important;
+          font-weight: 500 !important;
+          margin-top: 15px !important;
+          margin-bottom: 10px !important;
+        }
+      }
+
+
+      h3,
+      h3 a {
+        font-size: 1.2rem !important;
+        line-height: 1 !important;
+        font-weight: 600 !important;
+        margin-top: 20px !important;
+      }
+
+      p {
+        margin-top: 1rem !important;
+        font-size: 1rem !important;
+        line-height: 1.5 !important;
+      }
+
+      a {
+        font-size: 1rem !important;
+      }
+
+      .slds-required {
+        display: none !important;
+      }
+
+      .forceCommunityThemeHeaderStacked .themeHeaderTopRowInner {
+        padding-left: 16px !important;
+        padding-right: 16px !important;
+      }
+
+
+
+      .forceCommunityThemeHeaderStacked .themeHeaderBottomRowInner {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+      }
+
+      .forceCommunityThemeHeaderStacked .themeHeaderTopRow {
+        padding-top: 12px !important;
+        padding-bottom: 12px !important;
+      }
+
+      .slds-col--padded.comm-content-header.comm-layout-column {
+        padding-top: 0px !important;
+      }
+
+      .slds-col--padded {
+        padding-right: 16px !important;
+        padding-left: 16px !important;
+      }
+
+      .slds-button_neutral,
+      .slds-button--neutral {
+        color: #fff !important;
+        background-color: #002664 !important;
+        border-color: #002664 !important;
+      }
+
+      .slds-button_neutral:hover,
+      .slds-button--neutral:hover {
+        background-color: #2e5299 !important;
+        border-color: #2e5299 !important;
+      }
+
+      .slds-button_neutral:active,
+      .slds-button--neutral:active {
+        background-color: #0085b3 !important;
+        border-color: #0085b3 !important;
+      }
+
+      .slds-button_neutral:disabled {
+        background: #a0a0a0 !important;
+      }
+
+      .slds-button {
+        border-radius: .25rem !important;
+        border: 2px solid transparent !important;
+        padding: .75rem 1.5rem !important;
+        cursor: pointer !important;
+        line-height: inherit !important;
+        font-size: 0.8125rem !important;
+      }
+
+      .slds-button_outline-brand {
+        color: #333 !important;
+        background-color: #fff !important;
+        border-color: #002664 !important;
+      }
+
+      .siteforceContentArea .slds-button {
+        margin: 1.5rem 1rem 0 0;
+      }
+
+      .slds-form-element__help {
+        font-size: 0.875rem !important;
+      }
+
+      .slds-form-element__help::before {
+        content: "";
+        display: block;
+        background: url("/sfsites/c/resource/infosvg") no-repeat;
+        width: 16px;
+        height: 16px;
+        background-size: 16px 16px;
+        float: left;
+        margin: 2px 6px 0 0;
+      }
+
+      @media screen and (min-width: 768px) {
+        .slds-button {
+          font-size: 1rem !important;
+          line-height: 1.5 !important;
+          min-width: 7.75rem !important;
+        }
+      }
+
+      td .slds-button,
+      .small-button .slds-button {
+        padding: .5rem .5rem !important;
+        min-width: 0rem !important;
+        line-height: 1 !important;
+      }
+
+      .header-button {
+        margin-top: 20px !important;
+      }
+
+      .service-button {
+        height: 70px;
+        width: 100%;
+        border-radius: 8px;
+        background-color: #C60C30;
+        margin-bottom: 0.75rem;
+        margin-top: 1.5rem;
+        padding: 0;
+        font-family: 'Montserrat';
+        font-weight: 400;
+        font-size: 1.15rem;
+        border: 2px solid rgb(213, 10, 48);
+        color: white;
+      }
+
+      .service-button:before {
+        content: "";
+        display: inline-block;
+        vertical-align: middle;
+        background: url("/sfsites/c/resource/snswlogo") no-repeat;
+        margin-right: 1rem;
+        height: 28px;
+        width: 28px;
+        background-size: 28px 28px;
+        background-position: right;
+      }
+
+      .nsw-footer {
+        font-weight: 400;
+        border-top: 1px solid #a0a5ae;
+      }
+
+      .nsw-footer__upper {
+        padding-top: 1.5rem;
+        background-color: #fff;
+      }
+
+      @media (min-width: 48em) {
+        .section-links {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+        }
+      }
+
+      .nsw-container {
+        max-width: 75rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .nsw-container p {
+        display: block !important;
+        margin-block-start: 1em !important;
+        margin-block-end: 1em !important;
+        margin-inline-start: 0px !important;
+        margin-inline-end: 0px !important;
+      }
+
+      .section-links__group {
+        padding-bottom: 1.5rem;
+        flex: 1 0 auto;
+        min-width: 16rem;
+        max-width: 50%;
+      }
+
+      @media (min-width: 48em) {
+        .section-links__group {
+          flex-basis: 50%;
+          min-width: auto;
+        }
+      }
+
+      @media (min-width: 62em) {
+        .section-links__group {
+          flex-basis: 25%;
+        }
+      }
+
+      .section-links__heading {
+        margin: 0;
+        font-family: Montserrat, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-weight: 600;
+        font-size: 1rem !important;
+        line-height: 1.5 !important;
+      }
+
+      @media (min-width: 62em) {
+        .section-links__heading {
+          font-size: 1rem !important;
+          line-height: 1.5 !important;
+        }
+      }
+
+      .section-links__list {
+        padding: 0;
+        font-size: .875rem !important;
+        line-height: 1.35 !important;
+        list-style: none;
+        margin: .25rem 0 0;
+      }
+
+      @media (min-width: 62em) {
+        .section-links__list {
+          font-size: .875rem !important;
+          line-height: 1.35 !important;
+        }
+      }
+
+      .section-links__list {
+        padding: 0;
+        font-size: .875rem !important;
+        line-height: 1.35 !important;
+        list-style: none;
+        margin: .25rem 0 0;
+      }
+
+      @media (min-width: 62em) {
+        .section-links__list {
+          font-size: .875rem !important;
+          line-height: 1.35 !important;
+        }
+      }
+
+      .nsw-footer__lower {
+        padding: 1rem 0 1.5rem;
+        background-color: #333;
+        color: #fff;
+        font-size: .75rem !important;
+      }
+
+      .nsw-footer__lower p {
+        font-size: .75rem !important;
+      }
+
+      .footer {
+        margin-top: 60px !important;
+      }
+
+      .nsw-footer-links {
+        font-weight: 600;
+        margin: 1rem 0 0;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+
+      .nsw-footer-links__item {
+        margin: 0 0 1rem;
+        flex: 1 0 50%;
+        max-width: 50%;
+      }
+
+      @media (min-width: 48em) {
+        .nsw-footer-links__item {
+          margin-right: 1.5rem;
+          flex: 0 0 auto;
+          max-width: none;
+        }
+      }
+
+      @media (min-width: 48em) {
+        .nsw-footer__info {
+          display: flex;
+          flex-wrap: nowrap;
+        }
+      }
+
+      .nsw-footer__copyright {
+        flex: 1 1 auto;
+      }
+
+      .nsw-footer__built {
+        flex: 0 0 12.5rem;
+      }
+
+      @media (min-width: 48em) {
+        .nsw-footer__built {
+          text-align: right;
+        }
+      }
+
+      .maintenancePlaceholder {
+        width: auto;
+        height: 400px;
+      }
+
+      @media (max-width: 600px) {
+        .maintenancePlaceholder {
+          width: auto;
+          height: 200px;
+        }
+      }
+
+      li::before {
+        content: "" !important;
+      }
+
+      .forceCommunityRichText ol,
+      .forceCommunityRichText ul {
+        padding-left: 0px !important;
+      }
+
+      .forceCommunityRichText ol li,
+      .forceCommunityRichText ul li {
+        padding-left: 0px !important;
+      }
+
+      .nsw-footer__lower a {
+        color: #fff !important;
+        font-size: .75rem !important;
+      }
+
+      .nsw-footer-links__link {
+        text-decoration: underline;
+      }
+
+      .slds-button_icon-bare {
+        display: none !important;
+      }
+
+      .slds-resizable__handle {
+        display: none;
+      }
+
+      .slds-table:not(.slds-no-row-hover) tbody tr:hover>td,
+      .slds-table:not(.slds-no-row-hover) tbody tr:hover>th,
+      .slds-table:not(.slds-no-row-hover) tbody tr:focus>td,
+      .slds-table:not(.slds-no-row-hover) tbody tr:focus>th {
+        background-color: transparent !important;
+      }
+
+      .slds-table_bordered:not(.slds-no-row-hover) tbody tr:hover>td:not(.slds-has-focus),
+      .slds-table_bordered:not(.slds-no-row-hover) tbody tr:hover>th:not(.slds-has-focus),
+      .slds-table_bordered:not(.slds-no-row-hover) tbody tr:focus>td:not(.slds-has-focus),
+      .slds-table_bordered:not(.slds-no-row-hover) tbody tr:focus>th:not(.slds-has-focus),
+      .slds-table--bordered:not(.slds-no-row-hover) tbody tr:hover>td:not(.slds-has-focus),
+      .slds-table--bordered:not(.slds-no-row-hover) tbody tr:hover>th:not(.slds-has-focus),
+      .slds-table--bordered:not(.slds-no-row-hover) tbody tr:focus>td:not(.slds-has-focus),
+      .slds-table--bordered:not(.slds-no-row-hover) tbody tr:focus>th:not(.slds-has-focus) {
+        box-shadow: none !important;
+      }
+
+      .slds-dropdown-trigger .slds-button {
+        margin: 0.5rem 0 0.5rem 0;
+      }
+
+      .slds-table th:focus,
+      .slds-table th.slds-has-focus,
+      .slds-table [role=gridcell]:focus,
+      .slds-table [role=gridcell].slds-has-focus {
+        box-shadow: none !important;
+      }
+
+      .slds-button:focus {
+        box-shadow: none !important;
+      }
+
+      .slds-input__icon-group_right .slds-input__icon_right {
+        padding: 0 0 !important;
+        min-width: 0 !important;
+      }
+
+      .slds-input:focus {
+        box-shadow: none !important;
+      }
+
+      .table-nav .slds-button,
+      .slds-card__header .slds-button {
+        margin: 0 0;
+      }
+
+      .slds-dropdown__item>a:hover,
+      .slds-dropdown__item>a:focus {
+        background-color: white !important;
+      }
+
+      .slds-has-button-menu a {
+        font-size: 0.8125rem !important;
+      }
+
+      .slds-radio__label .slds-form-element__label {
+        font-weight: 400 !important;
+      }
+
+      .slds-checkbox__label .slds-form-element__label {
+        font-weight: 400 !important;
+      }
+
+      .slds-card {
+        margin-top: 15px;
+        box-shadow: 0 4px 12px 0 rgb(0 0 0 / 15%) !important;
+        border-top: 6px solid #d7153a !important;
+      }
+
+      .slds-card__header h2 {
+        margin-top: 0 !important;
+        color: #002664 !important;
+      }
+
+      @media (min-width: 768px) {
+        .slds-card__header-title .slds-text-heading_small {
+          font-size: 1.5rem;
+          white-space: normal;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .slds-card__header-title .slds-text-heading_small {
+          font-size: 1.25rem;
+          white-space: normal;
+        }
+      }
+
+      .slds-button_icon {
+        line-height: inherit !important;
+        margin: 0 0 !important;
+        padding: 0 0 !important;
+        min-width: 0 !important;
+      }
+
+      .red-fill svg {
+        fill: #d7153a !important;
+      }
+
+      .grey-fill svg {
+        fill: rgb(175, 175, 178) !important
+      }
+
+      .inline-button .slds-button {
+        margin: 0 0 0 0.5rem;
+      }
+
+      .table-card .slds-card__body {
+        padding-left: 16px;
+        padding-right: 16px;
+        padding-bottom: 6px;
+      }
+
+      .text-error {
+        color: #D7153A !important;
+      }
+
+      .lsc-info-blue {
+        color: #2E5299;
+      }
+
+      .lsc-success-green {
+        color: #00A908;
+      }
+
+      .lsc-warning-orange {
+        color: #DC5800;
+      }
+
+      .lsc-error-red {
+        color: #B81237;
+      }
+
+      td .slds-grid_align-end {
+        justify-content: flex-start !important;
+      }
+
+      .button-hide .slds-button {
+        display: none !important;
+      }
+
+      td .slds-button_neutral,
+      .small-button .slds-button,
+      .no-margin-button .slds-button {
+        margin: 0 0 0 0 !important;
+      }
+
+      .p-button .slds-button {
+        margin-top: 16px;
+        margin-right: 0px;
+        float: right;
+      }
+
+      table span {
+        font-size: 1rem !important;
+      }
+
+      textarea {
+        min-height: 140px !important;
+        font-weight: 400 !important;
+        font-size: 1rem !important;
+        border-radius: .25rem !important;
+        background-color: #fff !important;
+        color: #333 !important;
+        border: 1px solid #4c4f55 !important;
+        vertical-align: middle !important;
+        -webkit-appearance: none !important;
+        -moz-appearance: none !important;
+        appearance: none !important;
+        width: 100% !important;
+      }
+
+      .ignore-margin {
+        margin-left: -12px;
+        margin-right: -12px;
+      }
+
+      .slds-truncate lightning-primitive-datatable-tooltip {
+        display: none;
+      }
+
+      tr:nth-child(even),
+      .layout-backgrnd-color {
+        background-color: #f4f4f7;
+      }
+
+      .slds-table thead th,
+      .slds-table tfoot th {
+        color: #000 !important;
+      }
+
+      .slds-table thead,
+      .slds-table tbody {
+        border-bottom: 2px solid #333 !important;
+      }
+
+      sup {
+        vertical-align: super !important;
+      }
+
+      @media screen and (max-width: 768px) {
+        .label-line-height {
+          line-height: 1.75 !important;
+        }
+      }
+
+      table {
+        border-collapse: collapse !important;
+      }
+
+      .slds-button_icon-border {
+        border: 2px solid #dfdfdf !important;
+      }
+
+      .slds-input__icon-group_right {
+        top: 37% !important;
+      }
+
+      .comm-user-profile-menu__trigger-p {
+        margin-top: 0 !important;
+        font-size: 0.8rem !important;
+      }
+
+      community_user-user-profile-menu .slds-button :not(.comm-user-profile-menu__login-button) {
+        min-width: 0px !important;
+      }
+
+      .titleContainer h2 {
+        font-size: 1rem !important;
+        line-height: 1.25 !important;
+        font-weight: 600 !important;
+        margin-top: 0px !important;
+      }
+
+      .panel-header .slds-button {
+        margin-right: 8px !important;
+        padding: 5px 10px !important;
+        min-width: 0rem !important;
+      }
+
+      .forceCommunityThemeHeaderStacked .themeUtils .themeNotifications {
+        margin-left: 0px !important;
+      }
+
+      lightning-base-combobox lightning-icon {
+        margin-top: 0 !important;
+      }
+
+      .slds-dropdown__item>a:hover,
+      .slds-dropdown__item>a:focus {
+        background-color: #0085B3 !important;
+        color: #fff !important;
+      }
+
+      .slds-modal__header h2 {
+        margin-top: 0 !important;
+      }
+
+      .case-comment .slds-card__header-title .slds-text-heading_small {
+        font-size: 1rem !important;
+      }
+
+      .case-comment slot p {
+        margin-top: 0 !important;
+      }
+
+      .case-comment .slds-card__body {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .case-comment .slds-card__header {
+        padding-bottom: 12px !important;
+        background-color: #F4F4F7;
+      }
+
+      .p-nomargin {
+        margin-top: 0 !important;
+      }
+
+      .iconnoborder .slds-button {
+        border: 0px !important;
+      }
+
+      .nsw-notification {
+        margin-top: 1.5rem;
+        padding: 1rem;
+        background: transparent;
+        position: relative;
+        border-left: 6px solid transparent;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+      }
+
+      .nsw-notification--success {
+        background-color: #e5f6e6;
+        border-color: #00a908;
+      }
+
+      .nsw-notification--success svg {
+        fill: #00a908 !important;
+      }
+
+      .nsw-notification--error {
+        background-color: #f7e7eb;
+        border-color: #b81237;
+      }
+
+      .nsw-notification--error svg {
+        fill: #b81237 !important;
+      }
+
+      .nsw-notification--warning {
+        background-color: #fbeee5;
+        border-color: #dc5800;
+        fill: #dc5800 !important;
+      }
+
+      .nsw-notification--warning svg {
+        fill: #dc5800 !important;
+      }
+
+      .nsw-notification--info {
+        background-color: #eaedf4;
+        border-color: #2e5299;
+        fill: #2e5299 !important;
+      }
+
+      .nsw-notification--info svg {
+        fill: #2e5299 !important;
+      }
+
+      .nsw-notification__title {
+        font-weight: 600;
+        font-size: 1rem;
+      }
+
+      .wordwrap {
+        overflow-wrap: break-word;
+      }
+
+      .duedate-hide:before {
+        content: "-";
+      }
+
+      .slds-icon-utility-warning svg {
+        fill: #dc5800 !important;
+      }
+
+      p.comm-user-profile-menu__trigger-p {
+        color: #2E5299 !important;
+        font-size: 0.875rem !important;
+      }
+
+      .comm-user-profile-menu__trigger-icon {
+        content: url(/sfsites/c/resource/personavatar) !important;
+        height: 30px !important;
+        margin-right: .30rem;
+      }
+    </style>
+  </head>
+
+  <body class="siteforceThemeLayoutStarter">
+    <div class="header">
+      <div class="themeHeader forceCommunityThemeHeaderBase forceCommunityThemeHeaderStacked">
+        <div class="themeBottomBorder" style="background-color: rgba(255, 255, 255, 0);"></div>
+        <div class="themeHeaderInner">
+          <div class="themeHeaderTopRow" style="padding-top:5px; padding-bottom:5px;">
+            <div class="themeHeaderTopRowInner searchPosition--right" style="max-width: 1200px;">
+              <div class="themeLogo">
+                <a href="https://www.longservice.nsw.gov.au" class="forceCommunityThemeLogo">
+                  <div>
+                    <img class="logoImage" src="{!$Label.LSC_Logo_Link}" />
+                  </div>
+                  <span class="slds-assistive-text"></span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="themeHeaderBottomRow">
+            <div class="themeHeaderBottomRowInner" style="max-width: 1200px;">
+              <div class="themeNav">
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="body">
+      <div style="max-width: 1200px; text-align: center; margin-left: auto; margin-right: auto">
+        <div>
+          <h1>{!$Label.Maintenance_Message_Title}</h1>
+        </div>
+        <div style="text-align: center;">
+          <img src="{!$Label.Maintenance_Placeholder_Link}" class="maintenancePlaceholder" />
+        </div>
+        <div style="padding-left: 16px; padding-right: 16px;">
+          <p>{!$Label.Maintenance_Message_Body}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="forceCommunityRichText forceCommunityHtmlBlock">
+        <div dir="ltr">
+
+
+          <div class="nsw-footer">
+            <div class="nsw-footer__upper">
+              <div class="nsw-container section-links">
+                <div class="section-links__group">
+                  <h3 class="section-links__heading">
+                    <a href="https://www.longservice.nsw.gov.au/bci">Building and Construction Industry</a>
+                  </h3>
+                  <ul class="section-links__list">
+                    <li class="section-links__item">
+                      <a href="https://www.longservice.nsw.gov.au/bci/the-scheme/about-the-scheme/scheme-overview">Scheme Overview</a>
+                    </li>
+                    <li class="section-links__item">
+                      <a href="https://www.longservice.nsw.gov.au/bci/employers">Employers</a>
+                    </li>
+                    <li class="section-links__item">
+                      <a href="https://www.longservice.nsw.gov.au/bci/workers">Workers</a>
+                    </li>
+                    <li class="section-links__item">
+                      <a href="https://www.longservice.nsw.gov.au/bci/levy/about-the-levy">About the Levy</a>
+                    </li>
+                    <li class="section-links__item">
+                      <a href="https://www.longservice.nsw.gov.au/bci/employers/your-legal-obligations">Legal Obligations</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="section-links__group">
+                  <h3 class="section-links__heading">
+                    <a href="https://www.longservice.nsw.gov.au/cci">Contact Cleaning Industry</a>
+                  </h3>
+                  <ul class="section-links__list">
+                    <li class="section-links__item">
+                      <a href="https://www.longservice.nsw.gov.au/cci/the-scheme/about-the-scheme">Scheme Overview</a>
+                    </li>
+                    <li class="section-links__item">
+                      <a href="https://www.longservice.nsw.gov.au/cci/employers#">Employers</a>
+                    </li>
+                    <li class="section-links__item">
+                      <a href="https://www.longservice.nsw.gov.au/cci/workers">Workers</a>
+                    </li>
+                    <li class="section-links__item">
+                      <a href="https://www.longservice.nsw.gov.au/cci/contractors">Contractors</a>
+                    </li>
+                    <li class="section-links__item">
+                      <a href="https://www.longservice.nsw.gov.au/cci/employers/your-responsibilities">Legal Obligations</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="section-links__group">
+                  <h3 class="section-links__heading">
+                    <a href="https://www.longservice.nsw.gov.au">Long Service Corporation</a>
+                  </h3>
+                  <ul class="section-links__list">
+                    <li class="section-links__item">
+                      <a href="https://www.longservice.nsw.gov.au/about-us">About us</a>
+                    </li>
+                    <li class="section-links__item">
+                      <a href="https://www.longservice.nsw.gov.au/news">Latest news</a>
+                    </li>
+                    <li class="section-links__item">
+                      <a href="tel:131441">Phone: 13 14 41</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="nsw-footer__lower">
+              <div class="nsw-container">
+                <p>We pay respect to the Traditional Custodians and First Peoples of NSW, and acknowledge their continued connection
+                  to their country and culture.</p>
+                <hr/>
+                <ul class="nsw-footer-links">
+                  <li class="nsw-footer-links__item">
+                    <a href="https://www.longservice.nsw.gov.au/accessibility" class="nsw-footer-links__link">Accessibility</a>
+                  </li>
+                  <li class="nsw-footer-links__item">
+                    <a href="https://www.longservice.nsw.gov.au/cci/the-corporation/about-us/statement-of-privacy" class="nsw-footer-links__link">Privacy</a>
+                  </li>
+                  <li class="nsw-footer-links__item">
+                    <a href="https://www.longservice.nsw.gov.au/copyright-and-disclaimer" class="nsw-footer-links__link">Copyright &amp; Disclaimer</a>
+                  </li>
+                  <li class="nsw-footer-links__item">
+                    <a href="https://www.longservice.nsw.gov.au/contact-us/online-enquiry" class="nsw-footer-links__link">Contact us</a>
+                  </li>
+                  <li class="nsw-footer-links__item">
+                    <a href="https://www.longservice.nsw.gov.au/" class="nsw-footer-links__link">Long Service Corporation</a>
+                  </li>
+                  <li class="nsw-footer-links__item">
+                    <a href="https://www.nsw.gov.au/" class="nsw-footer-links__link">NSW Government</a>
+                  </li>
+                  <li class="nsw-footer-links__item">
+                    <a href="https://www.facebook.com/longservicensw" class="nsw-footer-links__link">Follow us</a>
+                  </li>
+                </ul>
+                <div class="nsw-footer__info">
+                  <p class="nsw-footer__copyright">Copyright © 2021</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+
+  </html>
+</apex:page>

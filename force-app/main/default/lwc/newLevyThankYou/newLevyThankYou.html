@@ -1,0 +1,15 @@
+<template>
+    <h2>Thank you</h2> 
+    <p>Reference: <a target="_blank" href={caseUrl}>{caseNumber}</a></p>
+    <template if:false={isBusiness}>
+        <p><strong>Your partial exemption application has been submitted for review.</strong></p>
+        <p>Exemption applications normally take approximately 3-5 days to process. We will notify you when a decision has been made.</p>
+        <p>You can track your exemption application in your account.</p>
+    </template>
+    <template if:true={isBusiness}>
+        <p><strong>Your application to pay the Long Service Corporation Levy by Instalments has been submitted for review.</strong></p>
+        <p>We will notify you of the outcome via the email provided as soon as possible. You can track your application by logging into your account.</p>
+    </template>
+    <p>Need assistance?</p>
+    <p>Please complete an <a href="/bci/s/contactsupport" target="_blank">online contact form</a> or call us on 13 14 41 Monday to Friday, from 8:30am to 5:00pm.</p>
+</template>

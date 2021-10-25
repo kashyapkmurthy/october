@@ -1,0 +1,38 @@
+<template>
+    <template if:true={hasDetails}>
+        <lightning-card title="Approval details" class="table-card">
+            <lightning-layout multiple-rows="true">
+                <lightning-layout-item size="12" small-device-size="12" medium-device-size="8" large-device-size="6">
+                    <p><b>Approving auth./Certifier:</b></p>
+                </lightning-layout-item>            
+                <lightning-layout-item size="12" small-device-size="12" medium-device-size="8" large-device-size="6">
+                    <p><span>{levy.approverCompany}</span></p>
+                </lightning-layout-item>
+            </lightning-layout>    
+            <lightning-layout multiple-rows="true">
+                <lightning-layout-item size="12" small-device-size="12" medium-device-size="8" large-device-size="6">
+                    <p><b>Contact name:</b></p>
+                </lightning-layout-item>            
+                <lightning-layout-item size="12" small-device-size="12" medium-device-size="8" large-device-size="6">
+                    <p><span>{levy.approverName}</span></p>
+                </lightning-layout-item>
+            </lightning-layout>
+            <lightning-layout multiple-rows="true">
+                <lightning-layout-item size="12" small-device-size="12" medium-device-size="8" large-device-size="6">
+                    <p><b>Phone:</b></p>
+                </lightning-layout-item>            
+                <lightning-layout-item size="12" small-device-size="12" medium-device-size="8" large-device-size="6">
+                    <p><span>{levy.approverPhone}</span></p>
+                </lightning-layout-item>
+            </lightning-layout>   
+            <lightning-layout multiple-rows="true">
+                <lightning-layout-item size="12" small-device-size="12" medium-device-size="8" large-device-size="6">
+                    <p><b>Email:</b></p>
+                </lightning-layout-item>            
+                <lightning-layout-item size="12" small-device-size="12" medium-device-size="8" large-device-size="6">
+                    <p><span class="wordwrap">{levy.approverEmail}</span></p>
+                </lightning-layout-item>
+            </lightning-layout>                                        
+        </lightning-card>
+    </template>
+</template>

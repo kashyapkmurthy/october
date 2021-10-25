@@ -1,0 +1,32 @@
+<template>
+  <template if:true={isLoading}>
+    <div class="slds-align_absolute-center">
+      <h1>Loading...</h1>
+    </div>
+  </template>
+  <template if:true={showError}>
+    <template if:true={mobileView}>
+        <div class="text-error">
+            <h3>
+                Error occurred while processing the request
+            </h3>
+            <h3>
+               "{errorMessage}"
+            </h3>
+        </div>
+    </template>
+    <template if:false={mobileView}>
+        <div class="text-error slds-text-align_center">
+            <h1>
+                Error occurred while processing the request
+                <br/> 
+                <br/> "{errorMessage}"
+            </h1>
+        </div>
+    </template>
+  </template>
+  <div if:true={isAmountGreaterThanMillion}>
+    <p>Please Contact us on 13 14 41 (Monday to Friday 8.30am to 5.00pm) for payments more than <b>$1 Million</b>.</p>
+    <p>Outside of business hours <a href="/bci/s/contactsupport">contact us online</a>.</p>
+</div>
+</template>

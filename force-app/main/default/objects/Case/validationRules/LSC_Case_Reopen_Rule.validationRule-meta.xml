@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LSC_Case_Reopen_Rule</fullName>
+    <active>true</active>
+    <description>Closed exemption cases should not be reopened.</description>
+    <errorConditionFormula>AND(
+OR(
+RecordType.DeveloperName = &quot;LSC_Exemption&quot;,
+RecordType.DeveloperName = &quot;LSC_Instalment&quot;,
+RecordType.DeveloperName = &quot;LSC_Inquiry&quot;,
+RecordType.DeveloperName = &quot;LSC_Refund&quot;),
+ISCHANGED(Status),
+OR(
+ISPICKVAL(PRIORVALUE(Status),&quot;Closed Approved&quot;),
+ISPICKVAL(PRIORVALUE(Status),&quot;Closed Rejected&quot;),
+ISPICKVAL(PRIORVALUE(Status),&quot;Cancelled&quot;),
+ISPICKVAL(PRIORVALUE(Status),&quot;Closed&quot;))
+)</errorConditionFormula>
+    <errorMessage>Case status is not allowed to be changed once closed.</errorMessage>
+</ValidationRule>

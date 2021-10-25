@@ -1,0 +1,81 @@
+<template>
+  <div class="slds-form-element">
+    <label class="slds-form-element__label slds-no-flex">{addressLabel}</label>
+  </div>
+  <template if:true={autocompleteAddress}>
+    <lightning-layout>
+      <lightning-layout-item size="12" small-device-size="12" medium-device-size="8" large-device-size="6">
+        <div class="slds-combobox_container">
+          <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open"
+            aria-expanded="true" aria-haspopup="listbox" role="combobox">
+              <lightning-input type="search" label="" name="address" value={value} id="addressSearch"
+                placeholder="Enter Address" maxlength="80" onchange={onChange} onkeyup={onKeyUp}  variant="label-hidden"
+                onblur={onBlur}>
+              </lightning-input>
+              <template if:true={showNoResults}>
+                <div role="listbox" id="listbox-id-1"
+                  class="slds-dropdown slds-dropdown_length-5 slds-dropdown_fluid">
+                    <div class="slds-text-color_error">
+                      No matched addresses. Please enter address manually by clicking the below button.
+                    </div>
+                </div>
+              </template>
+              <template if:true={showAddrResults}>
+                <div role="listbox" id="listbox-id-4"
+                  class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid">
+                    <ol role="listbox" id="listbox-id-2" class="slds-has-block-links_space">
+                      <template for:each={addressList} for:item="address" for:index="index">
+                        <li key={address}  role="presentation" class="slds-dropdown__item slds-truncate_container_90">
+                          <a role="option" onmouseover={handleMouseOver} onmouseout={handleMouseOut} class="" data-id="addressList" onclick={handleSelection} id={index} data-index={index}>
+                            <p class="slds-truncate" title={address.address} id={index}>
+                              {address.address}</p>
+                          </a>
+                        </li>
+                      </template>
+                    </ol>
+                </div>
+              </template>
+              <template if:true={fetchingDetails}>
+                <c-spinner size-input="medium"></c-spinner>
+              </template>
+          </div>
+        </div>
+
+      </lightning-layout-item>
+    </lightning-layout>
+  </template>      
+  <lightning-button
+      variant="Neutral"
+      label={buttonLabel}
+      onclick={handleClick}>
+      </lightning-button>
+
+  <template if:false={autocompleteAddress}>
+    <lightning-layout>
+      <lightning-layout-item size="12" small-device-size="12" medium-device-size="8" large-device-size="5">
+        <lightning-input type="text" id="saStreetAddr" label="Street/PO Box" maxlength="255" onblur={onBlur}
+        value={streetAddress} onchange={handleChange} required message-when-value-missing="Please enter Street or PO Box"></lightning-input>
+      </lightning-layout-item>
+    </lightning-layout> 
+    <lightning-layout>
+      <lightning-layout-item size="12" small-device-size="12" medium-device-size="8" large-device-size="5">
+        <lightning-input type="text" id="saSuburb" label="Suburb" maxlength="40" onblur={onBlur}
+        value={suburb} onfocusout={onFocusOut} onchange={handleChange} required message-when-value-missing="Please enter Suburb"></lightning-input>
+      </lightning-layout-item>
+    </lightning-layout>
+    <lightning-layout>
+      <lightning-layout-item size="12" small-device-size="12" medium-device-size="8" large-device-size="3">
+        <lightning-input type="text" id="saPostcode" label="Postcode" maxlength="4" minlength="4"
+        value={postcode} onfocusout={onFocusOut} onchange={handleChange} name="postcode"  pattern="[0-9]*"
+        message-when-pattern-mismatch="Please enter numbers" required message-when-value-missing="Please enter PostCode"></lightning-input>
+      </lightning-layout-item>
+    </lightning-layout>
+    <lightning-layout>
+      <lightning-layout-item size="12" small-device-size="12" medium-device-size="8" large-device-size="3">
+        <lightning-combobox name="saState" label="State" value={state} required message-when-value-missing="Please select State"
+        options={statePicklist} onchange={handlePicklistChange}>
+        </lightning-combobox>
+      </lightning-layout-item>
+    </lightning-layout>
+  </template>
+</template>

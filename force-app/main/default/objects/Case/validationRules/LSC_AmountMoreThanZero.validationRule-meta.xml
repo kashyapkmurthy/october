@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LSC_AmountMoreThanZero</fullName>
+    <active>true</active>
+    <errorConditionFormula>LSC_Amount__c &lt; 0</errorConditionFormula>
+    <errorMessage>Please enter amount more than 0</errorMessage>
+</ValidationRule>

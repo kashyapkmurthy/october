@@ -1,0 +1,88 @@
+<template>
+    <template if:false={isEFTModal}>
+        <h1>New Levy payment</h1>
+        <c-spinner size-input="large" if:true={isLoading}></c-spinner>
+        <c-development-details if:true={developmentDetailsStep} levy-parameters={levyParameters} onupdatedevelopmentdetailsparameters={handleUpdateLevyParameters}></c-development-details>
+        <c-levy-payment-development-cost if:true={developmentCostsStep} levy-parameters={levyParameters} onupdatedevelopmentcostsparameters={handleUpdateLevyParameters}></c-levy-payment-development-cost>
+        <c-instalments-component if:true={instalmentsStep} levy-parameters={levyParameters} onupdateinstalmentparameters={handleUpdateLevyParameters} onpayinstallment={handleInstallments}></c-instalments-component>
+        <c-development-approval if:true={developmentApprovalStep} levy-parameters={levyParameters} onupdatedevelopmentapprovalparameters={handleUpdateLevyParameters} instalments-step={hasSkipped}></c-development-approval>
+        <c-authorized-rep-component if:true={authorizedRepStep} levy-parameters={levyParameters} onupdateauthrepdetailsparameters={handleUpdateLevyParameters}></c-authorized-rep-component>
+        <c-levy-confirmation if:true={levyConfirmationStep} levy-parameters={levyParameters} onsummaryeditevent={handleLevyConfirmationEvent} onupdatelevyconfirmatinparameters={handleUpdateLevyParameters}></c-levy-confirmation>
+        <c-new-levy-thank-you if:true={thankYouStep} levy-parameters={levyParameters}></c-new-levy-thank-you>
+        <div class="slds-p-vertical_xx-large">     
+            <div class="slds-grid">
+                <span>
+                    <template if:true={isPrev}>
+                        <div class="slds-p-right_medium">
+                            <lightning-button variant="Neutral" label="Back" onclick={handlePrev}></lightning-button>
+                        </div>
+                    </template> 
+                </span>
+                <span>            
+                    <template if:true={isNext}>
+                        <lightning-button label="Next" variant="Neutral" onclick={handleNext}></lightning-button>
+                    </template>
+                </span>
+                <span>
+                    <template if:true={isSubmit}>
+                        <lightning-button label="Confirm and go to payment" variant="Neutral" disabled={submitDisabled} onclick={handlePayment}></lightning-button>
+                    </template> 
+                </span>
+            </div>     
+        </div>
+    </template> 
+    <template if:true={isEFTModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Payment details</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <h3>Pay via EFT</h3>
+                    <p>To pay via EFT create a new payment in your bank account and enter the details below:</p>
+                    <lightning-layout multiple-rows>
+                        <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="4">
+                            <p><span>BSB Code:</span></p>                    
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="4">
+                            <p><span>{bsb}</span></p>                    
+                        </lightning-layout-item>                
+                    </lightning-layout>  
+                    <lightning-layout multiple-rows>
+                        <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="4">
+                            <p><span>Account number:</span></p>                    
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="4">
+                            <p><span>{accNo}</span></p>                    
+                        </lightning-layout-item>                
+                    </lightning-layout>
+                    <lightning-layout multiple-rows>
+                        <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="4">
+                            <p><span>Description:</span></p>                    
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="4">
+                            <p><span>{transactionId}</span></p>                    
+                        </lightning-layout-item>                
+                    </lightning-layout>       
+                    <template if:true={canPayCPP}>
+                        <hr>
+                        <h3>Pay via NSW Customer Payment Portal</h3>
+                        <lightning-button label="Pay now" onclick={payCPP} ></lightning-button>
+                    </template>      
+                    <lightning-button class="slds-m-left_x-small" label="Close" disabled={submitDisabled} onclick={handleClickClose}></lightning-button>                               
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template> 
+    <template if:true={isLoading}>
+        <c-spinner size-input="large"></c-spinner>
+    </template>      
+</template>

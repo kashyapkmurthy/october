@@ -1,0 +1,8 @@
+<template>
+    <template if:true={hasData}>  
+        <lightning-card class="table-card" title="Transactions">         
+            <lightning-datatable class="slds-max-medium-table_stacked" key-field="id" data={data} columns={columns} hide-checkbox-column show-row-number-column>
+            </lightning-datatable>         
+        </lightning-card>   
+    </template>          
+</template>

@@ -1,0 +1,81 @@
+<template>
+    <h1>Levies</h1>
+    <lightning-layout>
+        <lightning-layout-item size="12" small-device-size="12" medium-device-size="5" large-device-size="3">
+            <lightning-input type="search" onchange={handleKeyChange} value={searchKey} class="search-input"></lightning-input>        
+        </lightning-layout-item>
+    </lightning-layout>
+    
+    <template if:true={hasData}>      
+        <lightning-datatable class="slds-max-medium-table_stacked" key-field="id" data={data} columns={columns} sorted-by={sortedBy} hide-checkbox-column
+            sorted-direction={sortedDirection} onsort={sortColumns} onrowaction={handleRowAction}>
+        </lightning-datatable>
+        <template if:true={multiplePages}>
+            <lightning-layout class="slds-m-top_small" multiple-rows="true">
+                <lightning-layout-item>
+                    <lightning-button label="Previous" icon-name="utility:chevronleft" onclick={previousHandler} disabled={isPrev} class="table-nav"> 
+                    </lightning-button>
+                    <lightning-button label="Next" icon-name="utility:chevronright" icon-position="right" disabled={isNext}
+                        onclick={nextHandler} class="table-nav slds-m-left_small"></lightning-button>                
+                </lightning-layout-item>
+                <lightning-layout-item alignment-bump="left">
+                    <p><span>Page {page} of {totalPage}</span></p>
+                </lightning-layout-item>
+            </lightning-layout>
+        </template>    
+    </template>
+    <template if:false={hasData}>
+        <p class="slds-align_absolute-center"><span>No Levies to show</span></p>
+    </template>
+    <template if:true={isEFTModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Payment details</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <h3>Pay via EFT</h3>
+                    <p>To pay via EFT create a new payment in your bank account and enter the details below:</p>
+                    <lightning-layout multiple-rows>
+                        <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="4">
+                            <p><span>BSB Code:</span></p>                    
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="4">
+                            <p><span>{bsb}</span></p>                    
+                        </lightning-layout-item>                
+                    </lightning-layout>  
+                    <lightning-layout multiple-rows>
+                        <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="4">
+                            <p><span>Account number:</span></p>                    
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="4">
+                            <p><span>{accNo}</span></p>                    
+                        </lightning-layout-item>                
+                    </lightning-layout>
+                    <lightning-layout multiple-rows>
+                        <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="4">
+                            <p><span>Description:</span></p>                    
+                        </lightning-layout-item>
+                        <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="4">
+                            <p><span>{transactionId}</span></p>                    
+                        </lightning-layout-item>                
+                    </lightning-layout>       
+                    <template if:true={canPayCPP}>
+                        <hr>
+                        <h3>Pay via NSW Customer Payment Portal</h3>
+                        <lightning-button label="Pay now" onclick={payCPP} ></lightning-button>
+                    </template>      
+                    <lightning-button class="slds-m-left_x-small" label="Close" onclick={handleClickClose}></lightning-button>                               
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>

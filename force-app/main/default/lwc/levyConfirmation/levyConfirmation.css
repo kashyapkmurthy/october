@@ -1,0 +1,16 @@
+.heading_4 {
+    font-family: 'Montserrat-SemiBold', 'Montserrat SemiBold', 'Montserrat', sans-serif;
+    font-weight: 650;
+    font-style: normal;
+    font-size: 20px;
+    text-align: left;
+}
+
+.slds-border_top, .slds-border_bottom {
+   border-color: black;
+   border-width: 1.5px;
+}
+
+.break-word {
+    overflow-wrap: break-word;
+}

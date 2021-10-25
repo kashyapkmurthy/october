@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LSC_Case_Closed_Rejected_Rule</fullName>
+    <active>true</active>
+    <description>Validates that the Closed Rejected field has been updated before the status can be updated to Closed Rejected.</description>
+    <errorConditionFormula>AND(
+ISCHANGED(Status),
+ISPICKVAL(Status, &quot;Closed Rejected&quot;),
+ISBLANK(LSC_RejectionReasons__c))</errorConditionFormula>
+    <errorMessage>Please update the Rejected reasons field before updating the case status to Closed Rejected</errorMessage>
+</ValidationRule>

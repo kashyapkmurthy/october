@@ -1,0 +1,105 @@
+<template>
+    <template if:true={isRendered}>
+        <br/><br/>
+        <lightning-card title="Council Report">
+            <lightning-layout>
+                <lightning-layout-item >     
+                    <lightning-combobox
+                    name="month"
+                    label="Month"
+                    value={month}
+                    options={monthOptions}
+                    onchange={handleChange}
+                    required
+                    ></lightning-combobox>  
+                </lightning-layout-item>    
+                <lightning-layout-item padding="horizontal-medium">
+                    <lightning-combobox
+                    name="year"
+                    label="Year"
+                    value={year}
+                    options={yearOptions}
+                    onchange={handleChange}
+                    required
+                    ></lightning-combobox> 
+                </lightning-layout-item>
+            </lightning-layout>
+            <br/> 
+            <lightning-button 
+                label="Get report"
+                icon-name="utility:retail_execution" 
+                variant="brand"
+                onclick={handleGet}>
+            </lightning-button>
+        </lightning-card>
+        <template if:false={hasData}>
+            <p>No records to display</p>
+        </template>
+        <template if:true={hasData}>
+            <div class="slds-text-heading_medium slds-p-top_small">Council name: {name}</div>
+            <div class="slds-text-heading_medium">Period: {period}</div>
+            <br/>
+            <table class="slds-table slds-table_bordered slds-border_left slds-border_right">
+                <thead>
+                    <tr class="slds-line-height_reset">
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Application Type">Application Type</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Application Number">Application Number</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Cost Of Works">Cost Of Works</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Levy Payable">Levy Payable</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Paid Amount">Paid Amount</div>
+                        </th>
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Comment">Comment</div>
+                        </th>      
+                        <th class="" scope="col">
+                            <div class="slds-truncate" title="Comment">Reason</div>
+                        </th>                                                                                                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={data} for:item="row">
+                        <tr class="slds-hint-parent" key={row.id}>
+                            <th data-label="Application Type" scope="row">
+                                {row.type}
+                            </th>
+                            <th data-label="Application Number" scope="row">
+                                {row.no}
+                            </th>
+                            <td data-label="Cost Of Works">
+                                <lightning-formatted-number value={row.cost} format-style="currency"></lightning-formatted-number>
+                            </td>
+                            <td data-label="Levy Payable">
+                                <lightning-formatted-number value={row.payable} format-style="currency"></lightning-formatted-number>
+                            </td>
+                            <td data-label="Paid Amount">
+                                <lightning-formatted-number value={row.paid} format-style="currency"></lightning-formatted-number>
+                            </td>
+                            <td data-label="Comment">
+                                {row.comment}
+                            </td>    
+                            <td data-label="Reason">
+                                {row.reason}
+                            </td>                                                                            
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+            <div class="slds-p-vertical_medium">
+                <lightning-button icon-name="utility:download" 
+                                        label="Download as CSV" 
+                                        title="Download CSV File"
+                                        onclick={downloadCSVFile} variant="brand">
+                </lightning-button>   
+            </div>
+        </template>
+    </template>
+</template>

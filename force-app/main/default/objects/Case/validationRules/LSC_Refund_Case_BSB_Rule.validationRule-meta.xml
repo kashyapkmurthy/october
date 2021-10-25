@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LSC_Refund_Case_BSB_Rule</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+NOT(ISBLANK(LSC_BSB__c)), 
+NOT(REGEX(LSC_BSB__c, &apos;[0-9]{3}-[0-9]{3}&apos;))
+)</errorConditionFormula>
+    <errorDisplayField>LSC_BSB__c</errorDisplayField>
+    <errorMessage>Please enter BSB in the format XXX-XXX</errorMessage>
+</ValidationRule>

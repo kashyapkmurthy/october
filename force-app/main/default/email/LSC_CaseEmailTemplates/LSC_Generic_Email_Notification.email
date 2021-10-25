@@ -1,0 +1,60 @@
+<messaging:emailTemplate subject="Thanks for contacting Long Service Corporation" recipientType="Contact" relatedToType="Contact" replyTo="no.reply@longservice.nsw.gov.au" renderUsingSystemContextWithoutSharing="True" >
+<messaging:htmlEmailBody >
+    <html>
+        <body style="font-family: 'Montserrat', Helvetica;font-size: 1rem;font-style: normal;font-weight: 400;background-color: #F4F4F7;">
+           <table style="background-color: #F4F4F7;padding:16px">
+                    <tr><td>
+                        <table style="margin-left: auto;margin-right: auto;background-color:#fff; padding: 16px 16px 0; border-top: 6px solid #002664;max-width: 600px;">
+                            <tr>
+                                <td>
+                <img src="https://c.{!$Label.BCI_Instance_Name}.content.force.com/servlet/servlet.ImageServer?id={!$Label.BCI_Document_Id}&oid={!$Label.BCI_Org_Id}" alt="Long Service Corporation"/>
+                <h1 style="margin-top: 30px;margin-bottom: 1rem;font-size: 2.25rem;line-height: 1.25;font-weight: 600;display: block;margin-inline-start: 0px;margin-inline-end: 0px;">You have a new pending action</h1>
+                <p>
+                  <span>Dear {!Contact.FirstName},</span>
+                </p>
+                <p> Please login to your LSC account and take any necessary action under ticket number : {!Case.CaseNumber}.</p></span>
+                </p>
+                            <br/>
+                            <a style="color: #fff;border-radius: .25rem;margin: 1.5rem 1rem 0 0;border: 2px solid #002664;white-space: normal;padding: .75rem 1.5rem;cursor: pointer;min-width: 7.75rem;background-color: #002664;text-decoration: none;" href="{!$Label.BCI_Community_Link}/s/case/{!Case.Id}">LSC Account</a>
+                            <br/><br/>
+                            <h3 style="font-size: 1.2rem;line-height: 1;font-weight: 600;margin-top: 20px;">Need assistance?</h3>
+                            <p style="margin-bottom: 0px;">Do not reply to this email, this mailbox is unattended. </p> </p>Please complete an <a href="{!$Label.BCI_Community_Link}/s/contactsupport">online contact form</a> or call us on 13 14 41 Monday to Friday, from 8:30am to 5:00pm.</p>
+                            <p style="margin-bottom: 0px;">&nbsp;</p>
+                       </td>
+                            </tr>
+                        </table>
+                        <table style="background-color:#333; padding: 16px; max-width: 600px;">
+                            <tr>
+                                <td colspan="4">
+                                    <p style="color: #fff;font-size: .75rem; margin-right: 0px; margin-left: 0px; margin-bottom: 10px; margin-top: 0px;">
+                            We pay respect to the Traditional Custodians and First Peoples of NSW, and acknowledge their continued
+                connection to their country and culture.
+                        </p>
+                        <hr style="background-color: #fff;"/>
+                       </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-top: 0px; font-color:#fff; width: 100px; text-align: left;">
+                                <a href="https://www.longservice.nsw.gov.au/bci/the-corporation/accessing-information/privacy" style="font-weight: 600;color: #fff;font-size: .75rem;">Privacy</a>
+                            </td>
+                                <td style="padding-top: 0px; font-color:#fff;  width: 200px; text-align: left;">
+                                <a href="https://www.longservice.nsw.gov.au/copyright-and-disclaimer" style="font-weight: 600;color: #fff;font-size: .75rem;">Copyright &amp; Disclaimer</a>
+                             </td>
+                                <td style="padding-top: 0px; font-color:#fff;  width: 100px; text-align: left;">
+                                <a href="https://www.longservice.nsw.gov.au/contact-us" style="font-weight: 600;color: #fff;font-size: .75rem;">Contact us</a>
+                             </td>
+                                <td style="padding-top: 0px; font-color:#fff;  width: 200px; text-align: left;">
+                                <a href="https://www.longservice.nsw.gov.au/" style="font-weight: 600;color: #fff;font-size: .75rem;">Long Service Corporation</a>
+                           </td>
+                            </tr>
+                            <tr>
+                                <td style="padding-top: 0px;" colspan="4">
+                                    <p style="color:#fff;font-size:.75rem; margin-top: 16px;">Copyright © 2021</p>
+                                </td>
+                            </tr>
+                        </table>
+                    </td></tr>
+                </table>
+            </body>
+        </html>
+    </messaging:htmlEmailBody>

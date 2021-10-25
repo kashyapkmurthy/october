@@ -1,0 +1,33 @@
+<template>
+    <template if:true={loading}>
+        <h1>Loading...</h1>  
+    </template>
+    <template if:false={loading}>
+        <template if:false={hasAccess}>
+            <h1>Record can't be accessed</h1>  
+        </template>
+        <template if:true={hasAccess}>
+            <lightning-layout multiple-rows>
+                <lightning-layout-item size="12" medium-device-size="8">
+                    <h1>Support ticket - {ticket.ticketNumber}</h1> 
+                    <h3>Subject: {ticket.subject}</h3>     
+                    <p><span>Details: <lightning-formatted-text value={ticket.details}></lightning-formatted-text></span></p>       
+                    <p if:true={ticket.levyName}> <span>Levy: <lightning-formatted-url value={levyUrl}  label={ticket.levyName} target="_blank" ></lightning-formatted-url></span></p>              
+                </lightning-layout-item>
+                <lightning-layout-item size="12" medium-device-size="4">
+                    <template if:true={hasAction}>
+                        <lightning-button class="slds-float_right" label="Print approval" onclick={printApproval} ></lightning-button>  
+                    </template>                                                    
+                </lightning-layout-item>        
+            </lightning-layout>                 
+            <lightning-layout multiple-rows class="ignore-margin">
+                <lightning-layout-item size="12" medium-device-size="8" padding="horizontal-small">
+                    <c-case-record-comments record-id={recordId} ticket={ticket} onnewcomment={newComment}></c-case-record-comments>
+                </lightning-layout-item>
+                <lightning-layout-item size="12" medium-device-size="4" padding="horizontal-small">
+                    <c-case-record-details record-id={recordId} ticket={ticket}></c-case-record-details>
+                </lightning-layout-item>        
+            </lightning-layout>
+        </template>        
+    </template>    
+</template>

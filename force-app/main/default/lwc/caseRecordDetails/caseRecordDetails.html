@@ -1,0 +1,23 @@
+<template>
+    <lightning-card title="Ticket details" class="table-card">
+        <p><b>Status</b></p>        
+        <p class="p-nomargin">{ticket.status}</p>
+        <p><b>Date created</b></p> 
+        <p class="p-nomargin"><lightning-formatted-date-time value={ticket.created} year="numeric" month="numeric" day="numeric" hour="2-digit"
+                    minute="2-digit" hour12="true"></lightning-formatted-date-time></p>
+        <p><b>Last updated</b></p> 
+        <p class="p-nomargin"><lightning-formatted-date-time value={ticket.updated}  year="numeric" month="numeric" day="numeric" hour="2-digit"
+                    minute="2-digit" hour12="true"></lightning-formatted-date-time></p>
+        <p><b>Attachments</b></p> 
+        <template if:true={hasAttachments}>
+            <template for:each={attachments} for:item="attachment">
+                <div key={attachment} class="slds-m-top_x-small">
+                    <lightning-icon icon-name="doctype:attachment" size="small" class="slds-m-right_x-small" title="Image"></lightning-icon>{attachment}
+                </div>
+            </template>
+        </template>
+        <template if:false={hasAttachments}>
+            <p class="p-nomargin">No attachments</p>
+        </template>        
+    </lightning-card>
+</template>

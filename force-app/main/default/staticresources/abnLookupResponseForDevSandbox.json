@@ -1,0 +1,17 @@
+{
+  "business": {
+    "australianBusinessNumber": "41478472302",
+    "australianBusinessNumberStatus": "Active",
+    "australianCompanyName": null,
+    "effectiveFrom": "2020-07-27",
+    "effectiveTo": null,
+    "businessName": [
+      "Inactive"
+    ],
+    "entityName": "T.J NISBET & J.C PAICE",
+    "entityTypeCode": "PTR",
+    "entityTypeName": "Other Partnership",
+    "charityTypeName": null,
+    "acncRegistrationStatus": null
+  }
+}

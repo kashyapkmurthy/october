@@ -1,0 +1,178 @@
+<apex:page standardController="Case" extensions="LSC_CaseControllerExtension" showHeader="false" applyBodyTag="false" renderAs="pdf">
+
+    <head>
+        <style type="text/css" media="print">
+            @page {
+                padding-top: 110px;
+                margin-bottom: 3cm;
+
+                @top-center {
+                    content: element(header);
+                }
+                @bottom-left {
+                    content: element(footer);
+                }
+            }
+
+            div.header {
+                padding-top: 30px;
+                position: running(header);
+                font-family: Helvetica, sans-serif;
+                font-size: 13px;
+            }
+
+            div.footer {
+                position: running(footer);
+                font-size: 12px;
+                font-family: Helvetica, sans-serif;
+                text-align: center;
+            }
+
+            div.content {
+                font-family: Helvetica, sans-serif, sans-serif;
+                line-height: 1.2;
+                font-size: 12px;
+            }
+
+            table {
+                -fs-table-paginate: paginate;
+            }
+
+            .pagenumber:before {
+                content: counter(page);
+            }
+
+            .pagecount:before {
+                content: counter(pages);
+            }
+        </style>
+    </head>
+    <div class="header" style="{!IF(renderPage == true, 'display:block', 'display:none')}">
+        <table style="width:100%;">
+            <tr>
+                <th>
+                    <apex:image url="{!$Resource.LSCLogo}" />
+                </th>
+                <td style="text-align:right;"> Instalment No.
+                    <apex:outputText value=" {!recCase.CaseNumber}" />
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="header" style="{!IF(renderPage == false, 'display:block', 'display:none')}">
+        <apex:pageMessages />
+    </div>
+    <div class="footer" Style="{!IF(renderPage == true, 'display:block', 'display:none')}">
+        Helpline 13 14 41 | www.longservice.nsw.gov.au
+        <hr/> 32 Mann Street, Gosford NSW 2250 | Locked Bag 3000, Central Coast MC NSW 2252 | ABN 93 646 090 808
+    </div>
+    <div class="content" Style="{!IF(renderPage == true, 'display:block', 'display:none')}">
+        <h1>
+            Approval to pay Levy by instalments
+        </h1>
+        <p>
+            <b>Date:</b> {!RIGHT(TEXT(DAY(DATEVALUE(recCase.ClosedDate))+ 100), 2)}/{!RIGHT(TEXT(MONTH(DATEVALUE(recCase.ClosedDate))+
+            100), 2)}/{!YEAR(DATEVALUE(recCase.ClosedDate))}
+        </p>
+        <p>
+            The Corporation has
+            <b>approved</b> your application to
+            <b>pay the levy by instalments</b> for the following project:
+        </p>
+        
+        <div style="display:inline-block; width: 50%;vertical-align: top;">
+            <h2>
+                Development Applicant
+            </h2>
+            {!recCase.Account.Name}
+            <br/> {!recCase.Account.BillingStreet}
+            <br/> {!recCase.Account.BillingCity} {!recCase.Account.BillingState} {!recCase.Account.BillingPostalCode}
+            <br/>
+            </div><div style="display:inline-block; width: 50%;">
+            <h2>
+                Development details
+            </h2>
+            <table>
+                <tr>
+                    <th>Development application number:</th>
+                    <td>
+                        <apex:outputText value="{!recCase.LSC_LevyId__r.LSC_ApplicationNumber__c}" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>Approving authority:</th>
+                    <td>
+                        <apex:outputText value="{!recCase.LSC_LevyId__r.LSC_LocalGovtAreaOrGovtAuthority__c}" />
+                    </td>
+                </tr>
+                <tr>
+                    <th>Site Address: </th>
+                    <td>
+                        <apex:outputText value="{!recCase.LSC_LevyId__r.LSC_SiteAddressStreet__c} {!recCase.LSC_LevyId__r.LSC_SiteAddressCity__c} {!recCase.LSC_LevyId__r.LSC_SiteAddressState__c} {!recCase.LSC_LevyId__r.LSC_SiteAddressPostCode__c}"
+                        />
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <h2>
+            Levy details
+        </h2>
+
+        <table>
+            <tr>
+                <th>Levy number:</th>
+                <td>
+                    <apex:outputText value="{!recCase.LSC_LevyId__r.Name}" />
+                </td>
+            </tr>
+            <tr>
+                <th>Total cost of work:</th>
+                <td>
+                    <apex:outputText value="{0, number,$###,###,###,###,##0.00}"><apex:param value="{!recCase.LSC_LevyId__r.LSC_CostOfWorks__c}"/></apex:outputText>
+                 </td>
+            </tr>
+            <tr style="font-size: 14px;font-weight:bold;">
+                <th>Levy payable: </th>
+                <td>
+                    <apex:outputText style="font-weight: bold;" value="{0, number,$###,###,###,###,##0.00}"><apex:param value="{!totalAmountDue}"/></apex:outputText>
+                </td>
+            </tr>
+        </table>
+        <p>
+            Based on the details provided, {!loopCounter} payments will be required over the duration of the project with the first instalment of
+            the levy payable prior to the release of an approval by the approving authority.
+        </p>
+
+        <h2>
+            Levy payment instalments plan
+        </h2>
+        <apex:dataTable value="{!displayInstalDetails}" cellspacing="5" var="item" style="border: 1px solid;" columns="3" columnsWidth="300px, 400px, 100px">
+            <apex:column >
+                <apex:facet name="header">Instalment</apex:facet>
+                <apex:outputText style="padding-left: 30px;" value="{!item.instalmentNo}" />
+            </apex:column>
+            <apex:column >
+                <apex:facet name="header">Due date</apex:facet>
+                <apex:facet name="footer">
+                    <b>Total Levy Payable</b>
+                </apex:facet>
+                <apex:outputText value="{!item.dueDate}" />
+            </apex:column>
+            <apex:column >
+                <apex:facet name="header">Amount due</apex:facet>
+                <apex:facet name="footer">
+                    <apex:outputText style="font-weight: bold;" value="{0, number,$###,###,###,###,##0.00}"><apex:param value="{!totalAmountDue}"/></apex:outputText>
+                </apex:facet>
+                <apex:outputText style="font-weight: bold;" value="{0, number,$###,###,###,###,##0.00}"><apex:param value="{!item.amountDue}"/></apex:outputText>
+            </apex:column>
+        </apex:dataTable>
+        <p>
+            <b>Please note:</b> failure to pay an instalment by the due date may result in the total amount of the instalments
+            unpaid becoming due and payable and the application of penalty interest at the rate of 2% per month or part thereof.
+        </p>
+        <p>
+            <b>Payments must be made directly to the Long Service Corporation.</b>
+        </p>
+    </div>
+</apex:page>

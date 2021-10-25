@@ -1,0 +1,89 @@
+<template>    
+    
+    <h2>Development costs</h2>
+    
+    <template if:true={userJourneyIndividual}>
+        <p><a href="https://www.longservice.nsw.gov.au/bci/levy/paying-the-levy/exemptions" target="_blank" class=""><u>Owner Builder</u></a> permit holders may be granted a reduction in the levy             
+        proportional to the amount of their personal labour performed during the construction.    </p>
+        <p>To apply, you will need to provide your Owner Builder permit number.</p>
+        <p>Time spent managing the project does not qualify for this exemption.</p>
+    </template>
+
+    <template if:true={userJourneyOrganisation}>
+        <p>Non-profit organisations may be entitled to a reduction in the levy proportional to the amount of voluntary labour performed during the construction.</p>
+        <p>Time spent managing the project does not qualify for this exemption.</p>
+    </template>
+
+    <template if:true={applyForExemption}>
+        <lightning-layout>
+            <lightning-layout-item>
+                <label class="slds-form-element slds-form-element__label label-line-height">
+                <span>Are you applying for a <a href="https://www.longservice.nsw.gov.au/bci/levy/paying-the-levy/exemptions" target="_blank">{levyExemptionOptLabel}</a></span><span if:true={userJourneyOrganisation} class="slds-p-top_x-small">
+                    <sup><lightning-helptext class="slds-p-left_xx-small" content="Non-profit organisations may be entitled to a reduction in the levy proportional to the amount of voluntary labour performed during the construction. Time spent managing the project does not qualify for this exemption."></lightning-helptext>     
+                    </sup></span></label>
+            </lightning-layout-item>
+        </lightning-layout>
+            <lightning-radio-group name="levyExemptionOption"   
+                                    label=""                   
+                                    options={options}
+                                    value={levyExempValue}
+                                    id="levyExemptionOpt"
+                                    onchange={handleChange}
+                                    type="radio"
+                                    required
+                                    message-when-value-missing="Please select if you are applying for an owner builder">
+        </lightning-radio-group>
+    </template>
+
+    <template if:true={showLicenseLookup}>
+        <c-owner-builder-licence-lookup onownerbuildevent={handleChildEvent} onemptyownerbox={handleEmptyOwnerTextBox} owner-builder-parameters={ownerBuilderParameters}></c-owner-builder-licence-lookup>
+    </template>
+    
+    
+    <template if:true={displayAddFields}>
+        <lightning-layout>
+            <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6">
+                <label class="slds-form-element__label label-line-height"><span class="slds-var-p-right_x-small">Total cost of building and construction work (inclusive of GST)</span><sup><lightning-helptext content={totalCostHelpTxt}></lightning-helptext></sup></label>
+                <lightning-input label="Total cost of building and construction work (inclusive of GST)" type="number" formatter="currency" step=".01" name="totalBuildConstCost" value={numberFieldValue} placeholder="Enter amount only up to 2 decimal places" onchange={handleNumberChange}
+                 message-when-step-mismatch="Please enter amount only up to 2 decimal places" onblur={handleBlur}
+                required message-when-value-missing="Please enter the total cost of building and construction work (inclusive of GST)" max="1000000000000" variant="label-hidden">
+                </lightning-input>
+            </lightning-layout-item>         
+        </lightning-layout>
+
+        <lightning-layout>
+            <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6">    
+                <label class="slds-form-element__label label-line-height"><span class="slds-var-p-right_x-small">Estimated cost of your voluntary labour (inclusive of GST)</span><sup><lightning-helptext content={estCosthelpText}></lightning-helptext></sup></label>                
+                <lightning-input label="Estimated cost of your voluntary labour (inclusive of GST)" type="number" class="strong-text" formatter="currency" placeholder="Enter amount only up to 2 decimal places" name="estCostVoluntaryLabor" data-id="voluntaryLabor"
+                step=".01" onchange={handleExemptionChange} value={exepmtionValue} required message-when-step-mismatch="Please enter amount only up to 2 decimal places" 
+                message-when-value-missing="Please enter the estimated cost of your voluntary labour (inclusive of GST)" variant="label-hidden"></lightning-input>
+            </lightning-layout-item>
+        </lightning-layout>
+       
+        <lightning-layout>
+            <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="4">
+                <lightning-input label="Levy payable (subject to approval)" type="number" formatter="currency" step=".01" name="levyPayable" value={calculatedValue} placeholder="0" disabled message-when-step-mismatch="Please enter a value with .01 accuracy" >
+                </lightning-input>
+            </lightning-layout-item>         
+        </lightning-layout>        
+    </template>
+
+
+    <template if:true={ShowNoLicenseLookup}>
+        <lightning-layout>
+            <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6">
+                <label class="slds-form-element__label label-line-height"><span class="slds-var-p-right_x-small">Total cost of building and construction work (inclusive of GST)</span><sup><lightning-helptext content={totalCostHelpTxt}></lightning-helptext></sup></label>
+                <lightning-input label="Total cost of building and construction work (inclusive of GST)" type="number" formatter="currency" step=".01" name="totalBuildConstCost" value={numberFieldValue} placeholder="Enter amount only up to 2 decimal places" onchange={handleNumberChange} message-when-step-mismatch="Please enter amount only up to 2 decimal places" 
+                required message-when-value-missing="Please enter the total cost of building and construction work (inclusive of GST)" onblur={handleBlur} max="1000000000000" variant="label-hidden">
+                </lightning-input>
+            </lightning-layout-item>         
+        </lightning-layout>
+
+        <lightning-layout>
+            <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="4">
+                <lightning-input label="Levy payable" type="number" formatter="currency" step=".01" name="levyPayable" value={calculatedValue} placeholder="0" disabled message-when-step-mismatch="Please enter a value with .01 accuracy" >
+                </lightning-input>
+            </lightning-layout-item>         
+        </lightning-layout>
+    </template>
+</template>

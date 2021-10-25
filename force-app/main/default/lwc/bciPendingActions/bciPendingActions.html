@@ -1,0 +1,26 @@
+<template>
+    <h1 if:false={renderAsShared}>Your pending actions</h1>
+    <template if:true={hasCaseNTransactionData}>
+        <lightning-datatable class="slds-max-medium-table_stacked" wrap-text-max-lines="2" key-field="id" data={caseNTransactionData} columns={columns} hide-checkbox-column></lightning-datatable>
+        <p if:true={renderAsShared}><a href="./pending-actions" target="_blank" class="slds-p-left_x-small"><u>see all</u> <lightning-icon class="slds-p-left_xx-small" icon-name="utility:forward" alternative-text="click forward" title="click forward" size="xx-small"></lightning-icon></a> </p>
+        <template if:true={multiplePages}>
+            <div if:true={mobileView}><p><span>Page {page} of {totalPage}</span></p></div>
+            <lightning-layout multiple-rows class="slds-p-vertical_large">
+                <lightning-layout-item class="slds-p-vertical_small slds-p-right_small">
+                    <lightning-button label="Previous" icon-name="utility:chevronleft" onclick={previousHandler} disabled={isPrev} class="table-nav"> 
+                    </lightning-button>
+                </lightning-layout-item>
+                <lightning-layout-item class="slds-p-vertical_small">
+                    <lightning-button label="Next" icon-name="utility:chevronright" icon-position="right" disabled={isNext}
+                        onclick={nextHandler} class="table-nav"></lightning-button>                
+                </lightning-layout-item>
+                <lightning-layout-item alignment-bump="left" if:false={mobileView}>
+                    <p><span>Page {page} of {totalPage}</span></p>
+                </lightning-layout-item>
+            </lightning-layout>
+        </template>
+    </template>
+    <template if:true={noRecordstoShow}>
+        <p class="slds-align_absolute-center"><span>No pending actions to show</span></p>
+    </template>  
+</template>

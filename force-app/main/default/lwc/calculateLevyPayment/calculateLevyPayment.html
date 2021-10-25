@@ -1,0 +1,41 @@
+<template>
+    <h1>Levy calculator</h1>
+    <p>
+        <span>
+            Use this calculator to determine the levy payable for your building project.
+        </span>
+    </p>
+    <p>
+        <span>
+            No levy is payable on work with a total value of less than $25,000.
+        </span>
+    </p>
+    <label class="slds-form-element__label">
+        <span><b>Total cost of building and construction work (including GST)</b></span>
+        <lightning-helptext content={helptext}></lightning-helptext>
+    </label>
+    <lightning-layout>
+        <lightning-layout-item size="8" small-device-size="8" medium-device-size="6" large-device-size="4">
+            <lightning-input type="number" formatter="currency" step=".01" max="1000000000000" name="input1" class="totalCost" value={numberFieldValue} variant="label-hidden" placeholder="Enter amount only up to 2 decimal places" onchange={handleNumberChange}
+                message-when-step-mismatch="Please enter amount only up to 2 decimal places"></lightning-input>
+        </lightning-layout-item>                  
+        <lightning-layout-item size="6" small-device-size="4" medium-device-size="6" large-device-size="2" class="inline-button">                
+                <template if:true={showResetBtn}>
+                    <lightning-button label="Reset" onclick={resetButton}  ></lightning-button> 
+                </template>                
+        </lightning-layout-item>                
+    </lightning-layout>
+    <lightning-layout>
+        <lightning-layout-item size="8" small-device-size="8" medium-device-size="6" large-device-size="4">                    
+                <lightning-input type="number" class="strong-text" formatter="currency" name="input1"  placeholder="0"
+                disabled step=".01" label="Levy payable" value={calculatedValue}></lightning-input>
+        </lightning-layout-item>
+        <lightning-layout-item ></lightning-layout-item>                
+    </lightning-layout>
+    <template if:false={canPayLevy}>
+        <p class="paragraph_with"><b>No Levy payable</b></p>
+    </template>
+    <template if:true={showLevyPay}>
+        <lightning-button label="Pay now" onclick={handleClick} class="slds-m-top_x-small"></lightning-button> 
+    </template>
+</template>

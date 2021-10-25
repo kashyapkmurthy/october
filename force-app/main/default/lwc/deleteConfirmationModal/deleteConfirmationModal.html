@@ -1,0 +1,46 @@
+<template>
+    <template if:true={showModal}>
+        <div style="height: auto; width:auto">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <template if:true={showHeader}>
+                        <header class="slds-modal__header">
+                            <h2 id="modal-heading-01"
+                                class="slds-text-heading_small slds-text-align_left slds-hyphenate">{modalHeading}</h2>
+                            <lightning-button-icon icon-name="utility:close" class="slds-float_right"
+                                onclick={handleCancel} alternative-text="close"></lightning-button-icon>
+                        </header>
+                    </template>
+
+                    <div class="slds-modal__content" id="modal-content-id-1">
+                        <div class="slds-p-around_large">
+                            <p id="action" class="slds-align_absolute-center"> <br /><br />
+                                <lightning-icon id="info" size="large" icon-name="utility:warning" alternative-text="Are you sure?"
+                                    title="DeleteConfirmation"></lightning-icon>
+                                <br />
+                            </p>
+                            <br />
+                            <p class="slds-align_absolute-center"><b>Are you sure?</b></p>
+                            <br />
+                            <template if:true={showMessage}>
+                                <div class="slds-text-align_center">
+                                    <p>{message}</p>
+                                </div>
+                            </template>
+                        </div>
+                        <div class="slds-clearfix slds-align_absolute-center">
+                            <lightning-button variant="brand-outline" label="No" onclick={handleNo}>
+                            </lightning-button>
+                            <lightning-button label="Yes" onclick={handleYes}>
+                            </lightning-button>
+                        </div>
+                        <br />
+                    </div>
+                   
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </template>
+</template>

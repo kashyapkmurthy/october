@@ -1,0 +1,60 @@
+<template>
+	<template if:true={renderRegistrationComponent}>
+        <h1>Levy registration</h1>
+        <template if:true={isLoading}>
+            <c-spinner size-input="large"></c-spinner>
+        </template>
+        <template if:true={registrationTypeChoiceStep}>
+            <c-registration-type-choice registration-parameters={registrationParameters}></c-registration-type-choice>
+        </template>
+        <template if:true={registrationLevyChoiceStep}>
+            <c-registration-levy-choice registration-parameters={registrationParameters} onupdateregparameters={handleUpdateRegParameters}></c-registration-levy-choice>
+        </template>
+        <template if:true={registrationContactFieldsStep}>
+            <c-registration-contact-fields is-existing-user={isExistingUser} registration-parameters={registrationParameters} onupdatecontactdetailsparameters={handleUpdateRegParameters}></c-registration-contact-fields>
+        </template>
+        <template if:true={registrationPasswordStep}> 
+            <c-registration-password registration-parameters={registrationParameters} onupdatelogindetailsparameters={handleUpdateRegParameters}></c-registration-password>
+        </template>
+        <template if:true={registrationSummaryStep}>
+            <c-registration-summary registration-parameters={registrationParameters} onsummaryeditevent={handleSummaryPageEvent} onupdatesummarydetailsparameters={handleUpdateRegParameters}></c-registration-summary>
+        </template>
+        <template if:true={registrationBusinessDetailsStep}>
+            <c-registration-business-details phone-label="Main business phone" email-label="Business email" 
+            street-addrss-label="Primary business street address" postal-addrss-label="Business postal address" registration-parameters={registrationParameters} onupdatebusinessdetailsparameters={handleUpdateRegParameters}></c-registration-business-details>
+        </template>     
+        <template if:true={thankYouStep}>
+            <c-thank-you-page is-existing-user={isExistingUser} registration-parameters={registrationParameters}></c-thank-you-page>
+        </template>
+        <template if:true={hasErrorMessage}>
+            <div class="nsw-notification nsw-notification--error" >
+                <lightning-icon icon-name="utility:error" alternative-text="Error!" title="Error" class="slds-p-right_x-small"></lightning-icon>
+                <div class="nsw-notification__content">
+                    <h4 class="nsw-notification__title">Error registering your account</h4>
+                    <p>{errorMessage}</p>
+                </div>
+            </div>
+        </template>         
+        <div class="slds-p-vertical_xx-large">     
+            <div class="slds-grid">
+                <span>
+                    <template if:true={isPrev}>
+                        <div class="slds-p-right_medium">
+                            <lightning-button variant="Neutral" label="Back" onclick={handlePrev}></lightning-button>
+                        </div>
+                    </template> 
+                </span>
+                <span>            
+                    <template if:true={isNext}>
+                        <lightning-button label="Next" variant="Neutral" onclick={handleNext}></lightning-button>
+                    </template>
+                </span>
+                <span>
+                    <template if:true={isSubmit}>
+                        <lightning-button label="Register" variant="Neutral" onclick={handleRegister}></lightning-button>
+                    </template> 
+                </span>
+            </div>     
+        </div>         
+    </template>
+</template>

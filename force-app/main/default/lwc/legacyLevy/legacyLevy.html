@@ -1,0 +1,90 @@
+<template>
+    <template if:true={isCancelled}>
+        <p>Cancelled Legacy Levy can't be converted.</p>
+    </template>
+    <template if:false={isCancelled}>
+        <template if:true={isConverted}>
+            <p>Legacy Levy has been converted.</p>
+            <p><a href={levyLink}>Link to the converted Levy</a></p>
+        </template>
+        <template if:false={isConverted}>
+            <template if:true={isLocked}>
+                <p>Legacy Levy was submitted for conversion approval.</p>
+            </template>
+            <template if:false={isLocked}>
+                <template if:true={data}>
+                    <template if:true={error}>
+                        <span class="slds-text-color_destructive">
+                            <p class="slds-text-body_regular">
+                                <b>{error}</b>
+                            </p>
+                        </span>
+                    </template>
+                    <p><b>Cost of works:</b> ${data.costOfWorks}</p>
+                    <p><b>Levy payable:</b> ${data.levyPayable}</p>
+                    <p><b>Total paid amount:</b> ${data.paidAmount}</p>
+                    <p><b>Total commission amount:</b> ${data.commissionAmount}</p>
+                    <p><b>Total gst amount:</b> ${data.gst}</p>
+                    <p><b>Total refunded amount:</b> ${data.refundedAmount}</p>
+                    <p><b>Total Write Off amount:</b> ${data.writeOffAmount}</p>
+                    <hr style="margin:0.5rem 0"/>
+                    <p>In order to convert the legacy levy please check the amount values and submit them for approval</p>
+                    <lightning-input type="number"
+                    label="Corrected total paid amount"
+                    value={paid}
+                    name="paid"
+                    formatter="currency"
+                    step=".01"
+                    style="padding: 1rem 0.25rem 0 0.25rem;"
+                    min="0"
+                    onchange={handleChange}
+                    required
+                    >
+                    </lightning-input>                 
+                    <lightning-input type="number"
+                    label="Corrected refunded amount"
+                    value={refunded}
+                    name="refunded"
+                    formatter="currency"
+                    step=".01"
+                    style="padding: 0 0.25rem;"
+                    min="0"
+                    onchange={handleChange}
+                    required
+                    >
+                    </lightning-input> 
+                    <lightning-input type="number"
+                    label="Corrected write off amount"
+                    value={writeoff}
+                    name="writeoff"
+                    formatter="currency"
+                    step=".01"
+                    style="padding: 0 0.25rem;"
+                    min="0"
+                    onchange={handleChange}
+                    required
+                    >
+                    </lightning-input>                   
+                    <lightning-record-edit-form object-api-name="LSC_LegacyLevy__c" record-id={recordId} record-type-id={recordTypeId} onsubmit={handleSubmit} >
+                        <lightning-input-field disabled field-name="LSC_ApplicationType__c"> 
+                        </lightning-input-field>                        
+                        <lightning-input-field required field-name="LSC_CorrectedLGA__c"> 
+                        </lightning-input-field>                        
+                        <lightning-input-field required field-name="LSC_NewLevyAccount__c">
+                        </lightning-input-field>
+                        <lightning-input-field required field-name="LSC_Approver__c"> 
+                        </lightning-input-field>                                                    
+                        <lightning-button
+                            class="slds-m-top_small"
+                            type="submit"
+                            label="Submit for approval">
+                        </lightning-button>
+                    </lightning-record-edit-form>    
+                </template> 
+            </template>
+            
+   
+        </template> 
+    </template>    
+   
+</template>

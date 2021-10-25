@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Print_Approval</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <hasMenubar>false</hasMenubar>
+    <hasScrollbars>true</hasScrollbars>
+    <hasToolbar>false</hasToolbar>
+    <height>600</height>
+    <isResizable>true</isResizable>
+    <linkType>url</linkType>
+    <masterLabel>Print Approval</masterLabel>
+    <openType>newWindow</openType>
+    <position>none</position>
+    <protected>false</protected>
+    <showsLocation>false</showsLocation>
+    <showsStatus>false</showsStatus>
+    <url>{!        IF(ISPICKVAL (Case.Type, &quot;Non Profit&quot;), 
+             URLFOR(&quot;/apex/ExemptionApprovalNonProfit&quot;&amp;&quot;?id=&quot;&amp;Case.Id),
+             IF(ISPICKVAL (Case.Type, &quot;Owner builder&quot;), 
+                URLFOR(&quot;/apex/ExemptionApprovalOwnerBuilder&quot;&amp;&quot;?id=&quot;&amp;Case.Id),
+                IF(ISPICKVAL (Case.Type, &quot;Equal instalments&quot;), 
+                   URLFOR(&quot;/apex/InstalmentApproval&quot;&amp;&quot;?id=&quot;&amp;Case.Id),
+                   IF(ISPICKVAL (Case.Type, &quot;Staged instalments&quot;), 
+                      URLFOR(&quot;/apex/InstalmentApproval&quot;&amp;&quot;?id=&quot;&amp;Case.Id),
+                      URLFOR(&quot;/apex/ExemptionApproval&quot;&amp;&quot;?id=&quot;&amp;Case.Id)))))
+
+}</url>
+</WebLink>

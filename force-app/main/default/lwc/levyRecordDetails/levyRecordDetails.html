@@ -1,0 +1,135 @@
+<template>
+    <lightning-card title="Development details" class="table-card">
+        <template if:true={levy}>
+            <lightning-layout multiple-rows="true">
+                <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="4">
+                    <p><b>Approval Number:</b></p>
+                </lightning-layout-item>            
+                <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="8">
+                    <p><span>{levy.daNumber}</span></p>
+                </lightning-layout-item>
+            </lightning-layout>    
+            <lightning-layout multiple-rows="true">
+                <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="4">
+                    <p><b>Date paid:</b></p>
+                </lightning-layout-item>            
+                <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="8">
+                    <p><span>{paidDate}</span></p>
+                </lightning-layout-item>
+            </lightning-layout>
+            <lightning-layout multiple-rows="true">
+                <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="4">
+                    <p><b>Site address:</b></p>
+                </lightning-layout-item>            
+                <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="8">
+                    <p><span>{levy.siteAddress}</span></p>
+                </lightning-layout-item>
+            </lightning-layout>
+            <lightning-layout multiple-rows="true">
+                <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="4">
+                    <p><b>Total cost:</b></p>
+                </lightning-layout-item>            
+                <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="8">
+                    <p><span><lightning-formatted-number value={levy.totalCost} format-style="currency"></lightning-formatted-number></span></p>
+                </lightning-layout-item>
+            </lightning-layout>
+            <template if:true={isNotCase}>
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="4">
+                        <p><b>Levy due:</b></p>
+                    </lightning-layout-item>            
+                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="8">
+                        <p><span><lightning-formatted-number value={levy.levyDue} format-style="currency"></lightning-formatted-number></span></p>
+                    </lightning-layout-item>
+                </lightning-layout>        
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="4">
+                        <p><b>Amount paid:</b></p>
+                    </lightning-layout-item>            
+                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="8">
+                        <p><span><lightning-formatted-number value={levy.amountPaid} format-style="currency"></lightning-formatted-number></span></p>
+                    </lightning-layout-item>
+                </lightning-layout>    
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item size="12" small-device-size="12" medium-device-size="4" large-device-size="4">
+                        <p><b>Balance due:</b></p>
+                    </lightning-layout-item>            
+                    <lightning-layout-item size="6" small-device-size="6" medium-device-size="4" large-device-size="4">
+                        <p><span><lightning-formatted-number value={levy.balanceDue} format-style="currency"></lightning-formatted-number></span></p>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" small-device-size="6" medium-device-size="4" large-device-size="4" class="inline-button">
+                        <template if:true={canPay}>
+                            <lightning-button label="Pay now" onclick={handlePay} class="slds-float_right"></lightning-button>
+                        </template>
+                    </lightning-layout-item>            
+                </lightning-layout>
+                <template if:true={hasInterest}>
+                    <lightning-layout multiple-rows="true">
+                        <lightning-layout-item size="12" small-device-size="12" medium-device-size="4" large-device-size="4">
+                            <p><b>Interest due:</b></p>
+                        </lightning-layout-item>            
+                        <lightning-layout-item size="6" small-device-size="6" medium-device-size="4" large-device-size="4">
+                            <p><span><lightning-formatted-number value={levy.interestDue} format-style="currency"></lightning-formatted-number></span></p>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6" small-device-size="6" medium-device-size="4" large-device-size="4" class="inline-button">
+                            <lightning-button label="Pay now" onclick={handleInterestPay} class="slds-float_right"></lightning-button>
+                        </lightning-layout-item>            
+                    </lightning-layout>   
+                </template>   
+            </template>  
+        </template>                                            
+    </lightning-card>
+    <template if:true={isEFTModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close"
+                            alternative-text="close"
+                            variant="inverse"
+                            size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Payment details</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <h3>Pay via EFT</h3>
+                    <p>To pay via EFT create a new payment in your bank account and enter the details below:</p>
+                    <lightning-layout>
+                        <lightning-layout-item size="3" small-device-size="6" medium-device-size="6" large-device-size="4">
+                            <p><span>BSB Code:</span></p>                    
+                        </lightning-layout-item>
+                        <lightning-layout-item size="3" small-device-size="6" medium-device-size="6" large-device-size="4">
+                            <p><span>{bsb}</span></p>                    
+                        </lightning-layout-item>                
+                    </lightning-layout>  
+                    <lightning-layout>
+                        <lightning-layout-item size="3" small-device-size="6" medium-device-size="6" large-device-size="4">
+                            <p><span>Account number:</span></p>                    
+                        </lightning-layout-item>
+                        <lightning-layout-item size="3" small-device-size="6" medium-device-size="6" large-device-size="4">
+                            <p><span>{accNo}</span></p>                    
+                        </lightning-layout-item>                
+                    </lightning-layout>
+                    <lightning-layout>
+                        <lightning-layout-item size="3" small-device-size="6" medium-device-size="6" large-device-size="4">
+                            <p><span>Description:</span></p>                    
+                        </lightning-layout-item>
+                        <lightning-layout-item size="3" small-device-size="6" medium-device-size="6" large-device-size="4">
+                            <template if:false={isInterestModal}><p><span>{levy.transactionId}</span></p></template>
+                            <template if:true={isInterestModal}><p><span>{levy.interestId}</span></p></template>
+                                             
+                        </lightning-layout-item>                
+                    </lightning-layout>                                            
+                    <template if:true={canPayCpp}>
+                        <hr>
+                        <h3>Pay via NSW Customer Payment Portal</h3>
+                        <lightning-button label="Pay now" onclick={payCPP} ></lightning-button>
+                    </template>
+                    <lightning-button class="slds-m-left_x-small" label="Close" onclick={handleClickClose}></lightning-button>                               
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>       
+</template>

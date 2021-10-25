@@ -1,0 +1,91 @@
+<template>
+    <div class="slds-var-m-top_medium">
+        <h1>Login / Register</h1>
+        <p class="slds-var-p-top_medium">To pay a levy you will need to login or create an account</p>
+         <ul class="slds-list_dotted slds-var-p-bottom_medium">
+            <li>for individuals login with ServiceNSW</li>
+            <li>for companies/ organisation login with LSC account</li>
+         </ul>   
+        <lightning-layout>
+            <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="4">
+                <button type="submit" class="service-button" onclick={handleSNSWLogin}><span>Log in with Service NSW</span></button>
+            </lightning-layout-item>
+        </lightning-layout>
+        <lightning-layout>
+            <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="4" style="text-align: center;">
+                <p><span>or</span></p>
+                <p><span>Log in with LSC account</span></p>
+            </lightning-layout-item>
+        </lightning-layout>   
+        <template if:true={isVerificationCompleted}>
+            <div class="nsw-notification nsw-notification--success">
+                <lightning-icon icon-name="utility:success" alternative-text="Success!" title="Success" class="slds-p-right_x-small"></lightning-icon>
+                <div class="nsw-notification__content">
+                    <h4 class="nsw-notification__title">Email verification</h4>
+                    <p>Thank you for confirming your email. You can now log in</p>
+                </div>
+            </div>
+        </template>   
+        <template if:true={isVerificationError}>
+            <div class="nsw-notification nsw-notification--warning">
+                <lightning-icon icon-name="utility:warning" alternative-text="Warning!" title="Warning" class="slds-p-right_x-small"></lightning-icon>
+                <div class="nsw-notification__content">
+                    <h4 class="nsw-notification__title">Email is not verified</h4>
+                    <p>Your email hasn't been verified. If you can't find the verification email in your inbox, please check your spam or junk mail folders.</p>
+                    <a onclick={handleEmailVerification}>Click this link if you haven't received an email or your verification link has expired</a>
+                </div>
+            </div>           
+        </template>
+        <template if:true={isVerificationExpired}>
+            <div class="nsw-notification nsw-notification--warning">
+                <lightning-icon icon-name="utility:warning" alternative-text="Warning!" title="Warning" class="slds-p-right_x-small"></lightning-icon>
+                <div class="nsw-notification__content">
+                    <h4 class="nsw-notification__title">Verification link expired</h4>
+                    <p>Your email verification link has expired.</p>
+                    <a onclick={handleEmailVerification}>Click this link if you want to submit a verification link one more time</a>
+                </div>
+            </div>             
+        </template>   
+        <template if:true={isVerificationFailed}>
+            <div class="nsw-notification nsw-notification--error">
+                <lightning-icon icon-name="utility:error" alternative-text="Error!" title="Error" class="slds-p-right_x-small"></lightning-icon>
+                <div class="nsw-notification__content">
+                    <h4 class="nsw-notification__title">Error verifying your email</h4>
+                    <p>There's a problem with your email verification code.</p>
+                    <a onclick={handleEmailVerification}>Click this link if you want to submit a verification link one more time</a>
+                </div>
+            </div>              
+        </template>                 
+        <template if:true={isEmailSent}>
+            <div class="nsw-notification nsw-notification--success">
+                <lightning-icon icon-name="utility:success" alternative-text="Success!" title="Success" class="slds-p-right_x-small"></lightning-icon>
+                <div class="nsw-notification__content">
+                    <h4 class="nsw-notification__title">Email verification</h4>
+                    <p>Verification email has been sent</p>
+                </div>
+            </div>          
+        </template>
+        <template if:true={isEmailNotAllowedInSandbox}>
+            <div class="nsw-notification nsw-notification--error">
+                <lightning-icon icon-name="utility:error" alternative-text="Error!" title="Error" class="slds-p-right_x-small"></lightning-icon>
+                <div class="nsw-notification__content">
+                    <h4 class="nsw-notification__title">Error login</h4>
+                    <p>{emailNotAllowedErrorMessage}</p>
+                </div>
+            </div>              
+        </template>                           
+        <lightning-layout>
+            <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="4">
+                <lightning-input type="email" pattern="^[A-Za-z0-9._%+-/!#$%&'*=?^_`{|}~]+@[A-Za-z0-9.-]+\.[A-Za-z]*$" label="Email" data-field ='username' name="username" value={username} required message-when-pattern-mismatch="Email has wrong format" onchange={handleEmailChange}></lightning-input>
+                <lightning-input type={passwordType} label="Password" value={password} required min-length="8" data-field ='password' name="password" max-length="20" onchange={handleChange}></lightning-input>        
+                <lightning-input type="checkbox" label="Show password" onchange={togglePassword}></lightning-input>
+            </lightning-layout-item>
+        </lightning-layout>
+        <div class="slds-var-m-top_x-small"><lightning-button label="Log in" onclick={handleLogin} ></lightning-button></div>
+        <div class="slds-var-m-top_x-small"><a href="./ForgotPassword" class="slds-var-m-right_x-large">Forgot password</a><a onclick={handleRegistration}>Create LSC account</a></div>
+        <br/>
+        <p>
+            <span>By clicking 'Log in with Service NSW' I understand and agree that:<br/>The personal information I provide will be collected and managed in accordance with the <a href="https://www.longservice.nsw.gov.au/bci/the-corporation/accessing-information/privacy">Long Service Corporation (LSC) Terms and Conditions and Privacy Notice</a>.</br>My email address will be provided to the LSC to allow login with my Service NSW Account.</span>
+        </p>
+    </div>
+</template>

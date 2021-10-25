@@ -1,0 +1,119 @@
+<template>
+    <lightning-card>
+        <template if:false={equalInstalments}>
+            <template iterator:it={data}>
+                <div key={it.value.id}>
+                    <lightning-layout multiple-rows class={it.value.bckgrndColor}>
+                        <template if:false={smallMediumDevView}>
+                            <lightning-layout-item padding="horizontal-medium" size="12" small-device-size="12" medium-device-size="12" large-device-size="2">
+                                <template if:false={it.last}>
+                                        <label class="slds-p-top_medium slds-form-element__label slds-no-flex">{it.value.stage}:</label>
+                                </template>
+                                <template if:true={it.last}>
+                                    <template if:false={readOnly}>
+                                        <div class="slds-p-top_medium">
+                                            <a if:true={showAddMore} onclick={handleAddRow}><u><span style="color: #2E5299">Add a CC/stage</span></u></a>
+                                        </div>
+                                    </template>
+                                </template>
+                            </lightning-layout-item>
+                            <lightning-layout-item padding="horizontal-medium" size="12" small-device-size="12" medium-device-size="12" large-device-size="3">
+                                <template if:false={it.last}>
+                                    <lightning-input type="date" maxlength="80" label="Proposed start date" value={it.value.startDate} id={it.value.id} data-index={it.value.id} name="startDate" onchange={handlePropsedDate} required message-when-value-missing="Please enter a proposed start date"
+                                    read-only={readOnly}></lightning-input> 
+                                </template>
+                            </lightning-layout-item>
+                            <lightning-layout-item padding="horizontal-medium" size="12" small-device-size="12" medium-device-size="12" large-device-size="3">
+                                <template if:false={it.last}>
+                                    <lightning-input type="number" maxlength="15" label="Stage Construction cost" value={it.value.estimatedCost} name="estimatedCost" id={it.value.id} data-index={it.value.id} onchange={handleCostChange} formatter="currency" step=".01" required message-when-value-missing="Please enter estimated cost"
+                                    message-when-step-mismatch="Please enter amount only up to 2 decimal places" read-only={readOnly}></lightning-input> 
+                                </template>
+                                <template if:true={it.last}>
+                                    <lightning-input type="number" maxlength="15" label="Total cost" value={it.value.totalCost} name="totalCost" id={it.value.id} data-index={it.value.id} formatter="currency" step=".01" disabled read-only={readOnly}></lightning-input> 
+                                    <lightning-formatted-text class="slds-form-element__help slds-has-error slds-text-color_error" if:true={showErrorMess} value={totalCostErrorMessage} name="totalCostErrMessage"></lightning-formatted-text>
+                                </template>
+                            </lightning-layout-item>
+                            <lightning-layout-item padding="horizontal-medium" size="12" small-device-size="12" medium-device-size="12" large-device-size="3">
+                                <template if:false={it.last}>
+                                    <lightning-input type="number" maxlength="15" label="Levy amount" value={it.value.levyAmt} id={it.value.id} data-index={it.value.id} name="levyAmount" disabled formatter="currency" step=".01" read-only={readOnly}></lightning-input> 
+                                </template>
+                                <template if:true={it.last}>
+                                    <lightning-input type="number" maxlength="15" label="Total levy amount" value={it.value.totalLevyAmt} name="totalLevyAmt" id={it.value.id} data-index={it.value.id} onchange={handleCostChange} formatter="currency" step=".01" disabled read-only={readOnly}></lightning-input> 
+                                </template>
+                            </lightning-layout-item >
+                            <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="1" padding={horizontalPaddingDelICon}>
+                                <template if:false={readOnly}>
+                                    <div class={verticalPaddingDelIcon}>
+                                        <lightning-icon if:true={it.value.showDel} icon-name="action:delete" alternative-text="Delete" title="Delete" onclick={deleteRow} id={it.value.id} data-index={it.value.id} access-key={it.value.id} size="xx-small"></lightning-icon>
+                                    </div>
+                                </template>
+                            </lightning-layout-item>
+                        </template>
+
+                        <template if:true={smallMediumDevView}>
+                            <lightning-layout-item padding="horizontal-medium" size="12" small-device-size="12" medium-device-size="12">
+                                <template if:false={it.last}>
+                                        <label class="slds-p-top_medium slds-form-element__label slds-no-flex">{it.value.stage}:</label>
+                                </template>
+                                <template if:true={it.last}>
+                                    <template if:false={readOnly}>
+                                        <div class="slds-p-top_medium">
+                                            <a if:true={showAddMore} onclick={handleAddRow}><u><span style="color: #2E5299">Add a CC/stage</span></u></a>
+                                        </div>
+                                    </template>
+                                </template>
+                            </lightning-layout-item>
+                            <lightning-layout-item padding="horizontal-medium" size="12" small-device-size="12" medium-device-size="12">
+                                <template if:false={it.last}>
+                                    <lightning-input type="date" maxlength="80" label="Proposed start date" value={it.value.startDate} id={it.value.id} data-index={it.value.id} name="startDate" onchange={handlePropsedDate} required message-when-value-missing="Please enter a proposed start date"
+                                    read-only={readOnly}></lightning-input> 
+                                </template>
+                            </lightning-layout-item>
+                            <template if:true={it.last}>
+                                <lightning-layout-item padding="horizontal-medium" size="12" small-device-size="12" medium-device-size="12">
+                                    <p class="slds-border_top"></p>  
+                                </lightning-layout-item > 
+                            </template>
+                            <lightning-layout-item padding="horizontal-medium" size="12" small-device-size="12" medium-device-size="12">
+                                <template if:false={it.last}>
+                                    <lightning-input type="number" maxlength="15" label="Stage Construction cost" value={it.value.estimatedCost} name="estimatedCost" id={it.value.id} data-index={it.value.id} onchange={handleCostChange} formatter="currency" step=".01" required message-when-value-missing="Please enter estimated cost"
+                                    message-when-step-mismatch="Please enter amount only up to 2 decimal places" read-only={readOnly}></lightning-input> 
+                                </template>
+                                <template if:true={it.last}>
+                                    <lightning-input type="number" maxlength="15" label="Total cost" value={it.value.totalCost} name="totalCost" id={it.value.id} data-index={it.value.id} formatter="currency" step=".01" disabled read-only={readOnly}></lightning-input> 
+                                    <lightning-formatted-text class="slds-form-element__help slds-has-error slds-text-color_error" if:true={showErrorMess} value={totalCostErrorMessage} name="totalCostErrMessage"></lightning-formatted-text>
+                                </template>
+                            </lightning-layout-item>
+                            <lightning-layout-item padding="horizontal-medium" size="12" small-device-size="12" medium-device-size="12">
+                                <template if:false={it.last}>
+                                    <lightning-input type="number" maxlength="15" label="Levy amount" value={it.value.levyAmt} id={it.value.id} data-index={it.value.id} name="levyAmount" disabled formatter="currency" step=".01" read-only={readOnly}></lightning-input> 
+                                </template>
+                                <template if:true={it.last}>
+                                    <lightning-input type="number" maxlength="15" label="Total levy amount" value={it.value.totalLevyAmt} name="totalLevyAmt" id={it.value.id} data-index={it.value.id} onchange={handleCostChange} formatter="currency" step=".01" disabled read-only={readOnly}></lightning-input> 
+                                </template>
+                            </lightning-layout-item >
+                            <lightning-layout-item size="12" small-device-size="12" medium-device-size="12" padding={horizontalPaddingDelICon}>
+                                <template if:false={readOnly}>
+                                    <div class={verticalPaddingDelIcon}>
+                                        <lightning-icon if:true={it.value.showDel} icon-name="action:delete" alternative-text="Delete" title="Delete" onclick={deleteRow} id={it.value.id} data-index={it.value.id} access-key={it.value.id} size="xx-small"></lightning-icon>
+                                    </div>
+                                </template>
+                            </lightning-layout-item>
+                        </template>
+                    </lightning-layout>
+                </div>
+            </template>
+        </template>
+        <template if:false={experienceBuilder}>
+            <template if:false={equalInstalments}>
+                <div class="slds-align_absolute-center slds-p-top_x-large">
+                    <lightning-button class="slds-p-right_medium" label="Save" variant="brand" onclick={validateAllFields} disabled={saveButtnDisabled}></lightning-button>
+                    <lightning-button label="Cancel" variant="brand" onclick={handleCancel} disabled={cancelButtnDisabled}></lightning-button>
+                </div>
+            </template>
+            <template if:true={equalInstalments}>
+                <c-preset-instalments develop-costs-data={developCostsDataForPresetInstalment} is-internal></c-preset-instalments>
+            </template>
+        </template>
+    </lightning-card>
+</template>

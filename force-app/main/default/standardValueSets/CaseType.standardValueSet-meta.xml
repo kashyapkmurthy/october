@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<StandardValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <sorted>false</sorted>
+    <standardValue>
+        <fullName>Construction did not start</fullName>
+        <default>false</default>
+        <label>Construction did not start</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Over-payment</fullName>
+        <default>false</default>
+        <label>Over-payment</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Paid twice</fullName>
+        <default>false</default>
+        <label>Paid twice</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Value decreased</fullName>
+        <default>false</default>
+        <label>Value decreased</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Add GST to payment</fullName>
+        <default>false</default>
+        <label>Add GST to payment</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Owner builder</fullName>
+        <default>false</default>
+        <label>Owner builder</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Non profit</fullName>
+        <default>false</default>
+        <label>Non profit</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Bushfire recovery</fullName>
+        <default>false</default>
+        <label>Bushfire recovery</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Equal instalments</fullName>
+        <default>false</default>
+        <label>Equal instalments</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Staged instalments</fullName>
+        <default>false</default>
+        <label>Staged instalments</label>
+    </standardValue>
+    <standardValue>
+        <fullName>System navigation help</fullName>
+        <default>false</default>
+        <label>System navigation help</label>
+    </standardValue>
+    <standardValue>
+        <fullName>General enquiry</fullName>
+        <default>false</default>
+        <label>General enquiry</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Update on existing case</fullName>
+        <default>false</default>
+        <label>Update on existing case</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Council related question</fullName>
+        <default>false</default>
+        <label>Council related question</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Dispute</fullName>
+        <default>false</default>
+        <label>Dispute</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Determination</fullName>
+        <default>false</default>
+        <label>Determination</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Other</fullName>
+        <default>false</default>
+        <label>Other</label>
+    </standardValue>
+    <standardValue>
+        <fullName>The construction work did not proceed</fullName>
+        <default>false</default>
+        <label>The construction work did not proceed</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Overpayment of the levy</fullName>
+        <default>false</default>
+        <label>Overpayment of the levy</label>
+    </standardValue>
+    <standardValue>
+        <fullName>The levy was paid twice</fullName>
+        <default>false</default>
+        <label>The levy was paid twice</label>
+    </standardValue>
+    <standardValue>
+        <fullName>The value of work decreased</fullName>
+        <default>false</default>
+        <label>The value of work decreased</label>
+    </standardValue>
+    <standardValue>
+        <fullName>The work is not leviable</fullName>
+        <default>false</default>
+        <label>The work is not leviable</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Requesting a non-profit partial exemption refund</fullName>
+        <default>false</default>
+        <label>Requesting a non-profit partial exemption refund</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Requesting an owner builder partial exemption refund</fullName>
+        <default>false</default>
+        <label>Requesting an owner builder partial exemption refund</label>
+    </standardValue>
+    <standardValue>
+        <fullName>BCI</fullName>
+        <default>false</default>
+        <label>BCI</label>
+    </standardValue>
+    <standardValue>
+        <fullName>CCI</fullName>
+        <default>false</default>
+        <label>CCI</label>
+    </standardValue>
+</StandardValueSet>

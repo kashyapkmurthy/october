@@ -1,0 +1,257 @@
+<apex:page standardController="LSC_Transaction__c" contentType="application/pdf#LevyReceipt.pdf" title="Levy Receipt" extensions="LSC_PrintTransactionDetails" showHeader="false" applyBodyTag="false" renderAs="pdf">
+    <head>
+        <style type="text/css" media="print">
+            @page {
+                padding-top: 120px;
+                margin-bottom: 3cm;
+
+                @top-center {
+                    content: element(header);
+                }
+                @bottom-left {
+                    content: element(footer);
+                }
+            }
+
+            div.header {
+                padding-top: 60px;
+                position: running(header);
+                font-family: Helvetica, sans-serif;
+                font-size: 20px;
+            }
+
+            div.footer {
+                position: running(footer);
+                font-size: 12px;
+                font-family: Helvetica, sans-serif;
+                text-align: center;
+            }
+
+            div.content {
+                font-family: Helvetica, sans-serif, sans-serif;
+                line-height: 1.2;
+            	font-size: 14px;
+            	position: absolute;
+				top: 0;
+            }
+
+            .label {
+                font-weight:bold; 
+                font-size: 18px;    
+            }
+
+            .pagenumber:before {
+                content: counter(page);
+            }
+
+            .pagecount:before {
+                content: counter(pages);
+            }
+        </style>
+    </head>
+    <div class="header" style="{!IF(renderPage == true, 'display:block', 'display:none')}">
+        <table style="width:100%;">
+            <tr>
+                <th>
+                    <apex:image url="{!$Resource.LSCLogo}" />
+                </th>
+                <td style="text-align:right;"> Receipt No.
+                    <apex:outputText value="{!transactiondetail.LSC_LevyId__r.Name}" />
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="header" style="{!IF(renderPage == false, 'display:block', 'display:none')}">
+        <apex:pageMessages />
+    </div>
+    <div class="footer" style="{!IF(renderPage == true, 'display:block', 'display:none')}">
+        Helpline 13 14 41 | www.longservice.nsw.gov.au
+        <hr/> 32 Mann Street, Gosford NSW 2250 | Locked Bag 3000, Central Coast MC NSW 2252 | ABN 93 646 090 808
+    </div>
+    
+
+    <div class="content" style="{!IF(renderPage == true, 'display:block', 'display:none')}">
+        <h1 style="margin-bottom: 0px;line-height: 0px;">Levy Receipt</h1>
+        <apex:pageblock title="">
+            <apex:pageblocksection title="" columns="1">
+                <apex:pageBlockSectionItem >
+                        <apex:outputLabel style="font-weight: 250;" value="Date:">&nbsp;</apex:outputLabel>
+                        <apex:outputText value="{0,date,dd'/'MM'/'yyyy}"> <apex:param value="{!transactiondetail.LSC_LevyId__r.LSC_LastLevyPaidDate__c}" /> </apex:outputText>
+                </apex:pageBlockSectionItem>
+            </apex:pageblocksection>
+        </apex:pageblock>
+        <h2 >Development Applicant</h2>
+        <table>
+            <tr>
+                <td>
+                    <apex:outputText value="{!applicantName}" />   
+                </td>
+            </tr>
+           
+            <tr>
+                <td>
+                    <apex:outputText value="{!applicantMailingAddress}" />  
+                </td>
+            </tr>
+        </table>
+
+       
+        <h2>Development Details</h2>
+        <table>
+            <tr>
+                <td style="width: 45%;">
+                    <apex:outputLabel style="font-weight: bold;" value="Application Type:"></apex:outputLabel>
+                </td>
+                <td>
+                    <apex:outputText value="{!transactiondetail.LSC_LevyId__r.LSC_ApplicationType__c}" />  
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <apex:outputLabel style="font-weight:bold;" value="Application No.:"></apex:outputLabel>
+                </td>
+                <td>
+                    <apex:outputText value="{!transactiondetail.LSC_LevyId__r.LSC_ApplicationNumber__c}" />   
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <apex:outputLabel style="font-weight:bold;" value="Approving Authority:"></apex:outputLabel>
+                </td>
+                <td>
+                    <apex:outputText value="{!transactiondetail.LSC_LevyId__r.LSC_LocalGovtAreaOrGovtAuthority__c}" />  
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <apex:outputLabel style="font-weight:bold;" value="Site Address:"></apex:outputLabel>
+                </td>
+                <td>
+                    <apex:outputText value="{!constructionStreetName}" />  
+                </td>
+            </tr>
+        
+
+        <tr><td><h2>Levy Details</h2></td></tr>
+       
+            <tr>
+                <td>
+                    <apex:outputLabel style="font-weight: bold;" value="Levy No.:"></apex:outputLabel>
+                </td>
+                <td>
+                    <apex:outputText value="{!transactiondetail.LSC_LevyId__r.Name}" />  
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <apex:outputLabel style="font-weight: bold;" value="Cost of Works (incl. GST):"></apex:outputLabel>
+                </td>
+                <td>
+                    <apex:outputText value="{0, number,$###,###,###,###,##0.00}"><apex:param value="{!transactiondetail.LSC_LevyId__r.LSC_CostOfWorks__c}"/></apex:outputText>
+                </td>
+            </tr>
+            <tr style="{!IF(transactiondetail.LSC_LevyId__r.LSC_HasExemption__c == TRUE, '', 'display:none')}">
+                <td>
+                    <apex:outputLabel style="font-weight: bold;" value="Value of Voluntary Labour:"></apex:outputLabel>
+                </td>
+                <td>
+                    <apex:outputText value="{0, number,$###,###,###,###,##0.00}"><apex:param value="{!transactiondetail.LSC_LevyId__r.LSC_ApprovedVoluntaryLabourcost__c}"/></apex:outputText>
+                </td>
+            </tr>            
+            <tr style="{!IF(transactiondetail.LSC_LevyId__r.LSC_HasExemption__c == TRUE, '', 'display:none')}">
+                <td>
+                    <apex:outputLabel style="font-weight: bold;" value="Levy Payable After Exemption:"></apex:outputLabel>
+                     
+                </td>
+                <td>
+                    <apex:outputText value="{0, number,$###,###,###,###,##0.00}"><apex:param value="{!transactiondetail.LSC_LevyId__r.LSC_TotalLevyPayable__c}"/></apex:outputText>
+                </td>
+            </tr>
+            <tr style="{!IF(transactiondetail.LSC_LevyId__r.LSC_HasExemption__c == FALSE, '', 'display:none')}">
+                <td>
+                    <apex:outputLabel style="font-weight: bold;" value="Levy Payable:"></apex:outputLabel>
+                     
+                </td>
+                <td>
+                    <apex:outputText value="{0, number,$###,###,###,###,##0.00}"><apex:param value="{!transactiondetail.LSC_LevyId__r.LSC_TotalLevyPayable__c}"/></apex:outputText>
+                </td>
+            </tr>           
+            <tr style="{!IF(isInstalment == true, 'margin-top:10px', 'display:none')}">
+                <td>
+                    <apex:outputLabel style="font-weight: bold;" value="Instalment Stage:"></apex:outputLabel>         
+                </td>
+                <td>
+                    <apex:outputText value="{!transactiondetail.LSC_Stage__c}" />
+                </td>
+            </tr>     
+            <tr style="{!IF(isInstalment == true, '', 'display:none')}">
+                <td>
+                    <apex:outputLabel style="font-weight: bold;" value="Instalment Paid Amount:"></apex:outputLabel>         
+                </td>
+                <td>
+                    <apex:outputText style="font-weight: bold;" value="{0, number,$###,###,###,###,##0.00}"><apex:param value="{!transactiondetail.LSC_PaidAmount__c}"/></apex:outputText>
+                </td>
+            </tr> 
+            <tr style="{!IF(AND(isInstalment == true, transactiondetail.LSC_Surcharge__c != NULL, transactiondetail.LSC_Surcharge__c > 0), '', 'display:none')}">
+                <td>
+                    <apex:outputLabel style="font-weight: bold;" value="Instalment Surcharge Amount (incl. GST):"></apex:outputLabel>         
+                </td>
+                <td>
+                    <apex:outputText style="font-weight: bold;" value="{0, number,$###,###,###,###,##0.00}"><apex:param value="{!transactiondetail.LSC_Surcharge__c}"/></apex:outputText>
+                </td>
+            </tr>  
+            <tr style="{!IF(transactiondetail.LSC_LevyId__r.LSC_TotalInterestPaidAmount__c == 0, '', 'display:none')}">
+                <td>
+                    <apex:outputLabel style="font-weight: bold;" value="Total Amount Paid (excl. Surcharge):"></apex:outputLabel>
+                </td>
+                <td >
+                    <apex:outputText style="font-weight: bold;" value="{0, number,$###,###,###,###,##0.00}">
+                        <apex:param value="{!transactiondetail.LSC_LevyId__r.LSC_TotalPaidCredit__c}"/>
+                    </apex:outputText>
+                </td>
+            </tr>
+            <tr style="{!IF(transactiondetail.LSC_LevyId__r.LSC_TotalInterestPaidAmount__c != 0, '', 'display:none')}">
+                <td>
+                    <apex:outputLabel style="font-weight: bold;" value="Total Amount Paid (excl. Surcharge):"></apex:outputLabel>
+                </td>
+                <td>
+                    <span>
+                        <apex:outputText style="font-weight: bold;" value="{0, number,$###,###,###,###,##0.00}">
+                            <apex:param value="{!transactiondetail.LSC_LevyId__r.LSC_TotalPaidCredit__c}"/>
+                        </apex:outputText>
+                        (<apex:outputText style="font-weight: bold;" value="{0, number,$###,###,###,###,##0.00}">
+                            <apex:param value="{!transactiondetail.LSC_LevyId__r.LSC_TotalInterestPaidAmount__c}"/>
+                        </apex:outputText>
+                        as Interest)
+                    </span>
+                </td>
+            </tr>
+            <tr style="{!IF(transactiondetail.LSC_LevyId__r.LSC_TotalPaidDebit__c != 0, '', 'display:none')}">
+                <td>
+                    <apex:outputLabel style="font-weight: bold;" value="Total Refund Amount:"></apex:outputLabel>
+                </td>
+                <td>
+                    <apex:outputText value="{0, number,$###,###,###,###,##0.00}"><apex:param value="{!transactiondetail.LSC_LevyId__r.LSC_TotalPaidDebit__c}"/></apex:outputText>
+                </td>
+            </tr>  
+            <tr style="{!IF(AND(transactiondetail.LSC_LevyId__r.LSC_TotalSurcharge__c != NULL, transactiondetail.LSC_LevyId__r.LSC_TotalSurcharge__c > 0), '', 'display:none')}">
+                <td>
+                    <apex:outputLabel style="font-weight: bold;" value="Total Surcharge Amount (incl. GST)* (non-refundable):"></apex:outputLabel>
+                </td>
+                <td>
+                    <apex:outputText style="font-weight: bold;" value="{0, number,$###,###,###,###,##0.00}"><apex:param value="{!transactiondetail.LSC_LevyId__r.LSC_TotalSurcharge__c}"/></apex:outputText>
+                </td>
+            </tr> 
+        </table>
+
+        <br></br>
+        <table>
+            <tr style="{!IF(AND(transactiondetail.LSC_LevyId__r.LSC_TotalSurcharge__c != NULL, transactiondetail.LSC_LevyId__r.LSC_TotalSurcharge__c > 0), '', 'display:none')}">
+                <td colspan="2">
+                    * This secure payment was processed on behalf of LSC by Service NSW (ABN 37 552 837 401)
+                </td>
+            </tr>
+        </table>
+    </div>
+</apex:page>

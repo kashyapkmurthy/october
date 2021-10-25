@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LSC_Refund_Case_Closing_Amount_Rule</fullName>
+    <active>false</active>
+    <description>Validates that Amount field has a value i.e. value entered for the case to be either updated to Closed Approved or Closed Rejected for a refund record type</description>
+    <errorConditionFormula>AND(
+ISCHANGED(Status),
+OR(
+RecordType.DeveloperName = &quot;LSC_Refund&quot;),
+OR(
+ISPICKVAL(PRIORVALUE(Status),&quot;Closed Approved&quot;)),
+ISBLANK(LSC_Amount__c)
+)</errorConditionFormula>
+    <errorMessage>An Amount is required for the status to be updated</errorMessage>
+</ValidationRule>

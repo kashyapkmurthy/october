@@ -1,0 +1,25 @@
+<template>
+    <template if:true={hasData}>
+        <div class="slds-clearfix">
+            <h1 class="slds-float_left">Accept Invite</h1>
+        </div>
+
+        <p>Company "{accountInviteData.accountName}" would like to invite you as a participating user</p>
+        <p>By accepting the invite you confirm to share your personal details with the company</p>
+        <lightning-layout>
+            <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="4">
+                <lightning-input class="phoneInput" read-only={renderReadMode} label="Verification code"
+                pattern="^[0-9 ]+$" value={verificationCode} name="verificationCode" maxlength="6" 
+                type="verificationCode" required message-when-pattern-mismatch="Please enter 6 digit number"
+                message-when-value-missing="Please enter a valid 6 digit verication code recieved in the invitation email" onchange={handleVerificationCodeChange}>
+                </lightning-input>
+            </lightning-layout-item>
+        </lightning-layout>
+        <lightning-button label="Accept" id="busDetails" slot="actions"
+            onclick={handleAccept}>
+        </lightning-button>        
+    </template>
+    <template if:false={hasData}>
+        <p class="slds-align_absolute-center"><span>No invitations pending for acceptance</span></p>
+    </template>
+</template>

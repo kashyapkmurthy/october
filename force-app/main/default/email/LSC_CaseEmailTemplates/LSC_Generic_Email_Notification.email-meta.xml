@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EmailTemplate xmlns="http://soap.sforce.com/2006/04/metadata">
+    <available>true</available>
+    <description>The email notification email is a generic call to attention for the portal user to log on and action a required notification in their portal instance</description>
+    <encodingKey>UTF-8</encodingKey>
+    <name>LSC Generic Email Notification</name>
+    <style>none</style>
+    <subject>You have an outstanding LSC notification</subject>
+    <type>custom</type>
+    <uiType>Aloha</uiType>
+</EmailTemplate>

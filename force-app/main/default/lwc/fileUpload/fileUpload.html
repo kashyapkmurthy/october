@@ -1,0 +1,28 @@
+<template>
+    <lightning-file-upload
+        class="no-margin-button"
+        name="fileUploader"
+        accept={acceptedFormats}
+        record-id={recordId}
+        onuploadfinished={handleUploadFinished}
+        multiple>
+    </lightning-file-upload>   
+    <template if:true={hasFiles}>
+        <p><span>Uploaded Files: </span></p>
+        <template for:each={uploadedFiles} for:item="file">
+            <div key={file} class="slds-m-top_x-small">
+                <lightning-layout>
+                    <lightning-layout-item>
+                        <div class="slds-p-top_xx-small">
+                            <lightning-icon icon-name="doctype:image" size="small" class="slds-m-right_x-small" title="Image"></lightning-icon>
+                            {file.name}
+                        </div>
+                    </lightning-layout-item>
+                    <lightning-layout-item padding="horizontal-medium">
+                        <lightning-icon icon-name="action:close" alternative-text="Remove" name={file.id} title="Remove" onclick={handleFileDelete} size="xx-small"></lightning-icon>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </div>
+        </template>
+    </template>
+</template>

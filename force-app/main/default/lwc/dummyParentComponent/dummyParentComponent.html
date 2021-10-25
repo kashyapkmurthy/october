@@ -1,0 +1,4 @@
+<template>
+    <lightning-button if:false={showaddBusinessPage} variant="Neutral" label="Add a Business" onclick={handleClick}></lightning-button>
+    <c-business-details-add-business  if:true={showaddBusinessPage} onupdateaddbusinessstatus={handleEvent}></c-business-details-add-business>
+</template>

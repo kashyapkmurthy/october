@@ -1,0 +1,58 @@
+<template>
+    <template if:true={showModal}>
+        <div style="height: auto; width:auto">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <template if:true={showHeader}>
+                        <header class="slds-modal__header">
+                            <h2 id="modal-heading-01"
+                                class="slds-text-heading_small slds-text-align_left slds-hyphenate">{modalHeading}</h2>
+                            <lightning-button-icon icon-name="utility:close" class="slds-float_right"
+                                onclick={handleCancel} alternative-text="close"></lightning-button-icon>
+                        </header>
+                    </template>
+
+                    <div class="slds-modal__content" id="modal-content-id-1">
+                        <div class="slds-p-around_large">
+                            <p id="action" class="slds-align_absolute-center"> <br /><br />
+                                <lightning-icon id="success" icon-name="action:approval" alternative-text="Approved"
+                                    title="Approved"></lightning-icon>
+                                <br />
+                            </p>
+                            <br />
+                            <p class="slds-align_absolute-center"><b>Thank you</b></p>
+                            <br />
+                            <template if:true={isNewContact}>
+                                <div class="slds-text-align_center"> <p class="lsc-text-blue">{inputData.name}</p>
+                                    <p>Your new contact has been succesfully added.</p>
+                                </div>
+                            </template>
+                            <template if:true={inputData.isNewUser}>
+                                <div class="slds-text-align_center slds-m-horizontal_medium">We've sent a confirmation email to <b>{inputData.email}</b> who would 
+                                    need to <b>click on the confirm email link</b> in order to be successfully added.
+                                </div>
+                            </template>
+                            <template if:true={showContactSuccess}>
+                                <div class="slds-text-align_center">{inputData.name}
+                                    <br/>Your contact has been succesfully added.
+                                </div>
+                            </template>
+                            <template if:true={inputData.isSendInvite}>
+                                <br />
+                                <div class="slds-text-align_center slds-m-horizontal_medium">We've now sent an email to <b>{inputData.email}</b>&nbsp;
+                                    who would need to <b>Accept the invite</b> in order to be successfully added.
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button class="slds-align_absolute-center" label="Close" onclick={handleCancel}>
+                        </lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </template>
+</template>

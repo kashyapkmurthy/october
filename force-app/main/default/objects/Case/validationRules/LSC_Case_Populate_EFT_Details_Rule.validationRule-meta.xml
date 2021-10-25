@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LSC_Case_Populate_EFT_Details_Rule</fullName>
+    <active>true</active>
+    <description>Validates that EFT details are populated on a refund case if the payment method on related Transaction line item is Cheque, Agency or EFT</description>
+    <errorConditionFormula>AND(
+ISCHANGED(Status),
+RecordType.DeveloperName = &quot;LSC_Refund&quot;,
+ISPICKVAL(Status, &quot;Pending Approval&quot;),
+ISPICKVAL( LSC_TransactionLineItemId__r.LSC_Status__c , &quot;Paid&quot;),
+OR(
+ISBLANK(LSC_AccountName__c),
+ISBLANK(LSC_AccountNo__c),
+ISBLANK(LSC_BankCode__c),
+ISBLANK(LSC_BSB__c)),
+OR(
+ISPICKVAL(LSC_TransactionLineItemId__r.LSC_PaymentMethod__c , &quot;Cheque&quot;),
+ISPICKVAL(LSC_TransactionLineItemId__r.LSC_PaymentMethod__c , &quot;Agency&quot;),
+ISPICKVAL(LSC_TransactionLineItemId__r.LSC_PaymentMethod__c , &quot;EFT&quot;))
+)</errorConditionFormula>
+    <errorMessage>The EFT Account No, Account Name, Bank Code and BSB need to be updated before changing the case status to Pending Approval</errorMessage>
+</ValidationRule>

@@ -1,0 +1,14 @@
+<template>
+    <template if:true={hasMultipleAbns}>
+        <lightning-layout>
+            <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6">
+                <lightning-combobox 
+                    name="Entity"
+                    value={selectedAbn}
+                    options={options}
+                    onchange={handleChange}
+                ></lightning-combobox>       
+            </lightning-layout-item>
+        </lightning-layout>   
+    </template>    
+</template>

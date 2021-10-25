@@ -1,0 +1,19 @@
+<template>
+    <template if:true={showBanner}>
+        <template if:true={smallDevView}><span class="slds-var-p-right_xxx-small slds-var-p-top_xxx-small slds-float_right"><button class="slds-button slds-button_icon slds-button_icon-inverse" title="Close" onclick={handleClose}>
+            <lightning-icon icon-name="utility:close"
+                alternative-text="close"
+                variant="inverse"
+                size="x-small" ></lightning-icon>
+            <span class="slds-assistive-text">Close</span>
+        </button></span></template>
+        <p class="slds-var-p-left_x-small slds-var-p-vertical_small">To continue to pay your levy, please complete your registration.
+            <span if:false={smallDevView} class="slds-var-p-right_x-small slds-float_right"><button class="slds-button slds-button_icon slds-button_icon-inverse" title="Close" onclick={handleClose}>
+            <lightning-icon icon-name="utility:close"
+                alternative-text="close"
+                variant="inverse"
+                size="x-small" ></lightning-icon>
+            <span class="slds-assistive-text">Close</span>
+        </button></span></p>
+    </template>
+</template>

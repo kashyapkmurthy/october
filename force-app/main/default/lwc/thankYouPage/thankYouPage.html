@@ -1,0 +1,18 @@
+<template>
+    <h2>Thank you</h2> 
+    <template if:false={isExistingUser}>
+        <p><b>You're nearly done!</b></p>  
+        <p>We have sent a confirmation email to: </p><div class="txt-color">{email}</div>
+        <p>To complete your registration, <b>go to your email</b> and <b>click on the confirm email link.</b></p>
+            <p>The link will expire in 1 hour.</p>
+
+        <p>If the email hasn't arrived within 5 minutes, check your Spam or Junk folder.</p>
+
+        <p><b>Still having problems?</b></p>
+        <p>Contact us on 13 14 41  (Monday to Friday 8.30am to 5.00pm).</p>
+        <p>Outside of business hours <a href="/bci/s/contactsupport" target="_blank">contact us online</a>.</p>
+    </template>
+    <template if:true={isExistingUser}>
+        <p>You've successfully completed your registration. Click this <a href=".">link</a> to start using the portal.</p>
+    </template>
+</template>

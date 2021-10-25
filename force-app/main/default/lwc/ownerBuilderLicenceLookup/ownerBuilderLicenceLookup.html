@@ -1,0 +1,20 @@
+<template>        
+    <lightning-layout multiple-rows="true">
+        <lightning-layout-item size="12" small-device-size="12" medium-device-size="8" large-device-size={largeDeviceSize}>
+            
+            <lightning-input type="text" id="ownerBuilderLookup" label="Owner builder permit number" maxlength="9" onfocus={onFocus}
+                              value={ownerBuilderValue} onchange={handleChange} 
+                              required 
+                              placeholder="Minimum 7 characters (e.g 123456P)"                              
+                              message-when-value-missing="Please enter owner builder permit number"></lightning-input> 
+        </lightning-layout-item>
+        <lightning-layout-item size="1" padding="horizontal-small">
+            <div class="slds-p-top_xx-large">
+                <lightning-icon if:true={showCorrectIcon} icon-name="action:approval" alternative-text="Correct" title="Correct" id="correctIcon" size="xx-small"></lightning-icon>
+            </div>
+        </lightning-layout-item>
+    </lightning-layout>
+    <div if:true={isLoading} class="slds-is-relative slds-p-vertical_large">
+        <lightning-spinner variant="brand" size="medium"></lightning-spinner>
+    </div>
+</template>

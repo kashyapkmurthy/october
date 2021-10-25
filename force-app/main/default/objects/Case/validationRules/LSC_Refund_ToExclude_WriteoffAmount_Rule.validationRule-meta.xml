@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>LSC_Refund_ToExclude_WriteoffAmount_Rule</fullName>
+    <active>true</active>
+    <description>Validates that Refund Amount doesn&apos;t include Write Off Amount on the levy</description>
+    <errorConditionFormula>AND(
+RecordType.DeveloperName = &quot;LSC_Refund&quot;,
+LSC_Amount__c  &gt; (LSC_LevyId__r.LSC_TotalPaidCredit__c  -  LSC_LevyId__r.LSC_TotalWriteOffAmount__c)
+)</errorConditionFormula>
+    <errorMessage>Refund Amount cannot be more than the actual amount paid by the customer (excluding the write off amount)</errorMessage>
+</ValidationRule>

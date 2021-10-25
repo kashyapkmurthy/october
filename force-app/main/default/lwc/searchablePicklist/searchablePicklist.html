@@ -1,0 +1,35 @@
+<template>
+    <div class="slds-form-element">
+        <label class="slds-form-element__label" for="combobox">{label}</label>
+        <div class="slds-form-element__control">
+            <div class="slds-combobox_container">
+                <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open" aria-expanded="true" aria-haspopup="listbox" role="combobox">
+                    <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right" role="none">
+                        <input type="text" class="slds-input slds-combobox__input slds-has-focus slds-combobox__input-value" id="combobox" aria-activedescendant="option0" aria-autocomplete="list" aria-controls="listbox-id-16" autocomplete="off" role="textbox" 
+                        value={searchInput} oninput={handleInput} onfocus={onFocus} onblur={onBlur} onclick={onClick}/>
+                        <span class="slds-icon_container slds-input__icon slds-input__icon_right">
+                            <svg focusable="false" data-key="down" aria-hidden="true" viewBox="0 0 52 52" class="slds-icon slds-icon-text-default slds-icon_xx-small"><g><path d="M8.3 14h35.4c1 0 1.7 1.3.9 2.2L27.3 37.4c-.6.8-1.9.8-2.5 0L7.3 16.2c-.7-.9-.1-2.2 1-2.2z"></path></g></svg>
+                        </span>
+                    </div>
+                    <template if:true={showList}>
+                        <div id="listbox-id-16" data-id="listbox-id-16" class="slds-dropdown slds-dropdown_length-with-icon-7 slds-dropdown_fluid slds-is-open" role="listbox">
+                            <ul class="slds-listbox slds-listbox_vertical" role="presentation">
+                                <template for:each={retList} for:item="item">
+                                    <li key={item.value} id={item.id} role="presentation" class="slds-listbox__item" onmousedown={handleSelected}>
+                                        <div class="slds-media slds-listbox__option slds-media_center slds-media_small slds-listbox__option_plain" role="option">
+                                            <span class="slds-media__figure slds-listbox__option-icon"></span>
+                                            <span class="slds-media__body">
+                                            <span class="slds-truncate">{item.label}</span>
+                                            </span>
+                                        </div>
+                                    </li>
+                                </template>
+                            </ul>
+                        </div>
+                    </template>
+                    <div if:true={showError} data-help-text="" aria-live="assertive" class="slds-form-element__help slds-text-color_destructive slds-has-error">{errorMessage}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

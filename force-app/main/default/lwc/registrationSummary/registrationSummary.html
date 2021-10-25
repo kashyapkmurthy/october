@@ -1,0 +1,105 @@
+<template>  
+    <h2>Summary</h2>
+    <template if:true={regTypeBusiness}>
+        <lightning-card title="Business details" class="break-word">
+            <lightning-button label="Edit" id="businessDetails" slot="actions" onclick={handleClick}></lightning-button>
+            <lightning-layout horizontal-align="start">
+                <lightning-layout-item flexibility="auto" size="4" padding="horizontal-small">
+                    <p ><b>ABN:</b></p>
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="auto" size="8" padding="horizontal-small">
+                    <p >{abn}</p>
+                </lightning-layout-item>
+            </lightning-layout>
+            <lightning-layout horizontal-align="start">
+                <lightning-layout-item flexibility="auto" size="4" padding="horizontal-small">
+                    <p ><b>Entity:</b></p>
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="auto" size="8" padding="horizontal-small">
+                    <p >{entity}</p>
+                </lightning-layout-item>
+            </lightning-layout>
+            <lightning-layout horizontal-align="start">
+                <lightning-layout-item flexibility="auto" size="4" padding="horizontal-small">
+                    <p ><b>Phone:</b></p>
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="auto" size="8" padding="horizontal-small">
+                    <p >{businessPhone}</p>
+                </lightning-layout-item>
+            </lightning-layout>
+            <lightning-layout horizontal-align="start">
+                <lightning-layout-item flexibility="auto" size="4" padding="horizontal-small">
+                    <p ><b>Email:</b></p>
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="auto" size="8" padding="horizontal-small">
+                    <p >{businessEmail}</p>
+                </lightning-layout-item>
+            </lightning-layout>
+            <lightning-layout horizontal-align="start">
+                <lightning-layout-item flexibility="auto" size="4" padding="horizontal-small">
+                    <p ><b>Billing address:</b></p>
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="auto" size="8" padding="horizontal-small">
+                    <p >{billingAddress}</p>
+                </lightning-layout-item>
+            </lightning-layout>
+            <lightning-layout horizontal-align="start">
+                <lightning-layout-item flexibility="auto" size="4" padding="horizontal-small">
+                    <p ><b>Postal address:</b></p>
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="auto" size="8" padding="horizontal-small">
+                    <p >{postalAddress}</p>
+                </lightning-layout-item>
+            </lightning-layout>           
+        </lightning-card>   
+    </template> 
+    <lightning-card title="Your details" class="break-word">
+        <lightning-button label="Edit" slot="actions" id="yourDetails" onclick={handleClick}></lightning-button>
+        <lightning-layout horizontal-align="start">
+            <lightning-layout-item flexibility="auto" size="4" padding="horizontal-small">
+                <p ><b>Name:</b></p>
+            </lightning-layout-item>
+            <lightning-layout-item flexibility="auto" size="8" padding="horizontal-small">
+                <p>{name}</p>
+            </lightning-layout-item>
+        </lightning-layout>
+        <lightning-layout horizontal-align="start">
+            <lightning-layout-item flexibility="auto" size="4" padding="horizontal-small">
+                <p ><b>Phone:</b></p>
+            </lightning-layout-item>
+            <lightning-layout-item flexibility="auto" size="8" padding="horizontal-small">
+                <p >{phone}</p>
+            </lightning-layout-item>
+        </lightning-layout>
+        <lightning-layout horizontal-align="start">
+            <lightning-layout-item flexibility="auto" size="4" padding="horizontal-small">
+                <p ><b>Email:</b></p>
+            </lightning-layout-item>
+            <lightning-layout-item flexibility="auto" size="8" padding="horizontal-small">
+                <p >{email}</p>
+            </lightning-layout-item>
+        </lightning-layout>
+        <div if:false={regTypeBusiness}>
+            <lightning-layout horizontal-align="start">
+                <lightning-layout-item flexibility="auto" size="4" padding="horizontal-small">
+                    <p ><b>Postal address:</b></p>
+                </lightning-layout-item>
+                <lightning-layout-item flexibility="auto" size="8" padding="horizontal-small"> 
+                    <p >{postalAddress}</p>
+                </lightning-layout-item>
+            </lightning-layout>        
+        </div>
+    </lightning-card>  
+
+    <h2>Declaration</h2>
+    <p class="slds-text-body_regular slds-text-color_destructive">Providing false or misleading information may result in prosecution and a penalty of up to $5,500 under Section 58A of the Building and Construction Industry Long Service Payments Act 1986.</p>
+    <div class="slds-p-top_large">
+        <lightning-input type="checkbox" class="chkbox" label={declarationLabel} name="checkboxInput" required
+        message-when-value-missing="Please accept the declaration"></lightning-input>
+        <p>By clicking '<b>Register</b>' I understand and agree that:</p>
+        <p>The personal information I provide will be collected and managed in accordance with the&nbsp;
+            <a href="https://www.longservice.nsw.gov.au/bci/the-corporation/accessing-information/privacy" target="_blank">Long Service Corporation (LSC) Terms and Conditions and Privacy Notice</a>.
+        </p>
+        <p>{businessEmailDeclaration}</p>
+    </div>
+</template>

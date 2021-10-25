@@ -1,0 +1,37 @@
+<template>
+    <lightning-card  variant="Narrow" title="Case SLA" icon-name="standard:metrics">
+        <p class="slds-p-horizontal_small">
+            <template if:true={showTotal}>
+                <div>
+                    <div class="slds-form-element__label" style="display: block;"><span class="test-id__field-label" >Lifecycle time</span></div>
+                    <lightning-progress-ring value={totalTimeP} variant={totalTimeType}></lightning-progress-ring><span class="uiOutputTextArea slds-p-left_xx-small" style="vertical-align: super;">{totalTime} minutes</span>
+                </div>
+            </template>
+            <template if:true={showQueue}>
+                <div>
+                    <div class="slds-form-element__label" style="display: block;"><span class="test-id__field-label" >Time in queue</span></div>
+                    <lightning-progress-ring value={timeInQueueP} variant={timeInQueueType}></lightning-progress-ring><span class="uiOutputTextArea slds-p-left_xx-small" style="vertical-align: super;">{timeInQueue} minutes</span>
+                </div>
+            </template>
+            <template if:true={showProcessing}>
+                <div>
+                    <div class="slds-form-element__label" style="display: block;"><span class="test-id__field-label" >Processing time</span></div>
+                    <lightning-progress-ring value={processingTimeP} variant={processingTimeType}></lightning-progress-ring><span class="uiOutputTextArea slds-p-left_xx-small" style="vertical-align: super;">{processingTime} minutes</span>
+                </div>
+            </template>
+            <template if:true={showOnHold}>
+                <div>
+                    <div class="slds-form-element__label" style="display: block;"><span class="test-id__field-label" >Total time On Hold</span></div>
+                    <lightning-progress-ring value={onHoldTimeP}  variant={onHoldTimeType}></lightning-progress-ring><span class="uiOutputTextArea slds-p-left_xx-small" style="vertical-align: super;">{onHoldTime} minutes</span>
+                </div>
+            </template>
+            <template if:true={showApproval}>
+                <div>
+                    <div class="slds-form-element__label" style="display: block;"><span class="test-id__field-label" >Approval</span></div>
+                    <lightning-progress-ring value={approvalTimeP} variant={approvalTimeType}></lightning-progress-ring><span class="uiOutputTextArea slds-p-left_xx-small" style="vertical-align: super;">{approvalTime} minutes</span>
+                </div>
+            </template>                
+        </p>
+    </lightning-card>
+            
+</template>

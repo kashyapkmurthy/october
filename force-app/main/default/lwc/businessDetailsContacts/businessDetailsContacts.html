@@ -1,0 +1,198 @@
+<template>
+    <template if:true={businessDetailsContacts}>
+        <lightning-card title="Contacts / Users">
+            <template if:true={isLoading}>
+                <c-spinner></c-spinner>
+            </template>
+            <lightning-button if:true={isAdmin} label={buttonLabel} id="contactList" slot="actions"
+                class="slds-m-left_small" onclick={handleClick}>
+            </lightning-button>
+            <template if:true={renderReadMode}>
+                <lightning-button if:true={isAdmin} label='Add New' class="slds-m-left_small" id="addContact"
+                    slot="actions" onclick={handleAddContact}>
+                </lightning-button>
+            </template>
+            <template if:false={renderReadMode}>
+                <lightning-button if:true={isAdmin} variant="brand-outline" label="Cancel" id="contactCancelList"
+                    slot="actions" class="slds-m-left_small" onclick={handleCancelClick}>
+                </lightning-button>
+            </template>
+            <div class="slds-p-horizontal_medium">
+                <table class="slds-table slds-max-medium-table_stacked">
+                    <thead>
+                        <tr class="slds-line-height_reset">
+                            <th scope="col">
+                                <span class="slds-truncate" title="Name">First Name</span>
+                            </th>
+                            <th scope="col">
+                                <span class="slds-truncate" title="Name">Last Name</span>
+                            </th>
+                            <th scope="col">
+                                <span class="slds-truncate" title="Phone">Phone
+                                <sup><lightning-helptext class="slds-p-left_x-small" content="Phone number must begin with + (country code) (Or) must be a valid Australian phone number
+                                1300 XXX XXX, 1800 XXX XXX, 1900 XXX XXX, 1902 XXX XXX,
+                                02 XXXX XXXX, 03 XXXX XXXX, 07 XXXX XXXX, 08 XXXX XXXX,
+                                13 XXXX, 18 XXXX, 19 XXXX,
+                                04XX XXX XXX"></lightning-helptext></sup>
+                                </span>
+                            </th>
+                            <th scope="col">
+                                <span class="slds-truncate" title="Email">Email</span>
+                            </th>
+                            <th scope="col">
+                                <span class="slds-truncate" title="Director">Director</span>
+                            </th>
+                            <th scope="col">
+                                <span class="slds-truncate" title="Admin">Admin</span>
+                            </th>
+                            <th scope="col">
+                                <span class="slds-truncate" title="User">User</span>
+                            </th>
+                            <th scope="col">
+                                <span class="slds-truncate" title="Delete"></span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={businessDetailsContacts} for:item="bdc" for:index="index">
+                            <tr key={bdc.key} class="slds-hint-parent">
+                                <td data-label="Name">
+                                    <lightning-input type="text" key={bdc.key} data-id={bdc.key}
+                                        value={bdc.recContact.FirstName} variant="label-hidden"
+                                        onchange={handleFNameChange} disabled={renderReadMode} required
+                                        message-when-value-missing="Please enter First Name" pattern="^[a-zA-Z '-]*"
+                                        message-when-pattern-mismatch="Please enter a valid First name">
+                                    </lightning-input>
+                                </td>
+                                <td data-label="Name">
+                                    <lightning-input type="text" key={bdc.key} data-id={bdc.key}
+                                        value={bdc.recContact.LastName} variant="label-hidden"
+                                        onchange={handleLNameChange} disabled={renderReadMode} required
+                                        message-when-value-missing="Please enter Last Name" pattern="^[a-zA-Z '-]*"
+                                        message-when-pattern-mismatch="Please enter a valid Last name">
+                                    </lightning-input>
+                                </td>
+                                <td data-label="Phone">
+                                    <div class="slds-truncate" title="Phone">
+                                        <lightning-input type="phone" key={bdc.key} data-id={bdc.key} label="Phone"
+                                            value={bdc.recContact.Phone} variant="label-hidden"
+                                            onchange={handlePhoneChange} disabled={renderReadMode}
+                                            pattern="(^(\s*(1300|1800|1900|1902))(| )[0-9]{3}(| )([0-9]\s*){3}$)|(^(\s*0[2|3|7|8]){1}(| )[0-9]{4}(| )([0-9]\s*){4}$)|(^(\s*(13|18|19))(| )([0-9]\s*){4}$)|(^(\s*04)[0-9]{2}(| )[0-9]{3}(| )([0-9]\s*){3}$)|
+                                            (^(\s*[+])[0-9]{2}(| )[0-9]{1}(| )[0-9]{4}(| )([0-9]\s*){4}$)|(^(\s*[+])[0-9]{2}(| )[0-9]{3}(| )[0-9]{3}(| )([0-9]\s*){3}$)"
+                                            message-when-pattern-mismatch="Wrong format" name="phone" maxlength="15"
+                                            required message-when-value-missing="Please enter phone number">
+                                        </lightning-input>
+                                    </div>
+                                </td>
+                                <template if:true={bdc.isUser}>
+                                    <td data-label="Email">
+                                        <div class="slds-truncate" title="Email">
+                                            <lightning-input key={bdc.key} data-id={bdc.key} label="Phone"
+                                                value={bdc.recContact.Email} variant="label-hidden" disabled=true
+                                                required name="email">
+                                            </lightning-input>
+                                        </div>
+                                    </td>
+                                </template>
+                                <template if:false={bdc.isUser}>
+                                    <td data-label="Email">
+                                        <div class="slds-truncate" title="Email">
+                                            <lightning-input key={bdc.key} data-id={bdc.key} label="Phone"
+                                                value={bdc.recContact.Email} variant="label-hidden" type="email"
+                                                onchange={handleEmailChange} disabled={renderReadMode} required
+                                                pattern="^[A-Za-z0-9._%+-/!#$%&'*=?^_`{|}~]+@[A-Za-z0-9.-]+\.[A-Za-z]*$" name="email"
+                                                message-when-pattern-mismatch="Email has wrong format"
+                                                message-when-value-missing="Please enter email address">
+                                            </lightning-input>
+                                        </div>
+                                    </td>
+                                </template>
+                                <template if:true={bdc.isLoggedInUser}>
+                                    <td data-label="Director">
+                                        <div class="slds-truncate" title="Director">
+                                            <lightning-input type="checkbox" key={bdc.key} data-id={bdc.key}
+                                                label="Director" checked={bdc.isDirector} variant="label-hidden"
+                                                onchange={handleDirectorChange} disabled=true></lightning-input>
+                                        </div>
+                                    </td>
+                                    <td data-label="Admin">
+                                        <div class="slds-truncate" title="Admin">
+                                            <lightning-input type="checkbox" key={bdc.key} data-id={bdc.key}
+                                                label="Admin" checked={bdc.isAdmin} variant="label-hidden"
+                                                onchange={handleAdminChange} disabled=true>
+                                            </lightning-input>
+                                        </div>
+                                    </td>
+                                    <td data-label="User">
+                                        <div class="slds-truncate" title="User">
+                                            <lightning-input type="checkbox" key={bdc.key} data-id={bdc.key}
+                                                label="User" checked={bdc.isUser} variant="label-hidden" disabled=true>
+                                            </lightning-input>
+                                        </div>
+                                    </td>
+                                    <template if:true={isAdmin}>
+                                        <td data-label="Delete">
+                                            <a name={index} data-id={bdc.key} disabled=true>
+                                                <lightning-icon class="grey-fill" icon-name="utility:delete"
+                                                    alternative-text="delete" size="small">
+                                                </lightning-icon>
+                                            </a>
+                                        </td>
+                                    </template>
+                                </template>
+                                <template if:false={bdc.isLoggedInUser}>
+                                    <td data-label="Director">
+                                        <div class="slds-truncate" title="Director">
+                                            <lightning-input type="checkbox" key={bdc.key} data-id={bdc.key}
+                                                label="Director" checked={bdc.isDirector} variant="label-hidden"
+                                                onchange={handleDirectorChange} disabled={renderReadMode}>
+                                            </lightning-input>
+                                        </div>
+                                    </td>
+                                    <td data-label="Admin">
+                                        <div class="slds-truncate" title="Admin">
+                                            <lightning-input type="checkbox" key={bdc.key} data-id={bdc.key}
+                                                label="User" checked={bdc.isAdmin} variant="label-hidden"
+                                                onchange={handleAdminChange} disabled={renderReadMode}>
+                                            </lightning-input>
+                                        </div>
+                                    </td>
+                                    <td data-label="User">
+                                        <div class="slds-truncate" title="User">
+                                            <lightning-input type="checkbox" key={bdc.key} data-id={bdc.key}
+                                                label="User" checked={bdc.isUser} variant="label-hidden" disabled=true>
+                                            </lightning-input>
+                                        </div>
+                                    </td>
+                                    <template if:true={isAdmin}>
+                                        <td data-label="Delete">
+                                            <a name={index} data-id={bdc.key} onclick={removeRow}>
+                                                <lightning-icon class="red-fill" icon-name="utility:delete"
+                                                    alternative-text="delete" size="small">
+                                                </lightning-icon>
+                                            </a>
+                                        </td>
+                                    </template>
+                                </template>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+        </lightning-card>
+        <template if:true={showAddNewModal}>
+            <c-add-business-contact-user is-modal-open={showAddNewModal} account-id={recordId} abn={abn}
+                onupdateaddcontactuser={handleAddContactUserUpdate}></c-add-business-contact-user>
+        </template>
+        <template if:true={showLSCModal}>
+            <c-add-business-contact-user-confirmation show-message={showMessage} input-data={contactData}
+                onupdatemodalclose={handleModalClose}>
+            </c-add-business-contact-user-confirmation>
+        </template>
+        <template if:true={showDeleteConfirmationModal}>
+            <c-delete-confirmation-modal message={deleteMessage} show-modal={showDeleteConfirmationModal}
+                onconfirmdelete={handleDeleteConfirmation}>
+            </c-delete-confirmation-modal>
+        </template>
+    </template>
+</template>

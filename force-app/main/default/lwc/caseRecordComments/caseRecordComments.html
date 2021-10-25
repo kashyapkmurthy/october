@@ -1,0 +1,44 @@
+<template>
+    <template if:true={isLoading}>
+        <c-spinner size-input="large"></c-spinner>
+    </template>
+    <template if:true={canComment}>
+        <lightning-button label="Add a comment" onclick={reply} ></lightning-button> 
+    </template>
+    <template if:true={showComment}>
+        <lightning-textarea name="details" label="Add a comment" class="new-comment" value={details} onchange={handleChange} required></lightning-textarea> 
+        <lightning-file-upload
+            class="no-margin-button"
+            label="Upload attachments"
+            name="fileUploader"
+            accept={acceptedFormats}
+            record-id={filesRecordId}
+            onuploadfinished={handleUploadFinished}
+            multiple>
+        </lightning-file-upload>   
+        <template if:true={hasFiles}>
+            <p><span>Uploaded Files: </span></p>
+            <template for:each={uploadedFiles} for:item="file">
+                <div key={file} class="slds-m-top_x-small">
+                    <lightning-button-icon icon-name="utility:clear" name={file.id} alternative-text="Remove" class="iconnoborder" onclick={handleFileDelete} title="Remove"></lightning-button-icon>
+                    <lightning-icon icon-name="doctype:attachment" size="small" class="slds-m-right_x-small" title="Image"></lightning-icon>
+                        {file.name}
+                </div>
+            </template>
+        </template> 
+        <lightning-button label="Submit" disabled={disableSubmit} onclick={postComment} ></lightning-button>  
+        <lightning-button label="Cancel" onclick={cancelComment} ></lightning-button>         
+    </template>
+    <template if:true={hasComments}>
+        <template for:each={comments} for:item="comment">
+            <lightning-card key={comment.id} class="case-comment" title={comment.name}>
+                <p slot="actions"><lightning-formatted-date-time value={comment.created} year="numeric" month="numeric" day="numeric" hour="2-digit"
+                    minute="2-digit" hour12="true"></lightning-formatted-date-time></p>
+                <p><lightning-formatted-text value={comment.body}></lightning-formatted-text></p>
+            </lightning-card>
+        </template>
+    </template>
+    <template if:false={hasComments}>
+        <p><span>Support ticket doesn't have any comments</span></p>
+    </template>    
+</template>
